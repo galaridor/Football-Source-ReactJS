@@ -1117,3 +1117,47 @@ h1, h2, h3, h4, h5,
   .post-meta a {
     color: #fff;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
+
+/* DataTable.css */
+.p-datatable-thead > tr > th {
+  background-color: #ee1e46 !important;
+  color: white;
+}
+
+.data-set-row {
+  background-color: #1A1E25 !important;
+  color: white;
+}
+
+.p-paginator {
+  background-color: #ee1e46 !important;
+  color: white;
+}
+
+.p-paginator-element, .p-dropdown-trigger, .p-inputtext{
+  color: black;
+}
+
+.p-datatable .p-datatable-tablewrapper {
+  border: 1px solid rgba(255, 255, 255, 0.1)
+}
+
+/* Change the border color for table header */
+.p-datatable .p-datatable-thead > tr > th {
+  border: 1px solid rgba(255, 255, 255, 0.1)
+}
+
+/* Change the border color for table rows */
+.p-datatable .p-datatable-tbody > tr {
+  border: 1px solid rgba(255, 255, 255, 0.1)
+}
+
+/* Change the border color for table cells */
+.p-datatable .p-datatable-tbody > tr > td {
+  border: 1px solid rgba(255, 255, 255, 0.1)
+}
+
+/* Change the border color for pagination area */
+.p-datatable .p-paginator {
+  border: 1px solid rgba(255, 255, 255, 0.1)
+}

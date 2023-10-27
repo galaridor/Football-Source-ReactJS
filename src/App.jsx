@@ -7,7 +7,6 @@ import ResultOnFocus from './components/ResultOnFocus'
 import FixtureOnFocus from './components/FixtureOnFocus'
 import Footer from './components/Footer'
 
-
 function App() {
 	return (
 		<div className="site-wrap">
