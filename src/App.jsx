@@ -6,6 +6,7 @@ import UpcomingEvent from './components/UpcomingEvent'
 import ResultOnFocus from './components/ResultOnFocus'
 import FixtureOnFocus from './components/FixtureOnFocus'
 import Footer from './components/Footer'
+import Competitions from './components/Competitions';
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 			<ResultOnFocus />
 			<FixtureOnFocus />
 			<Footer />
+			<Competitions />
 		</div>
 	)
 }
