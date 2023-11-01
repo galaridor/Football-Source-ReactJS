@@ -1,8 +1,8 @@
 const GoalScorers = (props) => {
     return (
-       <div className="goal-scorers-section">
+        <div className="goal-scorers-section">
 
-       </div>
+        </div>
     )
 }
 

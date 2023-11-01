@@ -1,9 +1,9 @@
 const LiveScore = (props) => {
-    return (
-       <div className="livescore-section">
+	return (
+		<div className="livescore-section">
 
-       </div>
-    )
+		</div>
+	)
 }
 
 export default LiveScore;

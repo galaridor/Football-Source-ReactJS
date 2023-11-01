@@ -1,9 +1,9 @@
 const HeadToHead = (props) => {
-    return (
-       <div className="head-to-head-section">
+	return (
+		<div className="head-to-head-section">
 
-       </div>
-    )
+		</div>
+	)
 }
 
 export default HeadToHead;

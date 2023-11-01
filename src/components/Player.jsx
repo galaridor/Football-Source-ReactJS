@@ -1,9 +1,9 @@
 const Player = (props) => {
-    return (
-        <div className="player-section">
+	return (
+		<div className="player-section">
 
-        </div>
-    )
+		</div>
+	)
 }
 
 export default Player;

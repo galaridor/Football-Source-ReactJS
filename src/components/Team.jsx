@@ -1,9 +1,9 @@
 const Team = (props) => {
-    return (
-        <div className="team-section">
+	return (
+		<div className="team-section">
 
-        </div>
-    )
+		</div>
+	)
 }
 
 export default Team;

@@ -1,9 +1,9 @@
 const Contact = (props) => {
-    return (
-        <div className="contact-section">
+	return (
+		<div className="contact-section">
 
-        </div>
-    )
+		</div>
+	)
 }
 
 export default Contact;

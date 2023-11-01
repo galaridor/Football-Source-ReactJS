@@ -4,7 +4,7 @@ const Footer = (props) => {
     return (
         <footer className="footer-section">
             <div className="container">
-                <div className="row" style={{justifyContent: "center"}}>
+                <div className="row" style={{ justifyContent: "center" }}>
                     <div className="col-lg-3">
                         <div className="widget mb-3">
                             <h3>Competitions</h3>

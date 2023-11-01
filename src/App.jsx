@@ -7,6 +7,7 @@ import ResultOnFocus from './components/ResultOnFocus'
 import FixtureOnFocus from './components/FixtureOnFocus'
 import Footer from './components/Footer'
 import Competitions from './components/Competitions';
+import Competition from './components/Competition';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 			<FixtureOnFocus />
 			<Footer />
 			<Competitions />
+			<Competition alias={'PL'} />
 		</div>
 	)
 }
