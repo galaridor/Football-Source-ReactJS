@@ -1,4 +1,4 @@
-const Copyright = (props) => {
+const Copyright = () => {
 	return (
 		<div className="copyright-section">
 			<div className="row text-center">

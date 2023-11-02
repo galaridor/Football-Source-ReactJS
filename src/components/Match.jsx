@@ -1,9 +1,9 @@
-const Match = (props) => {
+const Match = ({title}) => {
 	return (
 		<div className="match-section">
 			<div className="widget-header">
 				<div className="widget-title">
-					<h3 style={{ "textAlign": "center" }}>{props.title}</h3>
+					<h3 style={{ "textAlign": "center" }}>{title}</h3>
 				</div>
 				<div className="widget-body mb-3">
 					<div className="widget-vs">

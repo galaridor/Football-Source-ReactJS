@@ -1,4 +1,4 @@
-const UpcomingEvent = (props) => {
+const UpcomingEvent = () => {
 	return (
 		<div className="upcoming-event-section">
 			<div className="hero" style={{ backgroundImage: 'url("images/bg_3.jpg")' }}>

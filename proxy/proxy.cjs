@@ -2,6 +2,7 @@ const express = require('express');
 const fetch = require("node-fetch");
 const app = express();
 
+const baseUrl = 'https://api.football-data.org/v4';
 const apiKey = '9c5d28d5c644455a94efe4e3c2e4befc'
 
 app.use((_req, res, next) => {
@@ -13,7 +14,7 @@ app.use((_req, res, next) => {
 
 // Get All Competitions
 app.get('/competitions/', async (_req, res) => {
-	const url = 'https://api.football-data.org/v4/competitions/';
+	const url = `${baseUrl}/competitions/`;
 
 	try {
 		const response = await fetch(url, {
@@ -38,7 +39,7 @@ app.get('/competitions/', async (_req, res) => {
 app.get(`/competitions/:alias`, async (_req, res) => {
 	const alias = _req.params.alias;
 
-	const url = `https://api.football-data.org/v4/competitions/${alias}`;
+	const url = `${baseUrl}/competitions/${alias}`;
 
 	try {
 		const response = await fetch(url, {
@@ -63,7 +64,7 @@ app.get(`/competitions/:alias`, async (_req, res) => {
 app.get(`/competitions/:alias/standings`, async (_req, res) => {
 	const alias = _req.params.alias;
 
-	const url = `https://api.football-data.org/v4/competitions/${alias}/standings`;
+	const url = `${baseUrl}/competitions/${alias}/standings`;
 
 	try {
 		const response = await fetch(url, {
@@ -88,7 +89,7 @@ app.get(`/competitions/:alias/standings`, async (_req, res) => {
 app.get(`/competitions/:alias/matches`, async (_req, res) => {
 	const alias = _req.params.alias;
 
-	const url = `https://api.football-data.org/v4/competitions/${alias}/matches`;
+	const url = `${baseUrl}/competitions/${alias}/matches`;
 
 	try {
 		const response = await fetch(url, {
@@ -113,7 +114,7 @@ app.get(`/competitions/:alias/matches`, async (_req, res) => {
 app.get(`/competitions/:alias/teams`, async (_req, res) => {
 	const alias = _req.params.alias;
 
-	const url = `https://api.football-data.org/v4/competitions/${alias}/teams`;
+	const url = `${baseUrl}/competitions/${alias}/teams`;
 
 	try {
 		const response = await fetch(url, {
@@ -138,7 +139,7 @@ app.get(`/competitions/:alias/teams`, async (_req, res) => {
 app.get(`/competitions/:alias/scorers`, async (_req, res) => {
 	const alias = _req.params.alias;
 
-	const url = `https://api.football-data.org/v4/competitions/${alias}/scorers`;
+	const url = `${baseUrl}/competitions/${alias}/scorers`;
 
 	try {
 		const response = await fetch(url, {

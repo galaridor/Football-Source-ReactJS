@@ -1,4 +1,4 @@
-const HeadToHead = (props) => {
+const HeadToHead = () => {
 	return (
 		<div className="head-to-head-section">
 

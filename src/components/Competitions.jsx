@@ -1,15 +1,17 @@
-import {React, useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from 'primereact/button';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 
 const apiUrl = 'http://localhost:3456/competitions/';
 
-const Competitions = (props) => {
+const Competitions = () => {
 	const [competitions, setCompetitions] = useState([]);
+
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		fetch(apiUrl)
@@ -25,17 +27,24 @@ const Competitions = (props) => {
 			});
 	}, []);
 
-	const imageBodyTemplate = (competition) => {
+	const competitionEmblemBodyTemplate = (competition) => {
 		return <img src={`${competition.emblem}`} style={{ width: "150px" }} alt="Missing Image" className="w-6rem shadow-2 border-round" />;
 	};
 
-	const optionsBodyTemplate = (team) => {
+	const handleCompetitionDetailsClick = (competition) => {
+		navigate(`/competitions/${competition.code}`);
+	}
+
+	const optionsBodyTemplate = (competition) => {
 		return (
-			<div>
-				
-					<Link className="btn-details" to={`/competitions/${team.code}`}>Details</Link>
-				
-			</div>)
+			<div className='details-btn'>
+				<Button
+					label="Details"
+					onClick={() => handleCompetitionDetailsClick(competition)}
+					icon="pi pi-check"
+				/>
+			</div>
+		)
 	};
 
 	return (
@@ -57,7 +66,7 @@ const Competitions = (props) => {
 						style={{ width: "150px" }}
 						sortable
 					/>
-					<Column header="Emblem" body={imageBodyTemplate} style={{ width: "150px" }} />
+					<Column header="Emblem" body={competitionEmblemBodyTemplate} style={{ width: "150px" }} />
 					<Column field="code" header="Code" sortable style={{ width: "150px" }} />
 					<Column field="area.name" header="Area" sortable style={{ width: "150px" }} />
 					<Column

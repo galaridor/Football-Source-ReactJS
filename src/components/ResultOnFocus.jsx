@@ -1,4 +1,4 @@
-const ResultOnFocus = (props) => {
+const ResultOnFocus = () => {
 	return (
 		<div className="result-on-focus-section">
 			<div className="container">

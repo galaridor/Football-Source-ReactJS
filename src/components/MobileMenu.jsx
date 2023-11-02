@@ -1,4 +1,4 @@
-const MobileMenu = (props) => {
+const MobileMenu = () => {
 	return (
 		<div className="mobile-menu-section">
 			<div className="site-mobile-menu site-navbar-target">

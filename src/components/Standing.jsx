@@ -1,129 +1,135 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Link, useParams, useNavigate  } from "react-router-dom";
 import { React, useState, useEffect } from "react";
 import { Button } from 'primereact/button';
+import { useParams } from "react-router-dom";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 
 const Standing = (props) => {
-  const [standing, setStanding] = useState(null);
+	const [standing, setStanding] = useState(null);
+	const [competitionName, setCompetitionName] = useState("");
 
-  const { alias } = useParams()
-	const type = 'full';
+	const { alias: propAlias, type: propType } = props;
+	const { alias: routeAlias, type: routeType } = useParams();
+  
+	// Use the parameters from props if available, otherwise, use the route parameters
+	const alias = propAlias || routeAlias;
+	const type = propType || routeType;
+  
+	useEffect(() => {
+		const apiUrl = `http://localhost:3456/competitions/${alias}/standings/`;
 
-  const navigate = useNavigate()
+		fetch(apiUrl)
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
+				setStanding(data.standings[0].table);
+				setCompetitionName(data.competition.name);
+				console.log(data.standings[0].table);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
 
-  useEffect(() => {
-    const apiUrl = `http://localhost:3456/competitions/${alias}/standings/`;
+	const emblemBodyTemplate = (team) => {
+		return (
+			<img
+				src={`${team.team.crest}`}
+				style={{ width: "150px" }}
+				alt="Missing Image"
+				className="w-6rem shadow-2 border-round"
+			/>
+		);
+	};
 
-    fetch(apiUrl)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setStanding(data.standings[0].table);
-        console.log(data.standings[0].table);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+	const optionsBodyTemplate = (team) => {
+		return (
+			<div>
+				<Button
+					label="Details"
+					onClick={() => handleClick(team)}
+					icon="pi pi-check"
+				/>
+			</div>
+		);
+	};
 
-  const emblemBodyTemplate = (team) => {
-    return (
-      <img
-        src={`${team.team.crest}`}
-        style={{ width: "150px" }}
-        alt="Missing Image"
-        className="w-6rem shadow-2 border-round"
-      />
-    );
-  };
+	const handleClick = (rowData) => {
+		console.log("Name clicked:", rowData.team.tla);
+	};
 
-  const optionsBodyTemplate = (team) => {
-    return (
-      <div>
-        <Button
-          label="Details"
-          onClick={() => handleClick(team)}
-          icon="pi pi-check"
-        />
-      </div>
-    );
-  };
-
-  const handleClick = (rowData) => {
-	console.log("Name clicked:", rowData.team.tla);
-};
-
-  if (standing) {
-    if (type == "short") {
-      return (
-        <div className="standing-section">
-          <div className="widget-header">
-            <DataTable
-              value={standing}
-              sortMode="multiple"
-              paginator
-              rows={5}
-              rowsPerPageOptions={[5, 10, 15, 20, 50]}
-              totalRecords={standing.length}
-            >
-              <Column field="position" header="P" sortable />
-              <Column field="team.name" header="Team" sortable />
-              <Column field="playedGames" header="PG" sortable />
-              <Column field="won" header="W" sortable />
-              <Column field="draw" header="D" sortable />
-              <Column field="lost" header="L" sortable />
-              <Column field="points" header="PTS" sortable />
-            </DataTable>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="standing-section">
-          <div className="widget-header">
-            <DataTable
-              value={standing}
-              sortMode="multiple"
-              paginator
-              rows={5}
-              rowsPerPageOptions={[5, 10, 15, 20, 50]}
-              totalRecords={standing.length}
-            >
-              <Column field="position" header="Position" sortable />
-              <Column field="team.name" header="Team" sortable />
-              <Column field="team.tla" header="tla" sortable />
-              <Column body={emblemBodyTemplate} header="Emblem" />
-              <Column field="playedGames" header="Played Games" sortable />
-              <Column field="won" header="Won" sortable />
-              <Column field="draw" header="Draw" sortable />
-              <Column field="lost" header="Lost" sortable />
-              <Column field="points" header="Points" sortable />
-              <Column field="goalsFor" header="Goals Scored" sortable />
-              <Column field="goalsAgainst" header="Goals Conceeded" sortable />
-              <Column
-                field="goalDifference"
-                header="Goal Difference"
-                sortable
-              />
-              <Column field="points" header="Points" sortable />
-              <Column
-                style={{ width: "150px" }}
-                header="Options"
-                sortable
-                body={optionsBodyTemplate}
-              />
-            </DataTable>
-          </div>
-        </div>
-      );
-    }
-  } else {
-    return null;
-  }
+	if (standing) {
+		if (type == "short") {
+			return (
+				<div className="standing-section">
+					<h1 style={{textAlign: 'center'}}>{competitionName} Standing</h1>
+					<div className="widget-header">
+						<DataTable
+							value={standing}
+							sortMode="multiple"
+							paginator
+							rows={5}
+							rowsPerPageOptions={[5, 10, 15, 20, 50]}
+							totalRecords={standing.length}
+						>
+							<Column field="position" header="P" sortable />
+							<Column field="team.name" header="Team" sortable />
+							<Column field="playedGames" header="PG" sortable />
+							<Column field="won" header="W" sortable />
+							<Column field="draw" header="D" sortable />
+							<Column field="lost" header="L" sortable />
+							<Column field="points" header="PTS" sortable />
+						</DataTable>
+					</div>
+				</div>
+			);
+		} else {
+			return (
+				<div className="standing-section">
+					<h1 style={{textAlign: 'center'}}>{competitionName} Standing</h1>
+					<div className="widget-header">
+						<DataTable
+							value={standing}
+							sortMode="multiple"
+							paginator
+							rows={5}
+							rowsPerPageOptions={[5, 10, 15, 20, 50]}
+							totalRecords={standing.length}
+						>
+							<Column field="position" header="Position" sortable />
+							<Column field="team.name" header="Team" sortable />
+							<Column field="team.tla" header="tla" sortable />
+							<Column body={emblemBodyTemplate} header="Emblem" />
+							<Column field="playedGames" header="Played Games" sortable />
+							<Column field="won" header="Won" sortable />
+							<Column field="draw" header="Draw" sortable />
+							<Column field="lost" header="Lost" sortable />
+							<Column field="points" header="Points" sortable />
+							<Column field="goalsFor" header="Goals Scored" sortable />
+							<Column field="goalsAgainst" header="Goals Conceeded" sortable />
+							<Column
+								field="goalDifference"
+								header="Goal Difference"
+								sortable
+							/>
+							<Column field="points" header="Points" sortable />
+							<Column
+								style={{ width: "150px" }}
+								header="Options"
+								sortable
+								body={optionsBodyTemplate}
+							/>
+						</DataTable>
+					</div>
+				</div>
+			);
+		}
+	} else {
+		return null;
+	}
 };
 
 export default Standing;

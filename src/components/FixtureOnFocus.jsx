@@ -1,7 +1,7 @@
 import Match from "./Match";
 import Standing from "./Standing";
 
-const FixtureOnFocus = (props) => {
+const FixtureOnFocus = () => {
 	return (
 		<div className="fixture-on-focus-section">
 			<div className="site-section bg-dark">
@@ -11,7 +11,7 @@ const FixtureOnFocus = (props) => {
 							<Match title="Next Fixture on Focus" />
 						</div>
 						<div className="col-lg-7">
-							<Standing alias={"PL"} type={"short"}/>
+							<Standing alias="PL" type="short" />
 						</div>
 					</div>
 				</div>
