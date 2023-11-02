@@ -405,7 +405,7 @@ h5,
 .site-navbar {
 	margin-bottom: 0px;
 	z-index: 1999;
-	position: absolute;
+	/* position: absolute; */
 	width: 100%;
 }
 

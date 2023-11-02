@@ -1,103 +1,129 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Link, useParams, useNavigate  } from "react-router-dom";
+import { React, useState, useEffect } from "react";
+import { Button } from 'primereact/button';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 
-// Mock data for now, will use real data soon :)
-const data = [
-	{
-		postition: "1",
-		team: "Team 1",
-		wins: 23,
-		draws: 3,
-		losses: 1,
-		points: 72,
-	},
-	{
-		postition: "2",
-		team: "Team 2",
-		wins: 20,
-		draws: 3,
-		losses: 4,
-		points: 63,
-	},
-	{
-		postition: "3",
-		team: "Team 3",
-		wins: 15,
-		draws: 6,
-		losses: 6,
-		points: 51,
-	},
-	{
-		postition: "4",
-		team: "Team 4",
-		wins: 10,
-		draws: 7,
-		losses: 10,
-		points: 37,
-	},
-	{
-		postition: "5",
-		team: "Team 5",
-		wins: 7,
-		draws: 5,
-		losses: 15,
-		points: 26,
-	},
-	{
-		postition: "6",
-		team: "Team 6",
-		wins: 5,
-		draws: 7,
-		losses: 15,
-		points: 22,
-	},
-	{
-		postition: "7",
-		team: "Team 7",
-		wins: 3,
-		draws: 10,
-		losses: 14,
-		points: 19,
-	},
-	{
-		postition: "8",
-		team: "Team 8",
-		wins: 1,
-		draws: 6,
-		losses: 20,
-		points: 9,
-	},
-];
-
 const Standing = (props) => {
-	const rowClassName = (rowIndex) => {
-		return "data-set-row";
-	};
+  const [standing, setStanding] = useState(null);
 
-	return (
-		<div className="standing-section">
-			<div className="widget-header">
-				<DataTable
-					value={data}
-					sortMode="multiple"
-					paginator
-					rows={5}
-					rowsPerPageOptions={[5, 10, 15, 20, 50]}
-					totalRecords={data.length}
-					rowClassName={rowClassName}
-				>
-					<Column field="postition" header="P" />
-					<Column field="team" header="Team" sortable />
-					<Column field="wins" header="W" sortable />
-					<Column field="draws" header="D" sortable />
-					<Column field="losses" header="L" sortable />
-					<Column field="points" header="PTS" sortable />
-				</DataTable>
-			</div>
-		</div>
-	);
+  const { alias } = useParams()
+	const type = 'full';
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const apiUrl = `http://localhost:3456/competitions/${alias}/standings/`;
+
+    fetch(apiUrl)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setStanding(data.standings[0].table);
+        console.log(data.standings[0].table);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const emblemBodyTemplate = (team) => {
+    return (
+      <img
+        src={`${team.team.crest}`}
+        style={{ width: "150px" }}
+        alt="Missing Image"
+        className="w-6rem shadow-2 border-round"
+      />
+    );
+  };
+
+  const optionsBodyTemplate = (team) => {
+    return (
+      <div>
+        <Button
+          label="Details"
+          onClick={() => handleClick(team)}
+          icon="pi pi-check"
+        />
+      </div>
+    );
+  };
+
+  const handleClick = (rowData) => {
+	console.log("Name clicked:", rowData.team.tla);
+};
+
+  if (standing) {
+    if (type == "short") {
+      return (
+        <div className="standing-section">
+          <div className="widget-header">
+            <DataTable
+              value={standing}
+              sortMode="multiple"
+              paginator
+              rows={5}
+              rowsPerPageOptions={[5, 10, 15, 20, 50]}
+              totalRecords={standing.length}
+            >
+              <Column field="position" header="P" sortable />
+              <Column field="team.name" header="Team" sortable />
+              <Column field="playedGames" header="PG" sortable />
+              <Column field="won" header="W" sortable />
+              <Column field="draw" header="D" sortable />
+              <Column field="lost" header="L" sortable />
+              <Column field="points" header="PTS" sortable />
+            </DataTable>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="standing-section">
+          <div className="widget-header">
+            <DataTable
+              value={standing}
+              sortMode="multiple"
+              paginator
+              rows={5}
+              rowsPerPageOptions={[5, 10, 15, 20, 50]}
+              totalRecords={standing.length}
+            >
+              <Column field="position" header="Position" sortable />
+              <Column field="team.name" header="Team" sortable />
+              <Column field="team.tla" header="tla" sortable />
+              <Column body={emblemBodyTemplate} header="Emblem" />
+              <Column field="playedGames" header="Played Games" sortable />
+              <Column field="won" header="Won" sortable />
+              <Column field="draw" header="Draw" sortable />
+              <Column field="lost" header="Lost" sortable />
+              <Column field="points" header="Points" sortable />
+              <Column field="goalsFor" header="Goals Scored" sortable />
+              <Column field="goalsAgainst" header="Goals Conceeded" sortable />
+              <Column
+                field="goalDifference"
+                header="Goal Difference"
+                sortable
+              />
+              <Column field="points" header="Points" sortable />
+              <Column
+                style={{ width: "150px" }}
+                header="Options"
+                sortable
+                body={optionsBodyTemplate}
+              />
+            </DataTable>
+          </div>
+        </div>
+      );
+    }
+  } else {
+    return null;
+  }
 };
 
 export default Standing;

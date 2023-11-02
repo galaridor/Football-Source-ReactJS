@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import {React, useState, useEffect } from 'react';
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from 'primereact/button';
+import { Link } from "react-router-dom";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 
@@ -24,18 +25,16 @@ const Competitions = (props) => {
 			});
 	}, []);
 
-	const handleClick = (rowData) => {
-		console.log("Name clicked:", rowData.code);
+	const imageBodyTemplate = (competition) => {
+		return <img src={`${competition.emblem}`} style={{ width: "150px" }} alt="Missing Image" className="w-6rem shadow-2 border-round" />;
 	};
 
-	const imageBodyTemplate = (product) => {
-		return <img src={`${product.emblem}`} style={{ width: "150px" }} alt="Missing Image" className="w-6rem shadow-2 border-round" />;
-	};
-
-	const optionsBodyTemplate = (product) => {
+	const optionsBodyTemplate = (team) => {
 		return (
 			<div>
-				<Button label="Details" onClick={() => handleClick(product)} icon="pi pi-check" />
+				
+					<Link className="btn-details" to={`/competitions/${team.code}`}>Details</Link>
+				
 			</div>)
 	};
 
