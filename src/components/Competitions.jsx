@@ -11,7 +11,7 @@ const apiUrl = 'http://localhost:3456/competitions/';
 const Competitions = () => {
 	const [competitions, setCompetitions] = useState([]);
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		fetch(apiUrl)

@@ -6,10 +6,10 @@ import competitionBackground from "/public/images/competition_background.avif";
 
 const Competition = () => {
 	const [competition, setCompetition] = useState(null);
+	
+	const navigate = useNavigate();
 
-	const navigate = useNavigate()
-
-	const { alias } = useParams()
+	const { alias } = useParams();
 
 	useEffect(() => {
 		const apiUrl = `http://localhost:3456/competitions/${alias}/`;
@@ -64,7 +64,8 @@ const Competition = () => {
             label: 'Goal Scorers',
             icon: 'pi',
             command: () => {
-				navigate(`/competitions/${competition.code}/goalscorers`);
+				const maxLimitSize = 1000;
+				navigate(`/competitions/${competition.code}/goalscorers/${maxLimitSize}`);
             }
         }
     ];
@@ -79,7 +80,7 @@ const Competition = () => {
 		return (
 			<div style={{ textAlign: 'center', backgroundImage: `url(${competitionBackground})` }} className='competition-section'>
 				<h1 style={{color: 'red'}}>{competition.name} Details</h1>
-				<div style={{ width: '500px', display: 'inline-grid', margin: '15px', height: '700px', backgroundColor: 'lightgrey'}} className="card flex justify-content-center">
+				<div style={{ width: '500px', display: 'inline-grid', margin: '15px', height: 'auto', backgroundColor: 'lightgrey'}} className="card flex justify-content-center">
 					<Card style={{margin: '50px'}} title={competition.name} subTitle={cardSubtitle} footer={cardFooter} header={cardHeader} className="md:w-25rem">
 						<p>Current Season Start Date: {competition.currentSeason.startDate}</p>
 						<p>Current Season End Date: {competition.currentSeason.endDate}</p>

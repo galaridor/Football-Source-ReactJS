@@ -61,7 +61,7 @@ const Teams = () => {
 				<h1 style={{color: 'red'}}>All {competitionName} Teams</h1>
 				<div style={{whiteSpace: 'normal'}} className="teams-container">
 					{teams.map((team) => (
-						<div style={{ width: '500px', display: 'inline-grid', margin: '15px', height: '900px', backgroundColor: 'lightgrey'}} className="card flex justify-content-center" key={team.id}>
+						<div style={{ width: '500px', display: 'inline-grid', margin: '15px', height: 'auto', backgroundColor: 'lightgrey'}} className="card flex justify-content-center" key={team.id}>
 							<Card style={{margin: '50px'}} subTitle={cardSubtitle(team)} footer={cardFooter(team)} header={cardHeader(team)} title={team.name} className="md:w-25rem">
 								<p>Founded: {team.founded}</p>
 								<p>Address: {team.address}</p>

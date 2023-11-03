@@ -9,7 +9,6 @@ import Competition from "./components/Competition";
 import Home from "./components/Home";
 import Contacts from "./components/Contacts";
 import Livescore from './components/LiveScore';
-import Player from "./components/Player";
 import Matches from "./components/Matches";
 import Error from "./components/Error";
 import Standing from "./components/Standing";
@@ -17,6 +16,7 @@ import Teams from "./components/Teams";
 import GoalScorers from "./components/GoalScorers";
 import Team from "./components/Team";
 import Match from "./components/Match";
+import Person from "./components/Person";
 
 function App() {
 	return (
@@ -32,12 +32,12 @@ function App() {
 				<Route path="/competitions/:alias/standing/:type" element={<Standing />} />
 				<Route path="/competitions/:alias/matches" element={<Matches />} />
 				<Route path="/competitions/:alias/teams" element={<Teams />} />
-				<Route path="/competitions/:alias/goalscorers" element={<GoalScorers />} />
+				<Route path="/competitions/:alias/goalscorers/:limit" element={<GoalScorers />} />
 				<Route path="/teams/:id/" element={<Team />} />
 				<Route path="/matches/:id/" element={<Match />} />
 				<Route path="/livescore" element={<Livescore />} />
 				<Route path="/contacts" element={<Contacts />} />
-				<Route path="/players:/:id/" element={<Player />} />
+				<Route path="/people/:id/" element={<Person />} />
 			</Routes>
 			<Footer />
 		</div>

@@ -2,7 +2,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { React, useState, useEffect } from "react";
 import { Button } from 'primereact/button';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 
@@ -17,6 +17,8 @@ const Standing = (props) => {
 	const alias = propAlias || routeAlias;
 	const type = propType || routeType;
   
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		const apiUrl = `http://localhost:3456/competitions/${alias}/standings/`;
 
@@ -34,10 +36,10 @@ const Standing = (props) => {
 			});
 	}, []);
 
-	const emblemBodyTemplate = (team) => {
+	const emblemBodyTemplate = (rowData) => {
 		return (
 			<img
-				src={`${team.team.crest}`}
+				src={`${rowData.team.crest}`}
 				style={{ width: "150px" }}
 				alt="Missing Image"
 				className="w-6rem shadow-2 border-round"
@@ -45,12 +47,12 @@ const Standing = (props) => {
 		);
 	};
 
-	const optionsBodyTemplate = (team) => {
+	const optionsBodyTemplate = (rowData) => {
 		return (
 			<div>
 				<Button
 					label="Details"
-					onClick={() => handleClick(team)}
+					onClick={() => handleClick(rowData)}
 					icon="pi pi-check"
 				/>
 			</div>
@@ -58,14 +60,13 @@ const Standing = (props) => {
 	};
 
 	const handleClick = (rowData) => {
-		console.log("Name clicked:", rowData.team.tla);
+		navigate(`/teams/${rowData.team.id}/`);
 	};
 
 	if (standing) {
 		if (type == "short") {
 			return (
 				<div className="standing-section">
-					<h1 style={{textAlign: 'center'}}>{competitionName} Standing</h1>
 					<div className="widget-header">
 						<DataTable
 							value={standing}

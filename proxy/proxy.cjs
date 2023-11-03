@@ -136,10 +136,86 @@ app.get(`/competitions/:alias/teams`, async (_req, res) => {
 });
 
 // Get Competition top goal scorers by alias e.g: 'PL' for Premier League top goal scorers
-app.get(`/competitions/:alias/scorers`, async (_req, res) => {
+app.get(`/competitions/:alias/scorers/:limit`, async (_req, res) => {
 	const alias = _req.params.alias;
+	const limit = _req.params.limit;
 
-	const url = `${baseUrl}/competitions/${alias}/scorers`;
+	const url = `${baseUrl}/competitions/${alias}/scorers/?limit=${limit}`;
+
+	try {
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: { 'X-Auth-Token': apiKey },
+		});
+
+		if (!response.ok) {
+			throw new Error(`Error! status: ${response.status}`);
+		}
+
+		const result = await response.json();
+
+		return res.json(result);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: 'An error occurred' });
+	}
+});
+
+// Get Team detailed information by id 
+app.get(`/teams/:id/`, async (_req, res) => {
+	const id = _req.params.id;
+
+	const url = `${baseUrl}/teams/${id}/`;
+
+	try {
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: { 'X-Auth-Token': apiKey },
+		});
+
+		if (!response.ok) {
+			throw new Error(`Error! status: ${response.status}`);
+		}
+
+		const result = await response.json();
+
+		return res.json(result);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: 'An error occurred' });
+	}
+});
+
+// Get Person detailed information by id 
+app.get(`/people/:id/`, async (_req, res) => {
+	const id = _req.params.id;
+
+	const url = `${baseUrl}/persons/${id}/`;
+
+	try {
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: { 'X-Auth-Token': apiKey },
+		});
+
+		if (!response.ok) {
+			throw new Error(`Error! status: ${response.status}`);
+		}
+
+		const result = await response.json();
+
+		return res.json(result);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: 'An error occurred' });
+	}
+});
+
+// Get match by id 
+app.get(`/matches/:id/`, async (_req, res) => {
+	const id = _req.params.id;
+
+	const url = `${baseUrl}/matches/${id}/`;
 
 	try {
 		const response = await fetch(url, {

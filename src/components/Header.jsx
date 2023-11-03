@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
-const Header = (props) => {
+const Header = () => {
 	const [activeItem, setActiveItem] = useState('home');
 	const location = useLocation();
 

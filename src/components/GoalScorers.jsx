@@ -8,10 +8,11 @@ const GoalScorers = () => {
 	const [goalScorers, setGoalScorers] = useState([]);
 
 	const { alias } = useParams()
+    const { limit } = useParams()
 
 	const navigate = useNavigate()
 
-	const apiUrl = `http://localhost:3456/competitions/${alias}/scorers`;
+	const apiUrl = `http://localhost:3456/competitions/${alias}/scorers/${limit}`;
 
 	useEffect(() => {
 		fetch(apiUrl)
@@ -28,7 +29,7 @@ const GoalScorers = () => {
 	}, []);
 
 	const handlePlayerDetailsClick = (scorer) => {
-		navigate(`/players/${scorer.player.id}`);
+		navigate(`/people/${scorer.player.id}`);
 	}
 
 	const teamEmblemBodyTemplate = (scorer) => {
