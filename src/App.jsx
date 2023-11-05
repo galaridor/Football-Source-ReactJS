@@ -1,22 +1,22 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import MobileMenu from "./components/MobileMenu";
-import Header from "../src/components/Header";
-import Footer from "./components/Footer";
-import Competitions from "./components/Competitions";
-import Competition from "./components/Competition";
-import Home from "./components/Home";
-import Contacts from "./components/Contacts";
-import Livescore from './components/LiveScore';
-import Matches from "./components/Matches";
-import Error from "./components/Error";
-import Standing from "./components/Standing";
-import Teams from "./components/Teams";
-import GoalScorers from "./components/GoalScorers";
-import Team from "./components/Team";
-import Match from "./components/Match";
-import Person from "./components/Person";
+import MobileMenu from "./components/MobileMenu/MobileMenu";
+import Header from "../src/components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Competitions from "./components/Competitions/Competitions";
+import Competition from "./components/Competition/Competition";
+import Home from "./components/Home/Home";
+import Contacts from "./components/Contacts/Contacts";
+import Livescore from './components/LiveScore/LiveScore';
+import Matches from "./components/Matches/Matches";
+import Error from "./components/Error/Error";
+import Standing from "./components/Standing/Standing";
+import Teams from "./components/Teams/Teams";
+import GoalScorers from "./components/GoalScorers/GoalScorers";
+import Team from "./components/Team/Team";
+import Match from "./components/Match/Match";
+import Person from "./components/Person/Person";
 
 function App() {
 	return (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Match from "./Match";
-import Standing from "./Standing";
+import Match from "../Match/Match";
+import Standing from "../Standing/Standing";
 
 const FixtureOnFocus = () => {
 	const [matchOnFocus, setMatchOnFocus] = useState(null);
@@ -23,25 +23,25 @@ const FixtureOnFocus = () => {
 			});
 	}, []);
 
-	if(matchOnFocus){
-	return (
-		<div className="fixture-on-focus-section">
-			<div className="site-section bg-dark">
-				<div className="container">
-					<div className="row">
-						<div className="col-lg-5">
-							<Match match={matchOnFocus} title="Next Fixture on Focus" />
-						</div>
-						<div className="col-lg-7">
-							<Standing alias={matchOnFocus.competition.code} type="short" />
+	if (matchOnFocus) {
+		return (
+			<div className="fixture-on-focus-section">
+				<div className="site-section bg-dark">
+					<div className="container">
+						<div className="row">
+							<div className="col-lg-5">
+								<Match match={matchOnFocus} title="Next Fixture on Focus" />
+							</div>
+							<div className="col-lg-7">
+								<Standing alias={matchOnFocus.competition.code} type="short" />
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	)
+		)
 	}
-	else{
+	else {
 		return null;
 	}
 }

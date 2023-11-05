@@ -1,6 +1,6 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from 'primereact/button';
 import { useParams, useNavigate} from "react-router-dom";
 import "primereact/resources/themes/lara-light-indigo/theme.css";

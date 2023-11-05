@@ -1,6 +1,6 @@
 import { Card } from "primereact/card";
 import { Button } from 'primereact/button';
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import teamsBackground from "/public/images/competition_background.avif";

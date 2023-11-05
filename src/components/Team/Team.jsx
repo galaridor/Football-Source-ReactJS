@@ -1,10 +1,10 @@
-import { React, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams  } from "react-router-dom"
 import { Card } from 'primereact/card';
-import Squad from './Squad';
+import Squad from '../Squad/Squad';
 import teamBackground from "/public/images/competition_background.avif";
-import RunningCompetitions from './RunningCompetitions';
-import Coach from './Coach';
+import RunningCompetitions from '../RunningCompetitions/RunningCompetitions';
+import Coach from '../Coach/Coach';
 
 const Team = (props) => {
 	const [team, setTeam] = useState(null);

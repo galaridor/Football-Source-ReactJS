@@ -1,6 +1,6 @@
-import Copyright from "./Copyright";
-import Socials from "./Socials";
-import TopCompetitions from "./TopCompetitions";
+import Copyright from "../Copyright/Copyright";
+import Socials from "../Socials/Socials";
+import TopCompetitions from "../TopCompetitions/TopCompetitions";
 
 const Footer = () => {
     return (

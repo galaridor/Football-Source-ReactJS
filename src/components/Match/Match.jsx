@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
-import HeadToHead from "./HeadToHead";
+import HeadToHead from "../HeadToHead/HeadToHead";
 
 const Match = (props) => {
 	const [match, setMatch] = useState(null);
