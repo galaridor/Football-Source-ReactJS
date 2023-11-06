@@ -1,7 +1,9 @@
+import styles from './UpcomingEvent.module.css';
+
 const UpcomingEvent = () => {
 	return (
-		<div className="upcoming-event-section">
-			<div className="hero" style={{ backgroundImage: 'url("images/bg_3.jpg")' }}>
+        <div className={`${styles['upcoming-event-section']}`}>
+            <div className={`hero ${styles['main-background']}`}>
 				<div className="container">
 					<div className="row align-items-center">
 						<div className="col-lg-5 ml-auto">

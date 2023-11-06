@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import HeadToHead from "../HeadToHead/HeadToHead";
+import styles from "./Match.module.css";
 
 const Match = (props) => {
 	const [match, setMatch] = useState(null);
@@ -33,10 +34,10 @@ const Match = (props) => {
 	let title = props.title ?? `${match.homeTeam.name} - ${match.awayTeam.name}`;
 
 	return (
-		<div className="match-section">
+		<div className={styles['match-section']}>
 			<div className="widget-header">
 				<div className="widget-title">
-					<h3 style={{ "textAlign": "center" }}>{title}</h3>
+					<h3 className={styles['center-content']}>{title}</h3>
 				</div>
 				<div className="widget-body mb-3">
 					<div className="widget-vs">

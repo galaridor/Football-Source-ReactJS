@@ -1,6 +1,8 @@
+import styles from "./Copyright.module.css";
+
 const Copyright = () => {
 	return (
-		<div className="copyright-section">
+		<div className={`${styles['copyright-section']}`}>
 			<div className="row text-center">
 				<div className="col-md-12">
 					<div className="pt-5">

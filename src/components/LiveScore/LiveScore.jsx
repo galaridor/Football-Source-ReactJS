@@ -1,9 +1,11 @@
+import styles from './LiveScore.module.css';
+
 const LiveScore = () => {
-	return (
-		<div className="livescore-section">
-			<h1 style={{ textAlign: "center" }}>Live Score</h1>
-		</div>
-	);
+    return (
+        <div className={`${styles['livescore-section']}`}>
+            <h1 className={`${styles['center-title']}`}>Live Score</h1>
+        </div>
+    );
 };
 
 export default LiveScore;

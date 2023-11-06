@@ -1,22 +1,18 @@
-const contactStyle = {
-	textAlign: "center",
-	padding: "20px",
-	color: 'white'
-};
+import styles from './Contacts.module.css';
 
 const Contacts = () => {
 	return (
-		<div className="contacts-section">
-			<div style={contactStyle}>
-				<ul style={{ listStyleType: "none", padding: 0 }}>
-					<li style={{ fontSize: "18px", margin: "10px 0" }}>
-						Email: contact@example.com
+		<div className={`${styles['contacts-section']}`}>
+			<div className={`${styles['contact-style']}`}>
+				<ul className={`${styles['contact-list']}`}>
+					<li className={`${styles['contact-item']}`}>
+						<strong>Email:</strong> contact@example.com
 					</li>
-					<li style={{ fontSize: "18px", margin: "10px 0" }}>
-						Phone: +1 (123) 456-7890
+					<li className={`${styles['contact-item']}`}>
+						<strong>Phone:</strong> +1 (123) 456-7890
 					</li>
-					<li style={{ fontSize: "18px", margin: "10px 0" }}>
-						Address: 123 Main St, City, Country
+					<li className={`${styles['contact-item']}`}>
+						<strong>Address:</strong> 123 Main St, City, Country
 					</li>
 				</ul>
 			</div>
