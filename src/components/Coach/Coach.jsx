@@ -30,12 +30,10 @@ const Coach = ({ coach }) => {
 						title={coach.name}
 						footer={cardFooter}
 					>
-						<p>Name: {coach.name}</p>
-						<p>Date of Birth: {coach.dateOfBirth}</p>
-						<p>Nationality: {coach.nationality}</p>
-						<p>
-							Contract: from {coach.contract.start} until {coach.contract.until}
-						</p>
+						<p><strong>Name:</strong> {coach.name}</p>
+						<p><strong>Date of Birth:</strong> {coach.dateOfBirth}</p>
+						<p><strong>Nationality:</strong> {coach.nationality}</p>
+						<p><strong>Contract:</strong> from {coach.contract.start} until {coach.contract.until}</p>
 					</Card>
 				</div>
 			</div>

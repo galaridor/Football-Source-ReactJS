@@ -7,7 +7,7 @@ import * as competitionService from '../../services/competitionService';
 
 const Competition = () => {
 	const [competition, setCompetition] = useState(null);
-
+	
 	const navigate = useNavigate();
 
 	const { alias } = useParams();
@@ -79,9 +79,9 @@ const Competition = () => {
 						header={cardHeader}
 						className={styles['card']}
 					>
-						<p>Current Season Start Date: {competition.currentSeason.startDate}</p>
-						<p>Current Season End Date: {competition.currentSeason.endDate}</p>
-						<p>Current Matchday: {competition.currentSeason.currentMatchday}</p>
+						<p><strong>Current Season Start Date:</strong> {competition.currentSeason.startDate}</p>
+						<p><strong>Current Season End Date:</strong> {competition.currentSeason.endDate}</p>
+						<p><strong>Current Matchday:</strong> {competition.currentSeason.currentMatchday}</p>
 					</Card>
 				</div>
 			</div>

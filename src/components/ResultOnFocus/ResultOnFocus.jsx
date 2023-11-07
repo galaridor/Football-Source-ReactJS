@@ -1,6 +1,8 @@
+import styles from './ResultOnFocus.module.css';
+
 const ResultOnFocus = () => {
 	return (
-		<div className="result-on-focus-section">
+		<div className={styles['result-on-focus-section']}>
 			<div className="container">
 				<div className="row">
 					<div className="col-lg-12">

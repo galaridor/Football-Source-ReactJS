@@ -2,9 +2,8 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { useState, useEffect } from "react";
 import { Button } from 'primereact/button';
-import { useParams, useNavigate} from "react-router-dom";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "primereact/resources/primereact.min.css";
+import { useParams, useNavigate } from "react-router-dom";
+import styles from './Standing.module.css';
 import * as competitionService from '../../services/competitionService';
 
 const Standing = (props) => {
@@ -13,11 +12,11 @@ const Standing = (props) => {
 
 	const { alias: propAlias, type: propType } = props;
 	const { alias: routeAlias, type: routeType } = useParams();
-  
+
 	// Use the parameters from props if available, otherwise, use the route parameters
 	const alias = propAlias || routeAlias;
 	const type = propType || routeType;
-  
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -33,16 +32,15 @@ const Standing = (props) => {
 		return (
 			<img
 				src={`${rowData.team.crest}`}
-				style={{ width: "150px" }}
+				className={styles['emblem']}
 				alt="Missing Image"
-				className="w-6rem shadow-2 border-round"
 			/>
 		);
 	};
 
 	const optionsBodyTemplate = (rowData) => {
 		return (
-			<div>
+			<div className={styles['details-btn']}>
 				<Button
 					label="Details"
 					onClick={() => handleClick(rowData)}
@@ -57,10 +55,10 @@ const Standing = (props) => {
 	};
 
 	if (standing) {
-		if (type == "short") {
+		if (type === "short") {
 			return (
-				<div className="standing-section">
-					<div className="widget-header">
+				<div className={styles['standing-section']}>
+					<div className={styles['widget-header']}>
 						<DataTable
 							value={standing}
 							sortMode="multiple"
@@ -82,9 +80,9 @@ const Standing = (props) => {
 			);
 		} else {
 			return (
-				<div className="standing-section">
-					<h1 style={{textAlign: 'center'}}>{competitionName} Standing</h1>
-					<div className="widget-header">
+				<div className={styles['standing-section']}>
+					<h1 className={styles['standing-title']}>{competitionName} Standing</h1>
+					<div className={styles['widget-header']}>
 						<DataTable
 							value={standing}
 							sortMode="multiple"
@@ -103,19 +101,10 @@ const Standing = (props) => {
 							<Column field="lost" header="Lost" sortable />
 							<Column field="points" header="Points" sortable />
 							<Column field="goalsFor" header="Goals Scored" sortable />
-							<Column field="goalsAgainst" header="Goals Conceeded" sortable />
-							<Column
-								field="goalDifference"
-								header="Goal Difference"
-								sortable
-							/>
+							<Column field="goalsAgainst" header="Goals Conceded" sortable />
+							<Column field="goalDifference" header="Goal Difference" sortable />
 							<Column field="points" header="Points" sortable />
-							<Column
-								style={{ width: "150px" }}
-								header="Options"
-								sortable
-								body={optionsBodyTemplate}
-							/>
+							<Column header="Options" sortable body={optionsBodyTemplate} />
 						</DataTable>
 					</div>
 				</div>

@@ -1,22 +1,20 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import styles from './Header.module.css';
 
 const Header = () => {
 	const [activeItem, setActiveItem] = useState('home');
 	const location = useLocation();
 
-	// useEffect to update the activeItem based on the URL path
 	useEffect(() => {
 		const pathName = location.pathname;
 
-		// Define a mapping of keywords and their corresponding menu items
 		const keywordMapping = {
 			'/competitions': 'competitions',
 			'/livescore': 'livescore',
 			'/contacts': 'contacts',
 		};
 
-		// Check if the path contains a keyword and set the corresponding menu item as active
 		for (const keyword in keywordMapping) {
 			if (pathName.includes(keyword)) {
 				setActiveItem(keywordMapping[keyword]);
@@ -24,20 +22,19 @@ const Header = () => {
 			}
 		}
 
-		// If no keyword is found, set the default menu item as active
 		setActiveItem('home');
 	}, [location]);
 
 	const toggleClass = (itemName) => {
 		if (activeItem === itemName) {
-			setActiveItem('home'); // Reset to the default when clicked again
+			setActiveItem('home'); 
 		} else {
 			setActiveItem(itemName);
 		}
 	};
 
 	return (
-		<header className="site-navbar py-4 header-section" role="banner">
+		<header className={`site-navbar py-4 ${styles['header-section']}`} role="banner">
 			<div className="container">
 				<div className="d-flex align-items-center">
 					<div className="site-logo">

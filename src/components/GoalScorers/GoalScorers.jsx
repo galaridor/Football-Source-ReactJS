@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams  } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from 'primereact/button';
 import * as competitionService from '../../services/competitionService';
+import styles from './GoalScorers.module.css';
 
 const GoalScorers = () => {
 	const [goalScorers, setGoalScorers] = useState([]);
 
-	const { alias } = useParams()
-    const { limit } = useParams()
+	const { alias, limit } = useParams();
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		competitionService.getCompetitionTopScorersByAlias(alias, limit)
@@ -24,12 +24,12 @@ const GoalScorers = () => {
 	}
 
 	const teamEmblemBodyTemplate = (scorer) => {
-		return <img src={`${scorer.team.crest}`} style={{ width: "100px" }} alt="Missing Image" className="w-6rem shadow-2 border-round" />;
+		return <img src={`${scorer.team.crest}`} className={styles['team-emblem']} alt="Missing Image" />;
 	};
 
 	const optionsBodyTemplate = (scorer) => {
 		return (
-			<div className='details-btn'>
+			<div className={styles['details-btn']}>
 				<Button
 					label="Details"
 					onClick={() => handlePlayerDetailsClick(scorer)}
@@ -40,9 +40,9 @@ const GoalScorers = () => {
 	};
 
 	return (
-		<div className="matches-section">
-			<h2 style={{ textAlign: "center"}}>All Goal Scorers</h2>
-			<div className="widget-header">
+		<div className={styles['goal-scorers-section']}>
+			<h2 className={styles['goal-scorers-title']}>All Goal Scorers</h2>
+			<div className={styles['widget-header']}>
 				<DataTable
 					value={goalScorers}
 					sortMode="multiple"
@@ -51,28 +51,18 @@ const GoalScorers = () => {
 					rowsPerPageOptions={[5, 10, 15, 20, 50]}
 					totalRecords={goalScorers.length}
 				>
-					<Column field="player.id" header="ID" sortable style={{ width: "150px" }} />
-					<Column
-						field="player.name"
-						header="Player"
-						style={{ width: "150px" }}
-						sortable
-					/>
-					<Column header="Date of Birth" field='player.dateOfBirth' style={{ width: "150px" }} sortable/>
-					<Column field="player.nationality" header="Nationality" style={{ width: "150px" }} sortable/>
-					<Column header="Position" field='player.section' style={{ width: "150px" }} sortable/>
-					<Column
-						field="team.name"
-						header="Team"
-						sortable
-						style={{ width: "150px" }}
-					/>
-					<Column header="Emblem" body={teamEmblemBodyTemplate} style={{ width: "150px" }} />
-					<Column style={{ width: "150px" }} field="playedMatches" header="Played Matches" sortable/>
-					<Column style={{ width: "150px" }} field="goals" header="Goals" sortable />
-					<Column style={{ width: "150px" }} field="assists" header="Asists" sortable />
-					<Column style={{ width: "150px" }} field="penalties" header="Penalties" sortable />
-					<Column style={{ width: "150px" }} header="Options" body={optionsBodyTemplate} />
+					<Column field="player.id" header="ID" sortable />
+					<Column field="player.name" header="Player" sortable />
+					<Column header="Date of Birth" field='player.dateOfBirth' sortable />
+					<Column field="player.nationality" header="Nationality" sortable />
+					<Column header="Position" field='player.section' sortable />
+					<Column field="team.name" header="Team" sortable />
+					<Column header="Emblem" body={teamEmblemBodyTemplate} />
+					<Column field="playedMatches" header="Played Matches" sortable />
+					<Column field="goals" header="Goals" sortable />
+					<Column field="assists" header="Assists" sortable />
+					<Column field="penalties" header="Penalties" sortable />
+					<Column header="Options" body={optionsBodyTemplate} />
 				</DataTable>
 			</div>
 		</div>

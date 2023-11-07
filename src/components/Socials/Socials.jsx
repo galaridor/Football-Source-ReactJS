@@ -1,3 +1,5 @@
+import styles from './Socials.module.css';
+
 const Socials = () => {
 	const socials = [
 		{
@@ -19,7 +21,7 @@ const Socials = () => {
 	];
 
 	return (
-		<div className="socials-section">
+		<div className={styles['socials-section']}>
 			<h3>Socials</h3>
 			<ul className="list-unstyled links">
 				{socials.map((social) => (

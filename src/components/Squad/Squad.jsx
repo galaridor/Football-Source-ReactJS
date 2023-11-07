@@ -4,6 +4,7 @@ import { Button } from 'primereact/button';
 import { useNavigate} from "react-router-dom";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
+import styles from './Squad.module.css';
 
 const Squad = ({squad}) => {
 	const navigate = useNavigate();
@@ -26,9 +27,9 @@ const Squad = ({squad}) => {
 
 	if (squad.length > 0) {
 			return (
-				<div className="squad-section">
-					<h1 style={{textAlign: 'center', color: 'red'}}>Squad</h1>
-					<div className="widget-header">
+				<div className={styles['squad-section']}>
+					<h1 className={styles['squad-title']}>Squad</h1>
+					<div className={styles['widget-header']}>
 						<DataTable
 							value={squad}
 							sortMode="multiple"
@@ -42,12 +43,7 @@ const Squad = ({squad}) => {
 							<Column field="position" header="Position" sortable />
 							<Column field="dateOfBirth" header="Date of Birth" sortable />
 							<Column field="nationality" header="Nationality" sortable />
-                            <Column
-								style={{ width: "150px" }}
-								header="Options"
-								sortable
-								body={optionsBodyTemplate}
-							/>
+                            <Column header="Options" sortable body={optionsBodyTemplate} />
 						</DataTable>
 					</div>
 				</div>

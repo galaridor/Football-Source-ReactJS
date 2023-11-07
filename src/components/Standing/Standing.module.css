@@ -1,0 +1,20 @@
+.standing-section {
+	text-align: center;
+	background-image: url('/public/images/competition_background.avif');
+}
+
+.widget-header {
+	padding: 2%;
+}
+
+.emblem {
+	width: 150px;
+}
+
+.details-btn {
+	text-align: center;
+}
+
+.standing-title {
+	color: red;
+}

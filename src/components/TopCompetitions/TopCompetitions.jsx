@@ -1,3 +1,5 @@
+import styles from './TopCompetitions.module.css';
+
 const TopCompetitions = () => {
 	const topCompetitions = [
 		{},
@@ -9,7 +11,7 @@ const TopCompetitions = () => {
 	]
 
 	return (
-		<div className="top-competitions-section">
+		<div className={styles['top-competitions-section']}>
 			<h3>Top Competitions</h3>
 			<ul className="list-unstyled links">
 				<li>

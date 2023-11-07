@@ -3,8 +3,8 @@ import { Button } from 'primereact/button';
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import teamsBackground from "/public/images/competition_background.avif";
 import * as competitionService from '../../services/competitionService';
+import styles from './Teams.module.css';
 
 const Teams = () => {
 	const [teams, setTeams] = useState([]);
@@ -12,25 +12,25 @@ const Teams = () => {
 
 	const { alias } = useParams();
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		competitionService.getCompetitionTeamsByAlias(alias)
-		.then((result) => {
-			setTeams(result.teams);
-			setCompetitionName(result.competition.name);
-		})
+			.then((result) => {
+				setTeams(result.teams);
+				setCompetitionName(result.competition.name);
+			})
 			.catch();
 	}, []);
 
 	const cardHeader = (team) => (
-		<img src={`${team?.crest}`} style={{ width: "150px", margin: '25px' }} alt="Missing Image" className="w-6rem shadow-2 border-round" />
+		<img src={`${team?.crest}`} alt="Missing Image" className={`${styles['card-image']}`} />
 	);
 
 	const cardSubtitle = (team) => (
-		<div style={{ textAlign: 'center' }}>
+		<div className={`${styles['card-subtitle']}`}>
 			<p>{team?.area?.name}</p>
-			<img src={`${team?.area?.flag}`} style={{ width: "50px" }} alt="Missing Image" className="w-6rem shadow-2 border-round" />
+			<img src={`${team?.area?.flag}`} alt="Missing Image" className={`${styles['card-image']}`} />
 		</div>
 	);
 
@@ -50,12 +50,12 @@ const Teams = () => {
 
 	if (teams) {
 		return (
-			<div style={{ textAlign: 'center', backgroundImage: `url(${teamsBackground})`}} className="teams-section">
-				<h1 style={{color: 'red'}}>All {competitionName} Teams</h1>
-				<div style={{whiteSpace: 'normal'}} className="teams-container">
+			<div className={`${styles['teams-section']}`}>
+				<h1 className={`${styles['teams-title']}`}>All {competitionName} Teams</h1>
+				<div className={`${styles['teams-container']}`}>
 					{teams.map((team) => (
-						<div style={{ width: '500px', display: 'inline-grid', margin: '15px', height: 'auto', backgroundColor: 'lightgrey'}} className="card flex justify-content-center" key={team.id}>
-							<Card style={{margin: '50px'}} subTitle={cardSubtitle(team)} footer={cardFooter(team)} header={cardHeader(team)} title={team.name} className="md:w-25rem">
+						<div className={`${styles['card-container']}`} key={team.id}>
+							<Card className={`${styles['card']}`} subTitle={cardSubtitle(team)} footer={cardFooter(team)} header={cardHeader(team)} title={team.name}>
 								<p>Founded: {team.founded}</p>
 								<p>Address: {team.address}</p>
 								<p>Club Colors: {team.clubColors}</p>

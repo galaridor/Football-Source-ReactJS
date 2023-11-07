@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import * as competitionService from '../../services/competitionService';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
+import styles from './Competitions.module.css'; 
 
 const Competitions = () => {
 	const [competitions, setCompetitions] = useState([]);
@@ -19,7 +20,7 @@ const Competitions = () => {
 	}, []);
 
 	const competitionEmblemBodyTemplate = (competition) => {
-		return <img src={`${competition.emblem}`} style={{ width: "150px" }} alt="Missing Image" className="w-6rem shadow-2 border-round" />;
+		return <img src={`${competition.emblem}`} className={styles['competition-emblem']} alt="Missing Image" />;
 	};
 
 	const handleCompetitionDetailsClick = (competition) => {
@@ -28,7 +29,7 @@ const Competitions = () => {
 
 	const optionsBodyTemplate = (competition) => {
 		return (
-			<div className='details-btn'>
+			<div className={styles['details-btn']}>
 				<Button
 					label="Details"
 					onClick={() => handleCompetitionDetailsClick(competition)}
@@ -37,11 +38,11 @@ const Competitions = () => {
 			</div>
 		)
 	};
-	debugger;
+
 	return (
-		<div className="competitions-section">
-			<h2 style={{ textAlign: "center" }}>All Competitions</h2>
-			<div className="widget-header">
+		<div className={styles['competitions-section']}>
+			<h2 className={styles['competitions-title']}>All Competitions</h2>
+			<div className={styles['widget-header']}>
 				<DataTable
 					value={competitions}
 					sortMode="multiple"
@@ -50,25 +51,15 @@ const Competitions = () => {
 					rowsPerPageOptions={[5, 10, 15, 20, 50]}
 					totalRecords={competitions.length}
 				>
-					<Column field="id" header="ID" sortable style={{ width: "150px" }} />
-					<Column
-						field="name"
-						header="Competition Name"
-						style={{ width: "150px" }}
-						sortable
-					/>
-					<Column header="Emblem" body={competitionEmblemBodyTemplate} style={{ width: "150px" }} />
-					<Column field="code" header="Code" sortable style={{ width: "150px" }} />
-					<Column field="area.name" header="Area" sortable style={{ width: "150px" }} />
-					<Column
-						field="currentSeason.currentMatchday"
-						header="Current Matchday"
-						sortable
-						style={{ width: "150px" }}
-					/>
-					<Column style={{ width: "150px" }} field="currentSeason.startDate" header="Start Date" sortable />
-					<Column style={{ width: "150px" }} field="currentSeason.endDate" header="End Date" sortable />
-					<Column style={{ width: "150px" }} header="Options" sortable body={optionsBodyTemplate} />
+					<Column field="id" header="ID" sortable />
+					<Column field="name" header="Competition Name" sortable />
+					<Column header="Emblem" body={competitionEmblemBodyTemplate} />
+					<Column field="code" header="Code" sortable />
+					<Column field="area.name" header="Area" sortable />
+					<Column field="currentSeason.currentMatchday" header="Current Matchday" sortable />
+					<Column field="currentSeason.startDate" header="Start Date" sortable />
+					<Column field="currentSeason.endDate" header="End Date" sortable />
+					<Column header="Options" sortable body={optionsBodyTemplate} />
 				</DataTable>
 			</div>
 		</div>
