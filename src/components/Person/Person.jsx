@@ -3,6 +3,7 @@ import { useNavigate, useParams  } from "react-router-dom"
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import personBackground from "/public/images/competition_background.avif";
+import * as personService from '../../services/personService';
 
 const Person = () => {
 	const [person, setPerson] = useState(null);
@@ -12,19 +13,9 @@ const Person = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const apiUrl = `http://localhost:3456/people/${id}/`;
-
-		fetch(apiUrl)
-			.then(response => {
-				return response.json();
-			})
-			.then(data => {
-				setPerson(data);
-				console.log(data);
-			})
-			.catch(error => {
-				console.log(error);
-			});
+		personService.getPersonById(id)
+			.then(result => setPerson(result))
+			.catch();
 	}, []);
 
 	const personCardHeader = (

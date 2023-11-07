@@ -5,6 +5,7 @@ import Squad from '../Squad/Squad';
 import teamBackground from "/public/images/competition_background.avif";
 import RunningCompetitions from '../RunningCompetitions/RunningCompetitions';
 import Coach from '../Coach/Coach';
+import * as teamService from '../../services/teamService';
 
 const Team = (props) => {
 	const [team, setTeam] = useState(null);
@@ -12,19 +13,9 @@ const Team = (props) => {
 	const { id } = useParams()
 
 	useEffect(() => {
-		const apiUrl = `http://localhost:3456/teams/${id}/`;
-
-		fetch(apiUrl)
-			.then(response => {
-				return response.json();
-			})
-			.then(data => {
-				setTeam(data);
-				console.log(data);
-			})
-			.catch(error => {
-				console.log(error);
-			});
+		teamService.getTeamById(id)
+			.then(result => setTeam(result))
+			.catch();
 	}, []);
 
 	const cardHeader = (

@@ -5,6 +5,7 @@ import { Button } from 'primereact/button';
 import { useParams, useNavigate} from "react-router-dom";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
+import * as competitionService from '../../services/competitionService';
 
 const Standing = (props) => {
 	const [standing, setStanding] = useState(null);
@@ -20,20 +21,12 @@ const Standing = (props) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const apiUrl = `http://localhost:3456/competitions/${alias}/standings/`;
-
-		fetch(apiUrl)
-			.then((response) => {
-				return response.json();
+		competitionService.getCompetitionStandingsByAlias(alias)
+			.then((result) => {
+				setStanding(result.standings[0].table);
+				setCompetitionName(result.competition.name);
 			})
-			.then((data) => {
-				setStanding(data.standings[0].table);
-				setCompetitionName(data.competition.name);
-				console.log(data.standings[0].table);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+			.catch();
 	}, []);
 
 	const emblemBodyTemplate = (rowData) => {

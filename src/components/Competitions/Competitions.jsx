@@ -3,10 +3,9 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from 'primereact/button';
 import { useNavigate } from "react-router-dom";
+import * as competitionService from '../../services/competitionService';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
-
-const apiUrl = 'http://localhost:3456/competitions/';
 
 const Competitions = () => {
 	const [competitions, setCompetitions] = useState([]);
@@ -14,17 +13,9 @@ const Competitions = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetch(apiUrl)
-			.then(response => {
-				return response.json();
-			})
-			.then(data => {
-				setCompetitions(data.competitions);
-				console.log(data.competitions);
-			})
-			.catch(error => {
-				console.log(error);
-			});
+		competitionService.getAllCompetitions()
+			.then(result => setCompetitions(result.competitions))
+			.catch();
 	}, []);
 
 	const competitionEmblemBodyTemplate = (competition) => {
@@ -46,7 +37,7 @@ const Competitions = () => {
 			</div>
 		)
 	};
-
+	debugger;
 	return (
 		<div className="competitions-section">
 			<h2 style={{ textAlign: "center" }}>All Competitions</h2>

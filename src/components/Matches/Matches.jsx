@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from 'primereact/button';
+import * as competitionService from '../../services/competitionService';
 
 const Matches = () => {
 	const [matches, setMatches] = useState([]);
@@ -11,20 +12,10 @@ const Matches = () => {
 
 	const navigate = useNavigate()
 
-	const apiUrl = `http://localhost:3456/competitions/${alias}/matches`;
-
 	useEffect(() => {
-		fetch(apiUrl)
-			.then(response => {
-				return response.json();
-			})
-			.then(data => {
-				setMatches(data.matches);
-				console.log(data.matches);
-			})
-			.catch(error => {
-				console.log(error);
-			});
+		competitionService.getCompetitionMatchesByAlias(alias)
+			.then(result => setMatches(result.matches))
+			.catch();
 	}, []);
 
 	const matchHomeEmblemBodyTemplate = (match) => {

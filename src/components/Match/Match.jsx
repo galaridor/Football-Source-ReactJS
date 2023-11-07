@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import HeadToHead from "../HeadToHead/HeadToHead";
 import styles from "./Match.module.css";
+import * as matchService from '../../services/matchService';
 
 const Match = (props) => {
 	const [match, setMatch] = useState(null);
@@ -10,23 +11,13 @@ const Match = (props) => {
 
 	useEffect(() => {
 		if (props.match === undefined) { 
-			const apiUrl = `http://localhost:3456/matches/${id}/`;
-
-			fetch(apiUrl)
-				.then(response => {
-					return response.json();
-				})
-				.then(data => {
-					setMatch(data);
-					console.log(data);
-				})
-				.catch(error => {
-					console.log(error);
-				});
-			}
-			else {
-				setMatch(props.match);
-			}
+			matchService.getMatchById(id)
+				.then(result => setMatch(result))
+				.catch();
+		}
+		else {
+			setMatch(props.match);
+		}
 	}, []);
 
 	if (match) {

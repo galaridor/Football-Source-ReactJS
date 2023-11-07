@@ -3,6 +3,7 @@ import { useNavigate, useParams  } from "react-router-dom"
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from 'primereact/button';
+import * as competitionService from '../../services/competitionService';
 
 const GoalScorers = () => {
 	const [goalScorers, setGoalScorers] = useState([]);
@@ -12,20 +13,10 @@ const GoalScorers = () => {
 
 	const navigate = useNavigate()
 
-	const apiUrl = `http://localhost:3456/competitions/${alias}/scorers/${limit}`;
-
 	useEffect(() => {
-		fetch(apiUrl)
-			.then(response => {
-				return response.json();
-			})
-			.then(data => {
-				setGoalScorers(data.scorers);
-				console.log(data.scorers);
-			})
-			.catch(error => {
-				console.log(error);
-			});
+		competitionService.getCompetitionTopScorersByAlias(alias, limit)
+			.then(result => setGoalScorers(result.scorers))
+			.catch();
 	}, []);
 
 	const handlePlayerDetailsClick = (scorer) => {

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import teamsBackground from "/public/images/competition_background.avif";
+import * as competitionService from '../../services/competitionService';
 
 const Teams = () => {
 	const [teams, setTeams] = useState([]);
@@ -14,20 +15,12 @@ const Teams = () => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		const apiUrl = `http://localhost:3456/competitions/${alias}/teams/`;
-
-		fetch(apiUrl)
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
-				setTeams(data.teams);
-				setCompetitionName(data.competition.name);
-				console.log(data.teams);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		competitionService.getCompetitionTeamsByAlias(alias)
+		.then((result) => {
+			setTeams(result.teams);
+			setCompetitionName(result.competition.name);
+		})
+			.catch();
 	}, []);
 
 	const cardHeader = (team) => (

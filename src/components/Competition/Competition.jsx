@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Card } from 'primereact/card';
 import { SplitButton } from 'primereact/splitbutton';
 import styles from './Competition.module.css';
+import * as competitionService from '../../services/competitionService';
 
 const Competition = () => {
 	const [competition, setCompetition] = useState(null);
@@ -12,19 +13,9 @@ const Competition = () => {
 	const { alias } = useParams();
 
 	useEffect(() => {
-		const apiUrl = `http://localhost:3456/competitions/${alias}/`;
-
-		fetch(apiUrl)
-			.then(response => {
-				return response.json();
-			})
-			.then(data => {
-				setCompetition(data);
-				console.log(data);
-			})
-			.catch(error => {
-				console.log(error);
-			});
+		competitionService.getCompetitionByAlias(alias)
+			.then(result => setCompetition(result))
+			.catch();
 	}, []);
 
 	const cardHeader = (
