@@ -236,6 +236,32 @@ app.get(`/matches/:id/`, async (_req, res) => {
 	}
 });
 
+// Get match head to head by id 
+app.get(`/matches/:id/headtohead`, async (_req, res) => {
+	const id = _req.params.id;
+
+	const url = `${baseUrl}/matches/${id}/head2head`;
+
+	try {
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: { 'X-Auth-Token': apiKey },
+		});
+
+		if (!response.ok) {
+			throw new Error(`Error! status: ${response.status}`);
+		}
+
+		const result = await response.json();
+
+		return res.json(result);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: 'An error occurred' });
+	}
+});
+
+
 const port = 3456;
 
 app.listen(port, () =>

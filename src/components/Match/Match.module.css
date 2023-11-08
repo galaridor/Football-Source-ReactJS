@@ -1,3 +1,16 @@
 .center-content {
 	text-align: center;
 }
+
+.home-team-result {
+	margin-right: 10px;
+}
+
+.away-team-result {
+	margin-left: 10px;
+}
+
+.home-team-image, .away-team-image {
+	height: 100px;
+	width: 100px;
+}

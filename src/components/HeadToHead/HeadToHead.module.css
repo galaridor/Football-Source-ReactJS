@@ -1,0 +1,13 @@
+.head-to-head-section {
+    text-align: center;
+	background-image: url('/public/images/competition_background.avif');
+}
+
+.head-to-head-title{
+    text-align: center;
+    color:red;
+}
+
+.widget-header {
+	padding: 2%;
+}

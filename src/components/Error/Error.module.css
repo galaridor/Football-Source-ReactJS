@@ -1,0 +1,6 @@
+.error-section {
+    height: 800px;
+    background-image: url('/public/images/notfound.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}

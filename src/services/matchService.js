@@ -17,3 +17,21 @@ export const getMatchById = async (id) => {
         return [];
     }
 };
+
+export const getMatchHeadToHeadById = async (id) => {
+
+    try {
+        const response = await fetch(`${baseUrl}/${id}/headtohead`);
+
+        const result = await response.json();
+
+        console.log(result);
+
+        return result;
+    } 
+    catch (error) {
+        console.log(error);
+
+        return [];
+    }
+};

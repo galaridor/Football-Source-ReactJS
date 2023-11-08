@@ -5,7 +5,7 @@ import styles from './Footer.module.css';
 
 const Footer = () => {
     return (
-        <footer className={styles['copyright-section']}>
+        <footer className='footer-section'>
             <div className="container">
                 <div className={`row ${styles['center-content']}`}>
                     <div className="col-lg-3">
