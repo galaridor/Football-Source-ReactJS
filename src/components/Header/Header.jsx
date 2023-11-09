@@ -13,6 +13,8 @@ const Header = () => {
 			'/competitions': 'competitions',
 			'/livescore': 'livescore',
 			'/contacts': 'contacts',
+			'/people': 'competitions',
+			'/teams': 'competitions'
 		};
 
 		for (const keyword in keywordMapping) {

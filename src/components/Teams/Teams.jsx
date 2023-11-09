@@ -17,10 +17,16 @@ const Teams = () => {
 	useEffect(() => {
 		competitionService.getCompetitionTeamsByAlias(alias)
 			.then((result) => {
-				setTeams(result.teams);
-				setCompetitionName(result.competition.name);
-			})
-			.catch();
+				if (result.error)
+				  throw new Error(result.error);
+			
+				  setTeams(result.teams);
+				  setCompetitionName(result.competition.name);
+				})
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+				});
 	}, []);
 
 	const cardHeader = (team) => (

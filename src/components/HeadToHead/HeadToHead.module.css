@@ -3,11 +3,27 @@
 	background-image: url('/public/images/competition_background.avif');
 }
 
-.head-to-head-title{
+.head-to-head-title, .aggregates-title, .matches-title{
     text-align: center;
     color:red;
 }
 
 .widget-header {
 	padding: 2%;
+}
+
+.card {
+	margin: 50px;
+}
+
+.card-container {
+    width: 500px;
+	display: inline-grid;
+	margin: 15px;
+	height: auto;
+	background-color: lightgrey;
+}
+
+.home-team-emblem, .away-team-emblem {
+	width: 150px;
 }

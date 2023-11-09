@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Match from "../Match/Match";
 import Standing from "../Standing/Standing";
 import * as matchService from '../../services/matchService';
@@ -7,12 +8,22 @@ import styles from "./FixtureOnFocus.module.css";
 const FixtureOnFocus = () => {
 	const [matchOnFocus, setMatchOnFocus] = useState(null);
 
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		const id = 442012;
 
 		matchService.getMatchById(id)
-			.then(result => setMatchOnFocus(result))
-			.catch();
+			.then((result) => {
+				if (result.error)
+					throw new Error(result.error);
+		
+					setMatchOnFocus(result);
+			  })
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+			  });
 	}, []);
 
 	if (matchOnFocus) {

@@ -15,9 +15,18 @@ const Person = () => {
 	useEffect(() => {
 		personService.getPersonById(id)
 			.then(result => setPerson(result))
-			.catch();
+			.then((result) => {
+				if (result.error)
+				  throw new Error(result.error);
+			
+				  setPerson(result);
+				})
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+				});
 	}, []);
-
+	
 	const personCardHeader = (
 		<img src={`${person?.crest}`} className={styles['card-image']} alt="Missing Image" />
 	);

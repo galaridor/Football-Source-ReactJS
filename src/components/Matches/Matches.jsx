@@ -15,8 +15,16 @@ const Matches = () => {
 
 	useEffect(() => {
 		competitionService.getCompetitionMatchesByAlias(alias)
-			.then(result => setMatches(result.matches))
-			.catch();
+			.then((result) => {
+				if (result.error)
+				  throw new Error(result.error);
+			
+				  setMatches(result.matches);
+				})
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+				});
 	}, []);
 
 	const matchHomeEmblemBodyTemplate = (match) => {
@@ -51,7 +59,7 @@ const Matches = () => {
 	};
 
 	const scoreData = (match) => {
-		if (match.score && match.status !== 'TIMED') {
+		if (match.score && match.status !== 'TIMED' && match.status !== "SCHEDULED") {
 			return `${match.score?.fullTime?.home} : ${match.score?.fullTime?.away} / ${match.score?.halfTime?.away} : ${match.score?.halfTime?.away}`
 		}
 		return '';
@@ -70,15 +78,15 @@ const Matches = () => {
 					totalRecords={matches.length}
 				>
 					<Column field="id" header="ID" sortable />
-					<Column field="homeTeam.name" header="Home Team" sortable />
-					<Column header="Emblem" body={matchHomeEmblemBodyTemplate} />
+					<Column field="homeTeam.name" header="Home Team Name" sortable />
+					<Column header="Home Team Emblem" body={matchHomeEmblemBodyTemplate} />
 					<Column field="score" header="Result" body={scoreData} />
-					<Column header="Emblem" body={matchAwayEmblemBodyTemplate} />
-					<Column field="awayTeam.name" header="Away Team" sortable />
+					<Column header="Away Team Emblem" body={matchAwayEmblemBodyTemplate} />
+					<Column field="awayTeam.name" header="Away Team Name" sortable />
 					<Column field="referees" header="Referee" body={refereData} />
 					<Column field="status" header="Status" sortable />
 					<Column field="utcDate" header="Date" sortable />
-					<Column header="Options" sortable body={optionsBodyTemplate} />
+					<Column header="Options" body={optionsBodyTemplate} />
 				</DataTable>
 			</div>
 		</div>

@@ -10,13 +10,14 @@ import Home from "./components/Home/Home";
 import Contacts from "./components/Contacts/Contacts";
 import Livescore from './components/LiveScore/LiveScore';
 import Matches from "./components/Matches/Matches";
-import Error from "./components/Error/Error";
+import NotFound from "./components/Error/NotFound";
 import Standing from "./components/Standing/Standing";
 import Teams from "./components/Teams/Teams";
 import GoalScorers from "./components/GoalScorers/GoalScorers";
 import Team from "./components/Team/Team";
 import Match from "./components/Match/Match";
 import Person from "./components/Person/Person";
+import SomethingWentWrong from "./components/Error/SomethingWentWrong";
 
 function App() {
 	return (
@@ -24,9 +25,10 @@ function App() {
 			<MobileMenu />
 			<Header />
 			<Routes>
-				<Route path="*" element={<Error />} />
+				<Route path="*" element={<NotFound />} />
 				<Route path="/home" element={<Home />} />
 				<Route path="/" element={<Home />} />
+				<Route path="/error" element={<SomethingWentWrong />} />
 				<Route path="/competitions" element={<Competitions />} />
 				<Route path="/competitions/:alias" element={<Competition />} />
 				<Route path="/competitions/:alias/standing/:type" element={<Standing />} />

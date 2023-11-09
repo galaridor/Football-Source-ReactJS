@@ -211,6 +211,30 @@ app.get(`/people/:id/`, async (_req, res) => {
 	}
 });
 
+// Get all matches
+app.get(`/matches/`, async (_req, res) => {
+	
+	const url = `${baseUrl}/matches/`;
+
+	try {
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: { 'X-Auth-Token': apiKey },
+		});
+
+		if (!response.ok) {
+			throw new Error(`Error! status: ${response.status}`);
+		}
+
+		const result = await response.json();
+
+		return res.json(result);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: 'An error occurred' });
+	}
+});
+
 // Get match by id 
 app.get(`/matches/:id/`, async (_req, res) => {
 	const id = _req.params.id;

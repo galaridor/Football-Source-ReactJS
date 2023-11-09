@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Card } from 'primereact/card';
 import Squad from '../Squad/Squad';
 import RunningCompetitions from '../RunningCompetitions/RunningCompetitions';
@@ -12,10 +12,20 @@ const Team = () => {
 
 	const { id } = useParams();
 
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		teamService.getTeamById(id)
-			.then(result => setTeam(result))
-			.catch();
+			.then((result) => {
+				if (result.error)
+				  throw new Error(result.error);
+			
+				  setTeam(result);
+				})
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+				});
 	}, []);
 
 	const cardHeader = (

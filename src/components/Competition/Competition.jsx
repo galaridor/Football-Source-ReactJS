@@ -14,8 +14,16 @@ const Competition = () => {
 
 	useEffect(() => {
 		competitionService.getCompetitionByAlias(alias)
-			.then(result => setCompetition(result))
-			.catch();
+			.then((result) => {
+				if (result.error)
+					throw new Error(result.error);
+		
+					setCompetition(result);
+			  })
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+			  });
 	}, []);
 
 	const cardHeader = (

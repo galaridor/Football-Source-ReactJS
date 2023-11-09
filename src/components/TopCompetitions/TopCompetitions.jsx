@@ -1,40 +1,48 @@
-import styles from './TopCompetitions.module.css';
+import styles from "./TopCompetitions.module.css";
+import { Link } from "react-router-dom";
 
 const TopCompetitions = () => {
-	const topCompetitions = [
-		{},
-		{},
-		{},
-		{},
-		{},
-		{}
-	]
+  const topCompetitions = [
+    {
+      name: "Premier League",
+      alias: "PL",
+    },
+    {
+      name: "Bundesliga",
+      alias: "BL1",
+    },
+    {
+      name: "La Liga",
+      alias: "PD",
+    },
+    {
+      name: "Ligue 1",
+      alias: "FL1",
+    },
+    {
+      name: "Seria A",
+      alias: "SA",
+    },
+    {
+      name: "Champions League",
+      alias: "CL",
+    },
+  ];
 
-	return (
-		<div className={styles['top-competitions-section']}>
-			<h3>Top Competitions</h3>
-			<ul className="list-unstyled links">
-				<li>
-					<a href="#">Premier League</a>
-				</li>
-				<li>
-					<a href="#">Bundesliga</a>
-				</li>
-				<li>
-					<a href="#">La Lega</a>
-				</li>
-				<li>
-					<a href="#">League 1</a>
-				</li>
-				<li>
-					<a href="#">Seria A</a>
-				</li>
-				<li>
-					<a href="#">Champions League</a>
-				</li>
-			</ul>
-		</div>
-	)
-}
+  return (
+    <div className={styles["top-competitions-section"]}>
+      <h3>Top Competitions</h3>
+      <ul className="list-unstyled links">
+        {topCompetitions.map((competition) => (
+          <li className="competition" key={competition.name}>
+            <Link to={`/competitions/${competition.alias}`}>
+              {competition.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default TopCompetitions;

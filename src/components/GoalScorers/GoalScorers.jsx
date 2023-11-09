@@ -15,8 +15,16 @@ const GoalScorers = () => {
 
 	useEffect(() => {
 		competitionService.getCompetitionTopScorersByAlias(alias, limit)
-			.then(result => setGoalScorers(result.scorers))
-			.catch();
+			.then((result) => {
+				if (result.error)
+					throw new Error(result.error);
+		
+					setGoalScorers(result.scorers);
+			  })
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+			  });
 	}, []);
 
 	const handlePlayerDetailsClick = (scorer) => {

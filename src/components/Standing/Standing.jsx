@@ -22,10 +22,16 @@ const Standing = (props) => {
 	useEffect(() => {
 		competitionService.getCompetitionStandingsByAlias(alias)
 			.then((result) => {
-				setStanding(result.standings[0].table);
-				setCompetitionName(result.competition.name);
-			})
-			.catch();
+				if (result.error)
+				  throw new Error(result.error);
+			
+				  setStanding(result.standings[0].table);
+				  setCompetitionName(result.competition.name);
+				})
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+				});
 	}, []);
 
 	const emblemBodyTemplate = (rowData) => {
@@ -92,9 +98,9 @@ const Standing = (props) => {
 							totalRecords={standing.length}
 						>
 							<Column field="position" header="Position" sortable />
-							<Column field="team.name" header="Team" sortable />
+							<Column field="team.name" header="Team Name" sortable />
 							<Column field="team.tla" header="tla" sortable />
-							<Column body={emblemBodyTemplate} header="Emblem" />
+							<Column body={emblemBodyTemplate} header="Team Emblem" />
 							<Column field="playedGames" header="Played Games" sortable />
 							<Column field="won" header="Won" sortable />
 							<Column field="draw" header="Draw" sortable />
@@ -104,7 +110,7 @@ const Standing = (props) => {
 							<Column field="goalsAgainst" header="Goals Conceded" sortable />
 							<Column field="goalDifference" header="Goal Difference" sortable />
 							<Column field="points" header="Points" sortable />
-							<Column header="Options" sortable body={optionsBodyTemplate} />
+							<Column header="Options" body={optionsBodyTemplate} />
 						</DataTable>
 					</div>
 				</div>

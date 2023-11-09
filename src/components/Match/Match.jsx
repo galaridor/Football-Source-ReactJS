@@ -16,8 +16,16 @@ const Match = (props) => {
     if (props.match === undefined) {
       matchService
         .getMatchById(id)
-        .then((result) => setMatch(result))
-        .catch();
+        .then((result) => {
+          if (result.error)
+            throw new Error(result.error);
+      
+            setMatch(result);
+          })
+        .catch((error) => {
+          console.log(error);
+          navigate(`/error`);
+          });
     } else {
       setMatch(props.match);
     }
@@ -28,7 +36,6 @@ const Match = (props) => {
   };
 
   if (match) {
-    debugger;
     let title =
       props.title ?? `${match.homeTeam.name} - ${match.awayTeam.name}`;
 
@@ -47,9 +54,9 @@ const Match = (props) => {
                 </div>
                 <div>
                   <span className="vs">
-                    {match.status == 'FINISHED' && <span className={styles['home-team-result']}>5</span>}
+                    {match.status == 'FINISHED' && <span className={styles['home-team-result']}>{match.score.fullTime.home}</span>}
                     <span>VS</span>
-                    {match.status == 'FINISHED' &&  <span className={styles['away-team-result']}>1</span>}
+                    {match.status == 'FINISHED' &&  <span className={styles['away-team-result']}>{match.score.fullTime.away}</span>}
                   </span>
                 </div>
                 <div className="team-2 text-center">
