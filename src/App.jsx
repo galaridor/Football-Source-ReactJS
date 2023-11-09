@@ -18,6 +18,8 @@ import Team from "./components/Team/Team";
 import Match from "./components/Match/Match";
 import Person from "./components/Person/Person";
 import SomethingWentWrong from "./components/Error/SomethingWentWrong";
+import Login from "./components/Authentication/Login";
+import Register from "./components/Authentication/Register";
 
 function App() {
 	return (
@@ -29,6 +31,8 @@ function App() {
 				<Route path="/home" element={<Home />} />
 				<Route path="/" element={<Home />} />
 				<Route path="/error" element={<SomethingWentWrong />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/register" element={<Register />} />
 				<Route path="/competitions" element={<Competitions />} />
 				<Route path="/competitions/:alias" element={<Competition />} />
 				<Route path="/competitions/:alias/standing/:type" element={<Standing />} />

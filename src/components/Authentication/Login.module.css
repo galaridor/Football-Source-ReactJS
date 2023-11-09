@@ -1,0 +1,22 @@
+.login-section {
+    color: black;
+    font-size: 25px;
+    font-weight: bolder;
+    text-align: center;
+    margin: 3%;
+	background-image: url('/public/images/competition_background.avif');
+}
+
+.login-title {
+    color: red;
+}
+
+.login-form {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.submit-btn {
+   margin-top: 50px;
+   margin-bottom: 50px;
+}
