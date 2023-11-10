@@ -14,7 +14,6 @@ const Person = () => {
 
 	useEffect(() => {
 		personService.getPersonById(id)
-			.then(result => setPerson(result))
 			.then((result) => {
 				if (result.error)
 				  throw new Error(result.error);
@@ -39,6 +38,7 @@ const Person = () => {
 		<div className={styles['card-subtitle']}>
 			<p>{person?.currentTeam?.area?.name}</p>
 			<img src={`${person?.currentTeam?.area?.flag}`} className={styles['card-image']} alt="Missing Image" />
+			<p><strong>Contract from:</strong> {person?.currentTeam?.contract?.start} <strong>To:</strong> {person?.currentTeam?.contract?.until}</p>
 		</div>
 	);
 
