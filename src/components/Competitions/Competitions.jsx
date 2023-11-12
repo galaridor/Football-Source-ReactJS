@@ -64,7 +64,7 @@ const Competitions = () => {
 					paginator
 					rows={5}
 					rowsPerPageOptions={[5, 10, 15, 20, 50]}
-					totalRecords={competitions.length}
+					totalRecords={competitions?.length}
 				>
 					<Column field="id" header="ID" sortable />
 					<Column field="name" header="Competition Name" sortable filter filterPlaceholder="Search by Competition Name" />

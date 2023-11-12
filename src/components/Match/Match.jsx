@@ -94,7 +94,7 @@ const Match = (props) => {
 						<p className="mb-5">
 							<span className="d-block">{formatUTCDateToLocal(match.utcDate)}</span>
 							<strong className="text-primary">{match.venue}</strong>
-							<span className="d-block">{match?.referees.length > 0 ?? match.referees[0].name}</span>
+							<span className="d-block">{match?.referees?.length > 0 ?? match.referees[0].name}</span>
 						</p>
 						<div id="date-countdown2" className="pb-1" />
 					</div>

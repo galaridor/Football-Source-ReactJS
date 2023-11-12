@@ -59,7 +59,7 @@ const GoalScorers = () => {
 					paginator
 					rows={5}
 					rowsPerPageOptions={[5, 10, 15, 20, 50]}
-					totalRecords={goalScorers.length}
+					totalRecords={goalScorers?.length}
 				>
 					<Column field="player.id" header="ID" sortable />
 					<Column field="player.name" header="Player" sortable filter filterPlaceholder="Search by Player Name"/>

@@ -17,7 +17,7 @@ function Map({ address }) {
 				if (result.error)
 					throw new Error(result.error);
 
-					const position = [ result.results[0].geometry.lat, result.results[0].geometry.lng];
+					const position = [ result.results[0]?.geometry?.lat, result.results[0]?.geometry?.lng];
 					setPosition(position);
 			  })
 			.catch((error) => {
@@ -26,7 +26,7 @@ function Map({ address }) {
 			  });
 	}, []);
 
-	if (position.length > 0) {
+	if (position?.length > 0) {
 		return (
 			<div className={styles['map-section']}>
 				<h1 className={styles['map-location-title']}>Map Location</h1>

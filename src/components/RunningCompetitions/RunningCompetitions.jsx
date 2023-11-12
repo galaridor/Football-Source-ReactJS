@@ -24,7 +24,7 @@ const RunningCompetitions = ({ runningCompetitions }) => {
 		navigate(`/competitions/${competition.code}`);
 	}
 
-	if (runningCompetitions.length > 0) {
+	if (runningCompetitions?.length > 0) {
 		return (
 			<div className={styles['running-competitions-section']}>
 				<h1 className={styles['running-competition-title']}>All Running Competitions</h1>

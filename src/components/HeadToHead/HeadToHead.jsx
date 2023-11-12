@@ -51,7 +51,7 @@ const HeadToHead = ({ matchId }) => {
 	};
 
 	const refereData = (match) => {
-		if (match.referees && match.referees.length > 0) {
+		if (match.referees && match.referees?.length > 0) {
 			return match.referees[0].name;
 		}
 		return "";
@@ -68,7 +68,7 @@ const HeadToHead = ({ matchId }) => {
 		return <p>{formatUTCDateToLocal(match.utcDate)}</p>
 	}
 
-	if (headToHeadMatches.length > 0 && aggregates) {
+	if (headToHeadMatches?.length > 0 && aggregates) {
 		return (
 			<div className={`${styles["head-to-head-section"]}`}>
 				<h1 className={`${styles["head-to-head-title"]}`}>
@@ -119,7 +119,7 @@ const HeadToHead = ({ matchId }) => {
 						paginator
 						rows={5}
 						rowsPerPageOptions={[5, 10, 15, 20, 50]}
-						totalRecords={headToHeadMatches.length}
+						totalRecords={headToHeadMatches?.length}
 					>
 						<Column field="id" header="ID" sortable />
 						<Column field="homeTeam.name" header="Home Team Name" sortable filter filterPlaceholder="Search by Home Team Name" />

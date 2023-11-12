@@ -20,6 +20,7 @@ import Person from "./components/Person/Person";
 import SomethingWentWrong from "./components/Error/SomethingWentWrong";
 import Login from "./components/Authentication/Login";
 import Register from "./components/Authentication/Register";
+import SearchResult from "./components/Search/SearchResult";
 
 function App() {
 	return (
@@ -33,6 +34,7 @@ function App() {
 				<Route path="/error" element={<SomethingWentWrong />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
+				<Route path="/search/:phrase" element={<SearchResult />} />
 				<Route path="/competitions" element={<Competitions />} />
 				<Route path="/competitions/:alias" element={<Competition />} />
 				<Route path="/competitions/:alias/standing/:type" element={<Standing />} />

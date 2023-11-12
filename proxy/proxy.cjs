@@ -161,6 +161,31 @@ app.get(`/competitions/:alias/scorers/:limit`, async (_req, res) => {
 	}
 });
 
+// Get all Teams
+app.get(`/teams/all/:limit/`, async (_req, res) => {
+	const limit = _req.params.limit;
+
+	const url = `${baseUrl}/teams?limit=${limit}`;
+
+	try {
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: { 'X-Auth-Token': apiKey },
+		});
+
+		if (!response.ok) {
+			throw new Error(`Error! status: ${response.status}`);
+		}
+
+		const result = await response.json();
+
+		return res.json(result);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: 'An error occurred' });
+	}
+});
+
 // Get Team detailed information by id 
 app.get(`/teams/:id/`, async (_req, res) => {
 	const id = _req.params.id;

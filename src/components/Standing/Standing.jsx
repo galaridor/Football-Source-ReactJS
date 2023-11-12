@@ -71,7 +71,7 @@ const Standing = (props) => {
 							paginator
 							rows={5}
 							rowsPerPageOptions={[5, 10, 15, 20, 50]}
-							totalRecords={standing.length}
+							totalRecords={standing?.length}
 						>
 							<Column field="position" header="P" sortable />
 							<Column field="team.name" header="Team" sortable />
@@ -95,7 +95,7 @@ const Standing = (props) => {
 							paginator
 							rows={5}
 							rowsPerPageOptions={[5, 10, 15, 20, 50]}
-							totalRecords={standing.length}
+							totalRecords={standing?.length}
 						>
 							<Column field="position" header="Position" sortable />
 							<Column field="team.name" header="Team Name" sortable filter filterPlaceholder="Search by Team Name"/>

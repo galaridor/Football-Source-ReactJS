@@ -1,10 +1,17 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { InputText } from "primereact/inputtext";
+import { Button } from 'primereact/button';
+import { useNavigate } from "react-router-dom"
 import styles from './Header.module.css';
 
 const Header = () => {
 	const [activeItem, setActiveItem] = useState('home');
+	const [searchPhrase, setSearchPhrase] = useState('');
+
 	const location = useLocation();
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const pathName = location.pathname;
@@ -35,6 +42,15 @@ const Header = () => {
 		} else {
 			setActiveItem(itemName);
 		}
+	};
+
+	const handleSearchChange = (e) => {
+		const { value } = e.target;
+		setSearchPhrase(value);
+	};
+
+	const handleSearch = () => {
+		navigate(`/search/${searchPhrase}`);
 	};
 
 	return (
@@ -71,6 +87,13 @@ const Header = () => {
 							<span className="icon-menu h3 text-white"></span>
 						</a>
 					</div>
+				</div>
+				<div className={styles['search']}>
+					<span className="p-input-icon-right">
+						<i className="pi pi-search" />
+						<InputText placeholder="Search" onChange={handleSearchChange} />
+						<Button className={styles['search-btn']} icon="pi pi-search" severity="success" aria-label="Search" label='Search' onClick={handleSearch} />
+					</span>
 				</div>
 			</div>
 		</header>

@@ -25,7 +25,7 @@ const Squad = ({squad}) => {
 		navigate(`/people/${player.id}/`);
 	};
 
-	if (squad.length > 0) {
+	if (squad?.length > 0) {
 			return (
 				<div className={styles['squad-section']}>
 					<h1 className={styles['squad-title']}>Squad</h1>
@@ -36,7 +36,7 @@ const Squad = ({squad}) => {
 							paginator
 							rows={5}
 							rowsPerPageOptions={[5, 10, 15, 20, 50]}
-							totalRecords={squad.length}
+							totalRecords={squad?.length}
 						>
 							<Column field="id" header="ID" sortable />
 							<Column field="name" header="Player Name" sortable filter filterPlaceholder="Search by Player Name"/>

@@ -1,3 +1,12 @@
 .authentication {
 	margin-left: 100px;
 }
+
+.search {
+	text-align: center;
+	margin-top: 1%;
+}
+
+.search-btn {
+	margin-left: 15px;
+}

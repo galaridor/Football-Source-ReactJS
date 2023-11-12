@@ -75,7 +75,7 @@ const LiveScore = () => {
 					paginator
 					rows={5}
 					rowsPerPageOptions={[5, 10, 15, 20, 50]}
-					totalRecords={liveScoreMatches.length}
+					totalRecords={liveScoreMatches?.length}
 				>
 					<Column field="id" header="ID" sortable />
 					<Column field="homeTeam.name" header="Home Team Name" filterPlaceholder="Search by Home Team Name" filter sortable/>
