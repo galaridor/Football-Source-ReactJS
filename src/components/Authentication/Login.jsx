@@ -29,7 +29,7 @@ const Login = () => {
 			<form className={styles['login-form']} onSubmit={handleSubmit}>
 				<div className="p-fluid">
 					<div className="p-field">
-						<label htmlFor="username">Username</label>
+						<label htmlFor="username">Username:</label>
 						<InputText
 							id="username"
 							name="username"
@@ -39,7 +39,7 @@ const Login = () => {
 					</div>
 
 					<div className="p-field">
-						<label htmlFor="password">Password</label>
+						<label htmlFor="password">Password:</label>
 						<InputText
 							id="password"
 							name="password"

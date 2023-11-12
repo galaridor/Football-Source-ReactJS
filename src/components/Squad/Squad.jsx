@@ -9,20 +9,20 @@ import styles from './Squad.module.css';
 const Squad = ({squad}) => {
 	const navigate = useNavigate();
 
-	const optionsBodyTemplate = (rowData) => {
+	const optionsBodyTemplate = (player) => {
 		return (
 			<div>
 				<Button
-					label="Details"
-					onClick={() => handleClick(rowData)}
+					label="Player Details"
+					onClick={() => handlePlayerClick(player)}
 					icon="pi pi-check"
 				/>
 			</div>
 		);
 	};
 
-	const handleClick = (rowData) => {
-		navigate(`/people/${rowData.id}/`);
+	const handlePlayerClick = (player) => {
+		navigate(`/people/${player.id}/`);
 	};
 
 	if (squad.length > 0) {
@@ -39,10 +39,10 @@ const Squad = ({squad}) => {
 							totalRecords={squad.length}
 						>
 							<Column field="id" header="ID" sortable />
-							<Column field="name" header="Name" sortable />
-							<Column field="position" header="Position" sortable />
-							<Column field="dateOfBirth" header="Date of Birth" sortable />
-							<Column field="nationality" header="Nationality" sortable />
+							<Column field="name" header="Player Name" sortable filter filterPlaceholder="Search by Player Name"/>
+							<Column field="position" header="Position" sortable filter filterPlaceholder="Search by Player Position"/>
+							<Column field="dateOfBirth" header="Date of Birth" sortable filter filterPlaceholder="Search by Date of Birth"/>
+							<Column field="nationality" header="Nationality" sortable filter filterPlaceholder="Search by Nationality"/>
                             <Column header="Options" sortable body={optionsBodyTemplate} />
 						</DataTable>
 					</div>

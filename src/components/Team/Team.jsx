@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { Card } from 'primereact/card';
+import Map from '../Map/Map'
 import Squad from '../Squad/Squad';
 import RunningCompetitions from '../RunningCompetitions/RunningCompetitions';
 import Coach from '../Coach/Coach';
@@ -55,6 +56,7 @@ const Team = () => {
 				<Squad squad={team.squad} />
 				<RunningCompetitions runningCompetitions={team.runningCompetitions} />
 				<Coach coach={team.coach} />
+				<Map address={team.address}/>
 			</div>
 		);
 	} else {

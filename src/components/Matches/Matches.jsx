@@ -3,11 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from 'primereact/button';
+import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 import * as competitionService from '../../services/competitionService';
 import styles from './Matches.module.css';
 
 const Matches = () => {
 	const [matches, setMatches] = useState([]);
+	const [competitionName, setCompetitionName] = useState('');
 
 	const { alias } = useParams();
 
@@ -20,6 +22,7 @@ const Matches = () => {
 				  throw new Error(result.error);
 			
 				  setMatches(result.matches);
+				  setCompetitionName(result.competition.name);
 				})
 			.catch((error) => {
 				console.log(error);
@@ -43,7 +46,7 @@ const Matches = () => {
 		return (
 			<div className={styles['details-btn']}>
 				<Button
-					label="Details"
+					label="Match Details"
 					onClick={() => handleMatchDetailsClick(match)}
 					icon="pi pi-check"
 				/>
@@ -65,9 +68,13 @@ const Matches = () => {
 		return '';
 	};
 
+	const matchDateBodyTemplate = (match) => {
+		return <p>{formatUTCDateToLocal(match.utcDate)}</p>
+	}
+
 	return (
 		<div className={styles['matches-section']}>
-			<h2 className={styles['matches-title']}>All Matches</h2>
+			<h2 className={styles['matches-title']}>All {competitionName} Matches</h2>
 			<div className={styles['widget-header']}>
 				<DataTable
 					value={matches}
@@ -78,14 +85,14 @@ const Matches = () => {
 					totalRecords={matches.length}
 				>
 					<Column field="id" header="ID" sortable />
-					<Column field="homeTeam.name" header="Home Team Name" sortable />
+					<Column field="homeTeam.name" header="Home Team Name" sortable filter filterPlaceholder="Search by Home Team Name"/>
 					<Column header="Home Team Emblem" body={matchHomeEmblemBodyTemplate} />
 					<Column field="score" header="Result" body={scoreData} />
 					<Column header="Away Team Emblem" body={matchAwayEmblemBodyTemplate} />
-					<Column field="awayTeam.name" header="Away Team Name" sortable />
-					<Column field="referees" header="Referee" body={refereData} />
-					<Column field="status" header="Status" sortable />
-					<Column field="utcDate" header="Date" sortable />
+					<Column field="awayTeam.name" header="Away Team Name" sortable filter filterPlaceholder="Search by Away Team Name" />
+					<Column field="referees" header="Referee" body={refereData} filter filterPlaceholder="Search by Referee Name"/>
+					<Column field="status" header="Status" sortable filter filterPlaceholder="Search by Status" />
+					<Column body={matchDateBodyTemplate} header="Date" sortable filter filterPlaceholder="Search by Date"/>
 					<Column header="Options" body={optionsBodyTemplate} />
 				</DataTable>
 			</div>

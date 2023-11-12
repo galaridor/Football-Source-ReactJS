@@ -48,15 +48,15 @@ const Standing = (props) => {
 		return (
 			<div className={styles['details-btn']}>
 				<Button
-					label="Details"
-					onClick={() => handleClick(rowData)}
+					label="Team Details"
+					onClick={() => handleTeamDetailsClick(rowData)}
 					icon="pi pi-check"
 				/>
 			</div>
 		);
 	};
 
-	const handleClick = (rowData) => {
+	const handleTeamDetailsClick = (rowData) => {
 		navigate(`/teams/${rowData.team.id}/`);
 	};
 
@@ -98,18 +98,18 @@ const Standing = (props) => {
 							totalRecords={standing.length}
 						>
 							<Column field="position" header="Position" sortable />
-							<Column field="team.name" header="Team Name" sortable />
+							<Column field="team.name" header="Team Name" sortable filter filterPlaceholder="Search by Team Name"/>
 							<Column field="team.tla" header="tla" sortable />
 							<Column body={emblemBodyTemplate} header="Team Emblem" />
-							<Column field="playedGames" header="Played Games" sortable />
-							<Column field="won" header="Won" sortable />
-							<Column field="draw" header="Draw" sortable />
-							<Column field="lost" header="Lost" sortable />
-							<Column field="points" header="Points" sortable />
-							<Column field="goalsFor" header="Goals Scored" sortable />
-							<Column field="goalsAgainst" header="Goals Conceded" sortable />
-							<Column field="goalDifference" header="Goal Difference" sortable />
-							<Column field="points" header="Points" sortable />
+							<Column field="playedGames" header="Played Games" sortable filter filterPlaceholder="Search by Played Games"/>
+							<Column field="won" header="Won" sortable filter filterPlaceholder="Search by Won Games"/>
+							<Column field="draw" header="Draw" sortable filter filterPlaceholder="Search by Drawn Games"/>
+							<Column field="lost" header="Lost" sortable filter filterPlaceholder="Search by Lost Games"/>
+							<Column field="points" header="Points" sortable filter filterPlaceholder="Search by Points"/>
+							<Column field="goalsFor" header="Goals Scored" sortable filter filterPlaceholder="Search by Goals Scored"/>
+							<Column field="goalsAgainst" header="Goals Conceded" sortable filter filterPlaceholder="Search by Goals Conceded"/>
+							<Column field="goalDifference" header="Goal Difference" sortable filter filterPlaceholder="Search by Goal Difference"/>
+							<Column field="points" header="Points" sortable filter filterPlaceholder="Search by Won Points"/>
 							<Column header="Options" body={optionsBodyTemplate} />
 						</DataTable>
 					</div>

@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import styles from './Socials.module.css';
 
 const Socials = () => {
-	const socials = [
+	const [socials, setSocials] = useState([
 		{
 			name: 'Twitter',
 			link: 'https://www.twitter.com/'
@@ -18,7 +19,7 @@ const Socials = () => {
 			name: 'Youtube',
 			link: 'https://www.youtube.com/'
 		}
-	];
+	]);
 
 	return (
 		<div className={styles['socials-section']}>

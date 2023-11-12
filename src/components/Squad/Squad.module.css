@@ -1,11 +1,11 @@
 .squad-title {
-    color: red;
-    text-align: center;
+	color: red;
+	text-align: center;
 }
 
 .squad-section {
-    text-align: center;
-    background-image: url('/public/images/competition_background.avif');
+	text-align: center;
+	background-image: url('/public/images/competition_background.avif');
 }
 
 .widget-header {

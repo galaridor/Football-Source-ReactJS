@@ -21,7 +21,6 @@ const Register = () => {
 	};
 
 	const handleImageInputChange = (e) => {
-		debugger;
 		const { name, value } = e.target;
 		setFormData({
 			...formData,

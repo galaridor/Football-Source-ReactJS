@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from 'primereact/button';
+import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 import * as matchService from '../../services/matchService';
 import styles from './LiveScore.module.css';
 
@@ -17,7 +18,7 @@ const LiveScore = () => {
 				if (result.error)
 					throw new Error(result.error);
 		
-					setLiveScoreMatches(result.matches);
+				setLiveScoreMatches(result.matches);
 			  })
 			.catch((error) => {
 				console.log(error);
@@ -37,11 +38,15 @@ const LiveScore = () => {
 		navigate(`/matches/${match.id}`);
 	}
 
+	const matchDateBodyTemplate = (match) => {
+		return <p>{formatUTCDateToLocal(match.utcDate)}</p>
+	}
+
 	const optionsBodyTemplate = (match) => {
 		return (
 			<div className={styles['details-btn']}>
 				<Button
-					label="Details"
+					label="Match Details"
 					onClick={() => handleMatchDetailsClick(match)}
 					icon="pi pi-check"
 				/>
@@ -50,9 +55,13 @@ const LiveScore = () => {
 	};
 
 	const scoreData = (match) => {
-		if (match.score && match.status !== 'TIMED' && match.status !== "SCHEDULED") {
+		if (match.score && match.status !== 'TIMED' && match.status !== "SCHEDULED" && match.status !== "IN_PLAY") {
 			return `${match.score?.fullTime?.home} : ${match.score?.fullTime?.away} / ${match.score?.halfTime?.away} : ${match.score?.halfTime?.away}`
 		}
+		else if (match.score && match.status === 'IN_PLAY') {
+			return `${match.score?.fullTime?.home} : ${match.score?.fullTime?.away}`
+		}
+
 		return '';
 	};
 
@@ -69,13 +78,13 @@ const LiveScore = () => {
 					totalRecords={liveScoreMatches.length}
 				>
 					<Column field="id" header="ID" sortable />
-					<Column field="homeTeam.name" header="Home Team Name" sortable />
+					<Column field="homeTeam.name" header="Home Team Name" filterPlaceholder="Search by Home Team Name" filter sortable/>
 					<Column header="Home Team Emblem" body={matchHomeEmblemBodyTemplate} />
 					<Column field="score" header="Result" body={scoreData} />
 					<Column header="Away Team Emblem" body={matchAwayEmblemBodyTemplate} />
-					<Column field="awayTeam.name" header="Away Team Name" sortable />
-					<Column field="status" header="Status" sortable />
-					<Column field="utcDate" header="Date" sortable />
+					<Column field="awayTeam.name" header="Away Team Name" sortable filterPlaceholder="Search by Away Team Name" filter />
+					<Column field="status" header="Status" sortable filterPlaceholder="Search by Status" filter />
+					<Column header="Date" body={matchDateBodyTemplate} sortable filter filterPlaceholder="Search by Match Date" />
 					<Column header="Options" body={optionsBodyTemplate} />
 				</DataTable>
 			</div>

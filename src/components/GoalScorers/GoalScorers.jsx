@@ -8,6 +8,7 @@ import styles from './GoalScorers.module.css';
 
 const GoalScorers = () => {
 	const [goalScorers, setGoalScorers] = useState([]);
+	const [competitionName, setCompetitionName] = useState('');
 
 	const { alias, limit } = useParams();
 
@@ -18,8 +19,9 @@ const GoalScorers = () => {
 			.then((result) => {
 				if (result.error)
 					throw new Error(result.error);
-		
-					setGoalScorers(result.scorers);
+
+				setGoalScorers(result.scorers);
+				setCompetitionName(result.competition.name);
 			  })
 			.catch((error) => {
 				console.log(error);
@@ -39,7 +41,7 @@ const GoalScorers = () => {
 		return (
 			<div className={styles['details-btn']}>
 				<Button
-					label="Details"
+					label="Player Details"
 					onClick={() => handlePlayerDetailsClick(scorer)}
 					icon="pi pi-check"
 				/>
@@ -49,7 +51,7 @@ const GoalScorers = () => {
 
 	return (
 		<div className={styles['goal-scorers-section']}>
-			<h2 className={styles['goal-scorers-title']}>All Goal Scorers</h2>
+			<h2 className={styles['goal-scorers-title']}>All {competitionName} Goal Scorers</h2>
 			<div className={styles['widget-header']}>
 				<DataTable
 					value={goalScorers}
@@ -60,16 +62,16 @@ const GoalScorers = () => {
 					totalRecords={goalScorers.length}
 				>
 					<Column field="player.id" header="ID" sortable />
-					<Column field="player.name" header="Player" sortable />
-					<Column header="Date of Birth" field='player.dateOfBirth' sortable />
-					<Column field="player.nationality" header="Nationality" sortable />
-					<Column header="Position" field='player.section' sortable />
-					<Column field="team.name" header="Team" sortable />
+					<Column field="player.name" header="Player" sortable filter filterPlaceholder="Search by Player Name"/>
+					<Column header="Date of Birth" field='player.dateOfBirth' sortable filter filterPlaceholder="Search by Date Of Birth"/>
+					<Column field="player.nationality" header="Nationality" sortable filter filterPlaceholder="Search by Nationality"/>
+					<Column header="Position" field='player.section' sortable filter filterPlaceholder="Search by Player Position"/>
+					<Column field="team.name" header="Team" sortable filter filterPlaceholder="Search by Player Team"/>
 					<Column header="Emblem" body={teamEmblemBodyTemplate} />
-					<Column field="playedMatches" header="Played Matches" sortable />
-					<Column field="goals" header="Goals" sortable />
-					<Column field="assists" header="Assists" sortable />
-					<Column field="penalties" header="Penalties" sortable />
+					<Column field="playedMatches" header="Played Matches" sortable filter filterPlaceholder="Search by Played Matches"/>
+					<Column field="goals" header="Goals" sortable filter filterPlaceholder="Search by Goals"/>
+					<Column field="assists" header="Assists" sortable filter filterPlaceholder="Search by Assists"/>
+					<Column field="penalties" header="Penalties" sortable filter filterPlaceholder="Search by Penalties"/>
 					<Column header="Options" body={optionsBodyTemplate} />
 				</DataTable>
 			</div>

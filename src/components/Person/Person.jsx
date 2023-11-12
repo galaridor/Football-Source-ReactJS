@@ -45,14 +45,14 @@ const Person = () => {
 	const teamCardFooter = (
 		<div>
 			<Button
-				label="Details"
-				onClick={() => handleCurrentDeamDetailsClick()}
+				label="Team Details"
+				onClick={() => handleCurrentTeamDetailsClick()}
 				icon="pi pi-check"
 			/>
 		</div>
 	);
 
-	const handleCurrentDeamDetailsClick = () => {
+	const handleCurrentTeamDetailsClick = () => {
 		navigate(`/teams/${person?.currentTeam?.id}`);
 	}
 

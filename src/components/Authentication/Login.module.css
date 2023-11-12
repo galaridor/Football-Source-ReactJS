@@ -1,22 +1,30 @@
 .login-section {
-    color: black;
-    font-size: 25px;
-    font-weight: bolder;
-    text-align: center;
-    margin: 3%;
-	background-image: url('/public/images/competition_background.avif');
+	color: black;
+	font-size: 25px;
+	font-weight: bolder;
+	text-align: center;
+	margin: 3%;
+	background-image: url('/public/images/authentication_background.jpg');
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	height: 800px;
 }
 
 .login-title {
-    color: red;
+	color: red;
+	margin-bottom: 3%;
 }
 
 .login-form {
-    width: 60%;
-    margin: 0 auto;
+	width: 30%;
+	margin: 0 auto;
 }
 
 .submit-btn {
-   margin-top: 50px;
-   margin-bottom: 50px;
+	margin-top: 10%;
+	margin-bottom: 10%;
+}
+
+.login-form label {
+	color: red;
 }

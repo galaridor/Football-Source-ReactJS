@@ -13,7 +13,7 @@ const RunningCompetitions = ({ runningCompetitions }) => {
 	const cardFooter = (competition) => (
 		<div>
 			<Button
-				label="Details"
+				label="Competition Details"
 				onClick={() => handleCompetitionDetailsClick(competition)}
 				icon="pi pi-check"
 			/>

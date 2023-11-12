@@ -1,12 +1,13 @@
+import { useState } from "react";
 import styles from './Contacts.module.css';
 import Map from '../Map/Map';
 
 const Contacts = () => {
-	const contacts = {
-		email: 'contact@example.com',
+	const [contacts, setContacts] = useState({
+		email: 'footballsource@fs.com',
 		phone: '+1 (123) 456-7890',
-		address: '123 Main St, City, Country'
-	};
+		address: '85 Park Avenue London'
+	});
 
 	return (
 		<div className={`${styles['contacts-section']}`}>
@@ -24,7 +25,7 @@ const Contacts = () => {
 				</ul>
 			</div>
 			<div className='map-location'>
-				<Map address={contacts.address} phone={contacts.phone}/>
+				<Map address={contacts.address} />
 			</div>
 		</div>
 	);

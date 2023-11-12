@@ -43,7 +43,7 @@ const Teams = () => {
 	const cardFooter = (team) => (
 		<div>
 			<Button
-				label="Details"
+				label="Team Details"
 				onClick={() => handleTeamDetailsClick(team)}
 				icon="pi pi-check"
 			/>

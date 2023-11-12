@@ -14,7 +14,9 @@ const Header = () => {
 			'/livescore': 'livescore',
 			'/contacts': 'contacts',
 			'/people': 'competitions',
-			'/teams': 'competitions'
+			'/teams': 'competitions',
+			'/login': 'login',
+			'/register': 'register'
 		};
 
 		for (const keyword in keywordMapping) {
@@ -29,7 +31,7 @@ const Header = () => {
 
 	const toggleClass = (itemName) => {
 		if (activeItem === itemName) {
-			setActiveItem('home'); 
+			setActiveItem('home');
 		} else {
 			setActiveItem(itemName);
 		}
@@ -56,6 +58,12 @@ const Header = () => {
 								</li>
 								<li onClick={() => toggleClass('contacts')} className={`nav-link ${activeItem === 'contacts' ? 'active' : ''}`}>
 									<Link to="/contacts">Contacts</Link>
+								</li>
+								<li onClick={() => toggleClass('contacts')} className={`nav-link ${styles['authentication']} ${activeItem === 'login' ? 'active' : ''}`}>
+									<Link to="/login">Login</Link>
+								</li>
+								<li onClick={() => toggleClass('contacts')} className={`nav-link ${activeItem === 'register' ? 'active' : ''}`}>
+									<Link to="/register">Register</Link>
 								</li>
 							</ul>
 						</nav>

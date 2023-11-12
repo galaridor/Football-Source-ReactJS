@@ -9,7 +9,7 @@ const Coach = ({ coach }) => {
 	const cardFooter = (
 		<div>
 			<Button
-				label="Details"
+				label="Coach Details"
 				onClick={() => handleCoachDetailsClick()}
 				icon="pi pi-check"
 			/>
