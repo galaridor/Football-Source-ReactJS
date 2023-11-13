@@ -2,21 +2,14 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { useState, useEffect } from "react";
 import { Button } from 'primereact/button';
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from './Standing.module.css';
 import * as competitionService from '../../services/competitionService';
 
-const Standing = (props) => {
+const Standing = ({alias, type}) => {
 	const [isMultipleGroups, setIsMultipleGroups] = useState(false);
 	const [standing, setStanding] = useState(null);
 	const [competitionName, setCompetitionName] = useState("");
-
-	const { alias: propAlias, type: propType } = props;
-	const { alias: routeAlias, type: routeType } = useParams();
-
-	// Use the parameters from props if available, otherwise, use the route parameters
-	const alias = propAlias || routeAlias;
-	const type = propType || routeType;
 
 	const navigate = useNavigate();
 

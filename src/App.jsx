@@ -9,18 +9,19 @@ import Competition from "./components/Competition/Competition";
 import Home from "./components/Home/Home";
 import Contacts from "./components/Contacts/Contacts";
 import Livescore from './components/LiveScore/LiveScore';
-import Matches from "./components/Matches/Matches";
+import MatchesPage from "./components/Matches/MatchesPage";
 import NotFound from "./components/Error/NotFound";
-import Standing from "./components/Standing/Standing";
+import StandingPage from "./components/Standing/StandingPage";
 import Teams from "./components/Teams/Teams";
 import GoalScorers from "./components/GoalScorers/GoalScorers";
 import Team from "./components/Team/Team";
-import Match from "./components/Match/Match";
+import MatchPage from "./components/Match/MatchPage";
 import Person from "./components/Person/Person";
 import SomethingWentWrong from "./components/Error/SomethingWentWrong";
 import Login from "./components/Authentication/Login";
 import Register from "./components/Authentication/Register";
 import SearchResult from "./components/Search/SearchResult";
+
 
 function App() {
 	return (
@@ -37,12 +38,12 @@ function App() {
 				<Route path="/search/:phrase" element={<SearchResult />} />
 				<Route path="/competitions" element={<Competitions />} />
 				<Route path="/competitions/:alias" element={<Competition />} />
-				<Route path="/competitions/:alias/standing/:type" element={<Standing />} />
-				<Route path="/competitions/:alias/matches" element={<Matches />} />
+				<Route path="/competitions/:alias/standing/:type" element={<StandingPage />} />
+				<Route path="/competitions/:alias/matches" element={<MatchesPage />} />
 				<Route path="/competitions/:alias/teams" element={<Teams />} />
 				<Route path="/competitions/:alias/goalscorers/:limit" element={<GoalScorers />} />
 				<Route path="/teams/:id/" element={<Team />} />
-				<Route path="/matches/:id/" element={<Match />} />
+				<Route path="/matches/:id/" element={<MatchPage />} />
 				<Route path="/livescore" element={<Livescore />} />
 				<Route path="/contacts" element={<Contacts />} />
 				<Route path="/people/:id/" element={<Person />} />

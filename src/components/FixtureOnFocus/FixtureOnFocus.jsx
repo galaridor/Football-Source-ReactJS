@@ -33,7 +33,7 @@ const FixtureOnFocus = () => {
 					<div className="container">
 						<div className="row">
 							<div className="col-lg-6">
-								<Match match={matchOnFocus} title="Next Fixture on Focus" />
+								<Match match={matchOnFocus} title="Next Fixture on Focus" type="short" />
 							</div>
 							<div className="col-lg-6">
 								<Standing alias={matchOnFocus.competition.code} type="short" />

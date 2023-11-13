@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from 'primereact/button';
@@ -9,16 +9,17 @@ import * as teamService from '../../services/teamService';
 import * as personService from '../../services/personService';
 import styles from './Matches.module.css';
 
-const Matches = ({id, type}) => {
+const Matches = ({id, type, alias}) => {
 	const [matches, setMatches] = useState([]);
 	const [competitionName, setCompetitionName] = useState('');
-
-	const { alias } = useParams();
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (id === undefined) {
+
+		switch (type) {
+			case 'competition':
+
 			competitionService.getCompetitionMatchesByAlias(alias)
 				.then((result) => {
 					if (result.error)
@@ -31,37 +32,41 @@ const Matches = ({id, type}) => {
 					console.log(error);
 					navigate(`/error`);
 				});
-			}
-			else {
-				if (type == 'team') {
-					teamService.getTeamMatchesById(id)
-						.then((result) => {
-							if (result.error)
-								throw new Error(result.error);
-						
-							setMatches(result.matches);
-						})
-						.catch((error) => {
-							console.log(error);
-							navigate(`/error`);
-						});
-				}
-				else if (type == 'person') {
-					personService.getPersonMatchesById(id)
-						.then((result) => {
-							if (result.error)
-								throw new Error(result.error);
-							
-							debugger;
 
-							setMatches(result.matches);
-						})
-						.catch((error) => {
-							console.log(error);
-							navigate(`/error`);
-						});
-				}
-			}
+			  break;
+			case 'team':
+
+				teamService.getTeamMatchesById(id)
+					.then((result) => {
+						if (result.error)
+							throw new Error(result.error);
+					
+						setMatches(result.matches);
+					})
+					.catch((error) => {
+						console.log(error);
+						navigate(`/error`);
+					});
+
+				break;
+			case 'person':
+
+				personService.getPersonMatchesById(id)
+					.then((result) => {
+						if (result.error)
+							throw new Error(result.error);
+						
+						setMatches(result.matches);
+					})
+					.catch((error) => {
+						console.log(error);
+						navigate(`/error`);
+					});
+
+			  	break;
+			default:
+				break;
+		  }
 	}, []);
 
 	const matchHomeEmblemBodyTemplate = (match) => {

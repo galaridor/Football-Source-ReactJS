@@ -1,36 +1,11 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "primereact/button";
 import HeadToHead from "../HeadToHead/HeadToHead";
 import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 import styles from "./Match.module.css";
-import { Button } from "primereact/button";
-import * as matchService from "../../services/matchService";
 
-const Match = (props) => {
-	const [match, setMatch] = useState(null);
-
-	const { id } = useParams();
-
+const Match = ({match, title, type}) => {
 	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (props.match === undefined) {
-			matchService
-				.getMatchById(id)
-				.then((result) => {
-					if (result.error)
-						throw new Error(result.error);
-
-					setMatch(result);
-				})
-				.catch((error) => {
-					console.log(error);
-					navigate(`/error`);
-				});
-		} else {
-			setMatch(props.match);
-		}
-	}, []);
 
 	const handleMatchDetailsClick = (match) => {
 		navigate(`/matches/${match.id}`);
@@ -43,16 +18,15 @@ const Match = (props) => {
 	const handleAwayTeamDetailsClick = (match) => {
 		navigate(`/teams/${match.awayTeam.id}`);
 	}
-
+	debugger;
 	if (match) {
-		let title =
-			props.title ?? `${match.homeTeam.name} - ${match.awayTeam.name}`;
-
+		let modifiedTitle = title ?? `${match.homeTeam.name} - ${match.awayTeam.name}`;
+		
 		return (
 			<div className={styles["match-section"]}>
 				<div className="widget-header">
 					<div className="widget-title">
-						<h3 className={styles["center-content"]}>{title}</h3>
+						<h3 className={styles["center-content"]}>{modifiedTitle}</h3>
 					</div>
 					<div className="widget-body mb-3">
 						<div className="widget-vs">
@@ -98,18 +72,17 @@ const Match = (props) => {
 						</p>
 						<div id="date-countdown2" className="pb-1" />
 					</div>
-
-					{!id && (
-						<div className="text-center mb-2 match-details">
-							<Button
-								label="Match Details"
-								onClick={() => handleMatchDetailsClick(match)}
-								icon="pi pi-check"
-							/>
-						</div>
-					)}
+						{
+							type === 'short' && <div className="text-center mb-2 match-details">
+								<Button
+									label="Match Details"
+									onClick={() => handleMatchDetailsClick(match)}
+									icon="pi pi-check"
+								/>
+							</div>
+						}			
 				</div>
-				{id && <HeadToHead matchId={id ?? props.match.id} />}
+				  	{type === 'full' && <HeadToHead matchId={match.id} />}
 			</div>
 		);
 	} else {
