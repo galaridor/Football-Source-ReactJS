@@ -17,3 +17,21 @@ export const getPersonById = async (id) => {
         return [];
     }
 };
+
+export const getPersonMatchesById = async (id) => {
+
+    try {
+        const response = await fetch(`${baseUrl}/${id}/matches`);
+
+        const result = await response.json();
+
+        console.log(result);
+
+        return result;
+    } 
+    catch (error) {
+        console.log(error);
+
+        return [];
+    }
+};

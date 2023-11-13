@@ -5,6 +5,7 @@ import Map from '../Map/Map'
 import Squad from '../Squad/Squad';
 import RunningCompetitions from '../RunningCompetitions/RunningCompetitions';
 import Coach from '../Coach/Coach';
+import Matches from '../Matches/Matches';
 import * as teamService from '../../services/teamService';
 import styles from './Team.module.css';
 
@@ -53,6 +54,7 @@ const Team = () => {
 						<p><strong>Website:</strong> {team.website}</p>
 					</Card>
 				</div>
+				<Matches id={team.id} type={'team'}/>
 				<Squad squad={team.squad} />
 				<RunningCompetitions runningCompetitions={team.runningCompetitions} />
 				<Coach coach={team.coach} />

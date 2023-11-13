@@ -4,7 +4,7 @@
 }
 
 .widget-header {
-	padding: 2%;
+	padding: 1%;
 }
 
 .emblem {
@@ -15,6 +15,6 @@
 	text-align: center;
 }
 
-.standing-title {
+.standing-title, .group-title {
 	color: red;
 }

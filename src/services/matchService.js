@@ -1,9 +1,9 @@
 const baseUrl = "http://localhost:3456/matches";
 
-export const getMatches = async () => {
+export const getMatchesByDate = async (dateFrom, dateTo) => {
 
     try {
-        const response = await fetch(`${baseUrl}`);
+        const response = await fetch(`${baseUrl}/${dateFrom}/${dateTo}`);
 
         const result = await response.json();
 
@@ -37,7 +37,6 @@ export const getMatchById = async (id) => {
 };
 
 export const getMatchHeadToHeadById = async (id) => {
-
     try {
         const response = await fetch(`${baseUrl}/${id}/headtohead`);
 

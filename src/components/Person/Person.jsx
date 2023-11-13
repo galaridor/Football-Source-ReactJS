@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
+import Matches from '../Matches/Matches';
 import styles from './Person.module.css';
 import * as personService from '../../services/personService';
 
@@ -77,6 +78,7 @@ const Person = () => {
 						</Card>
 					</Card>
 				</div>
+				<Matches id={person.id} type={'person'}/>
 			</div>
 		)
 	}

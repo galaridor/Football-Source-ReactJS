@@ -211,6 +211,31 @@ app.get(`/teams/:id/`, async (_req, res) => {
 	}
 });
 
+// Get Team matches by id 
+app.get(`/teams/:id/matches`, async (_req, res) => {
+	const id = _req.params.id;
+
+	const url = `${baseUrl}/teams/${id}/matches`;
+
+	try {
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: { 'X-Auth-Token': apiKey },
+		});
+
+		if (!response.ok) {
+			throw new Error(`Error! status: ${response.status}`);
+		}
+
+		const result = await response.json();
+
+		return res.json(result);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: 'An error occurred' });
+	}
+});
+
 // Get Person detailed information by id 
 app.get(`/people/:id/`, async (_req, res) => {
 	const id = _req.params.id;
@@ -236,10 +261,11 @@ app.get(`/people/:id/`, async (_req, res) => {
 	}
 });
 
-// Get all matches
-app.get(`/matches/`, async (_req, res) => {
-	
-	const url = `${baseUrl}/matches/`;
+// Get Person matches by id 
+app.get(`/people/:id/matches`, async (_req, res) => {
+	const id = _req.params.id;
+
+	const url = `${baseUrl}/persons/${id}/matches`;
 
 	try {
 		const response = await fetch(url, {
@@ -310,6 +336,31 @@ app.get(`/matches/:id/headtohead`, async (_req, res) => {
 	}
 });
 
+// Get all matches by date
+app.get(`/matches/:dateFrom/:dateTo`, async (_req, res) => {
+	const dateFrom = _req.params.dateFrom
+	const dateTo = _req.params.dateTo
+
+	const url = `${baseUrl}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`;
+
+	try {
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: { 'X-Auth-Token': apiKey },
+		});
+
+		if (!response.ok) {
+			throw new Error(`Error! status: ${response.status}`);
+		}
+
+		const result = await response.json();
+
+		return res.json(result);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: 'An error occurred' });
+	}
+});
 
 const port = 3456;
 

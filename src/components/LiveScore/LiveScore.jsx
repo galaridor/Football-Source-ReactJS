@@ -1,19 +1,33 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from 'primereact/button';
+import { Calendar } from 'primereact/calendar';
 import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 import * as matchService from '../../services/matchService';
 import styles from './LiveScore.module.css';
 
 const LiveScore = () => {
     const [liveScoreMatches, setLiveScoreMatches] = useState([]);
-
+    const [date, setDate] = useState(new Date());
+	
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		matchService.getMatches()
+		let year = date.getFullYear();
+		let month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+		let day = date.getDate().toString().padStart(2, '0');
+
+		const dateFrom = `${year}-${month}-${day}`;
+
+		year = date.getFullYear();
+		month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+		day = (date.getDate() + 1).toString().padStart(2, '0');
+
+		const dateTo = `${year}-${month}-${day}`;
+
+		matchService.getMatchesByDate(dateFrom, dateTo)
 			.then((result) => {
 				if (result.error)
 					throw new Error(result.error);
@@ -24,7 +38,7 @@ const LiveScore = () => {
 				console.log(error);
 				navigate(`/error`);
 			  });
-	}, []);
+	}, [date]);
 
 	const matchHomeEmblemBodyTemplate = (match) => {
 		return <img src={`${match.homeTeam.crest}`} className={styles['match-emblem']} alt="Missing Image" />;
@@ -68,6 +82,9 @@ const LiveScore = () => {
     return (
         <div className={`${styles['livescore-section']}`}>
             <h1 className={`${styles['livescore-title']}`}>Live Score</h1>
+			<div className={`${styles['livescore-calendar']} flex justify-content-center`}>
+            	<Calendar value={date} onChange={(e) => setDate(e.value)} showIcon />
+        	</div>
 			<div className={styles['widget-header']}>
 				<DataTable
 					value={liveScoreMatches}

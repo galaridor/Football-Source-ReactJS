@@ -5,9 +5,11 @@ import { Column } from "primereact/column";
 import { Button } from 'primereact/button';
 import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 import * as competitionService from '../../services/competitionService';
+import * as teamService from '../../services/teamService';
+import * as personService from '../../services/personService';
 import styles from './Matches.module.css';
 
-const Matches = () => {
+const Matches = ({id, type}) => {
 	const [matches, setMatches] = useState([]);
 	const [competitionName, setCompetitionName] = useState('');
 
@@ -16,18 +18,50 @@ const Matches = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		competitionService.getCompetitionMatchesByAlias(alias)
-			.then((result) => {
-				if (result.error)
-				  throw new Error(result.error);
-			
-				  setMatches(result.matches);
-				  setCompetitionName(result.competition.name);
+		if (id === undefined) {
+			competitionService.getCompetitionMatchesByAlias(alias)
+				.then((result) => {
+					if (result.error)
+						throw new Error(result.error);
+				
+					setMatches(result.matches);
+					setCompetitionName(result.competition.name);
 				})
-			.catch((error) => {
-				console.log(error);
-				navigate(`/error`);
+				.catch((error) => {
+					console.log(error);
+					navigate(`/error`);
 				});
+			}
+			else {
+				if (type == 'team') {
+					teamService.getTeamMatchesById(id)
+						.then((result) => {
+							if (result.error)
+								throw new Error(result.error);
+						
+							setMatches(result.matches);
+						})
+						.catch((error) => {
+							console.log(error);
+							navigate(`/error`);
+						});
+				}
+				else if (type == 'person') {
+					personService.getPersonMatchesById(id)
+						.then((result) => {
+							if (result.error)
+								throw new Error(result.error);
+							
+							debugger;
+
+							setMatches(result.matches);
+						})
+						.catch((error) => {
+							console.log(error);
+							navigate(`/error`);
+						});
+				}
+			}
 	}, []);
 
 	const matchHomeEmblemBodyTemplate = (match) => {

@@ -37,3 +37,21 @@ export const getTeamById = async (id) => {
         return [];
     }
 };
+
+export const getTeamMatchesById = async (id) => {
+
+    try {
+        const response = await fetch(`${baseUrl}/${id}/matches`);
+
+        const result = await response.json();
+
+        console.log(result);
+
+        return result;
+    } 
+    catch (error) {
+        console.log(error);
+
+        return [];
+    }
+};
