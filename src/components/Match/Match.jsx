@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
+import CommentsList from "../Comments/CommentsList";
 import HeadToHead from "../HeadToHead/HeadToHead";
 import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 import styles from "./Match.module.css";
@@ -18,7 +19,7 @@ const Match = ({match, title, type}) => {
 	const handleAwayTeamDetailsClick = (match) => {
 		navigate(`/teams/${match.awayTeam.id}`);
 	}
-	debugger;
+
 	if (match) {
 		let modifiedTitle = title ?? `${match.homeTeam.name} - ${match.awayTeam.name}`;
 		
@@ -26,7 +27,7 @@ const Match = ({match, title, type}) => {
 			<div className={styles["match-section"]}>
 				<div className="widget-header">
 					<div className="widget-title">
-						<h3 className={styles["center-content"]}>{modifiedTitle}</h3>
+						<h3 className={styles["match-title"]}>{modifiedTitle}</h3>
 					</div>
 					<div className="widget-body mb-3">
 						<div className="widget-vs">
@@ -38,7 +39,7 @@ const Match = ({match, title, type}) => {
 										<Button
 											label="Home Details"
 											onClick={() => handleHomeTeamDetailsClick(match)}
-											icon="pi pi-check"
+											icon="pi pi-info"
 										/>
 									</div>
 								</div>
@@ -56,7 +57,7 @@ const Match = ({match, title, type}) => {
 										<Button
 											label="Away Details"
 											onClick={() => handleAwayTeamDetailsClick(match)}
-											icon="pi pi-check"
+											icon="pi pi-info"
 										/>
 									</div>
 								</div>
@@ -77,12 +78,13 @@ const Match = ({match, title, type}) => {
 								<Button
 									label="Match Details"
 									onClick={() => handleMatchDetailsClick(match)}
-									icon="pi pi-check"
+									icon="pi pi-info"
 								/>
 							</div>
 						}			
 				</div>
 				  	{type === 'full' && <HeadToHead matchId={match.id} />}
+					{type === 'full' && <CommentsList entityId={match.id} type='match'/>}
 			</div>
 		);
 	} else {

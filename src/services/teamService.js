@@ -1,3 +1,5 @@
+import * as request from "../utils/request";
+
 const baseUrl = "http://localhost:3456/teams";
 
 export const getAllTeams = async () => {
@@ -5,9 +7,7 @@ export const getAllTeams = async () => {
     try {
         const limit = 500;
 
-        const response = await fetch(`${baseUrl}/all/${limit}`);
-
-        const result = await response.json();
+        const result = await request.get(`${baseUrl}/all/${limit}`);
 
         console.log(result);
 
@@ -23,9 +23,7 @@ export const getAllTeams = async () => {
 export const getTeamById = async (id) => {
 
     try {
-        const response = await fetch(`${baseUrl}/${id}`);
-
-        const result = await response.json();
+        const result = await request.get(`${baseUrl}/${id}`);
 
         console.log(result);
 
@@ -41,9 +39,7 @@ export const getTeamById = async (id) => {
 export const getTeamMatchesById = async (id) => {
 
     try {
-        const response = await fetch(`${baseUrl}/${id}/matches`);
-
-        const result = await response.json();
+        const result = await request.get(`${baseUrl}/${id}/matches`);
 
         console.log(result);
 

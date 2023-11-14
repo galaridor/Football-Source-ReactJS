@@ -15,7 +15,7 @@ const Squad = ({squad}) => {
 				<Button
 					label="Player Details"
 					onClick={() => handlePlayerClick(player)}
-					icon="pi pi-check"
+					icon="pi pi-info"
 				/>
 			</div>
 		);

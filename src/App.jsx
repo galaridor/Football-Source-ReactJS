@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
+import 'primeicons/primeicons.css';
 import { Routes, Route } from "react-router-dom";
 import MobileMenu from "./components/MobileMenu/MobileMenu";
 import Header from "../src/components/Header/Header";

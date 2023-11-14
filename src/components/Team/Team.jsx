@@ -6,6 +6,7 @@ import Squad from '../Squad/Squad';
 import RunningCompetitions from '../RunningCompetitions/RunningCompetitions';
 import Coach from '../Coach/Coach';
 import Matches from '../Matches/Matches';
+import CommentsList from "../Comments/CommentsList";
 import * as teamService from '../../services/teamService';
 import styles from './Team.module.css';
 
@@ -59,6 +60,7 @@ const Team = () => {
 				<RunningCompetitions runningCompetitions={team.runningCompetitions} />
 				<Coach coach={team.coach} />
 				<Map address={team.address}/>
+				<CommentsList entityId={team.id} type='team'/>
 			</div>
 		);
 	} else {

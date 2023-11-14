@@ -43,7 +43,7 @@ const GoalScorers = () => {
 				<Button
 					label="Player Details"
 					onClick={() => handlePlayerDetailsClick(scorer)}
-					icon="pi pi-check"
+					icon="pi pi-info"
 				/>
 			</div>
 		)

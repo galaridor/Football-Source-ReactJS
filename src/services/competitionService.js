@@ -1,11 +1,11 @@
+import * as request from "../utils/request";
+
 const baseUrl = "http://localhost:3456/competitions";
 
 export const getAllCompetitions = async () => {
 
     try {
-        const response = await fetch(baseUrl);
-
-        const result = await response.json();
+        const result = await request.get(baseUrl);
 
         console.log(result);
 
@@ -21,9 +21,7 @@ export const getAllCompetitions = async () => {
 export const getCompetitionByAlias = async (alias) => {
 
     try {
-        const response = await fetch(`${baseUrl}/${alias}`);
-
-        const result = await response.json();
+        const result = await request.get(`${baseUrl}/${alias}`);
 
         console.log(result);
 
@@ -39,9 +37,7 @@ export const getCompetitionByAlias = async (alias) => {
 export const getCompetitionStandingsByAlias = async (alias) => {
 
     try {
-        const response = await fetch(`${baseUrl}/${alias}/standings`);
-
-        const result = await response.json();
+        const result = await request.get(`${baseUrl}/${alias}/standings`);
 
         console.log(result);
 
@@ -57,9 +53,7 @@ export const getCompetitionStandingsByAlias = async (alias) => {
 export const getCompetitionMatchesByAlias = async (alias) => {
 
     try {
-        const response = await fetch(`${baseUrl}/${alias}/matches`);
-
-        const result = await response.json();
+        const result = await request.get(`${baseUrl}/${alias}/matches`);
 
         console.log(result);
 
@@ -75,9 +69,7 @@ export const getCompetitionMatchesByAlias = async (alias) => {
 export const getCompetitionTeamsByAlias = async (alias) => {
 
     try {
-        const response = await fetch(`${baseUrl}/${alias}/teams`);
-
-        const result = await response.json();
+        const result = await request.get(`${baseUrl}/${alias}/teams`);
 
         console.log(result);
 
@@ -93,9 +85,7 @@ export const getCompetitionTeamsByAlias = async (alias) => {
 export const getCompetitionTopScorersByAlias = async (alias, limit) => {
 
     try {
-        const response = await fetch(`${baseUrl}/${alias}/scorers/${limit}`);
-
-        const result = await response.json();
+        const result = await request.get(`${baseUrl}/${alias}/scorers/${limit}`);
 
         console.log(result);
 

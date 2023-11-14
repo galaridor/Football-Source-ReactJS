@@ -1,11 +1,11 @@
+import * as request from "../utils/request";
+
 const baseUrl = "http://localhost:3456/matches";
 
 export const getMatchesByDate = async (dateFrom, dateTo) => {
 
     try {
-        const response = await fetch(`${baseUrl}/${dateFrom}/${dateTo}`);
-
-        const result = await response.json();
+        const result = await request.get(`${baseUrl}/${dateFrom}/${dateTo}`);
 
         console.log(result);
 
@@ -21,9 +21,7 @@ export const getMatchesByDate = async (dateFrom, dateTo) => {
 export const getMatchById = async (id) => {
 
     try {
-        const response = await fetch(`${baseUrl}/${id}`);
-
-        const result = await response.json();
+        const result = await request.get(`${baseUrl}/${id}`);
 
         console.log(result);
 
@@ -38,9 +36,7 @@ export const getMatchById = async (id) => {
 
 export const getMatchHeadToHeadById = async (id) => {
     try {
-        const response = await fetch(`${baseUrl}/${id}/headtohead`);
-
-        const result = await response.json();
+        const result = await request.get(`${baseUrl}/${id}/headtohead`);
 
         console.log(result);
 

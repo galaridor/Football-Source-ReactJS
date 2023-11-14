@@ -45,7 +45,7 @@ const Teams = () => {
 			<Button
 				label="Team Details"
 				onClick={() => handleTeamDetailsClick(team)}
-				icon="pi pi-check"
+				icon="pi pi-info"
 			/>
 		</div>
 	);

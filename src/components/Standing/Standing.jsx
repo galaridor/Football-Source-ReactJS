@@ -51,7 +51,7 @@ const Standing = ({alias, type}) => {
 				<Button
 					label="Team Details"
 					onClick={() => handleTeamDetailsClick(rowData)}
-					icon="pi pi-check"
+					icon="pi pi-info"
 				/>
 			</div>
 		);

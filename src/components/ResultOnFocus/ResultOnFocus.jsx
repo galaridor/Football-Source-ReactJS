@@ -72,7 +72,7 @@ const ResultOnFocus = () => {
 					<div className={`text-center mb-2 match-details ${styles['match-details-btn']}`}>
 						<Button
 							label="Match Details"
-							icon="pi pi-check"
+							icon="pi pi-info"
 							onClick={() => handleMatchDetailsClick(resultOnFocus)}
 						/>
 					</div>

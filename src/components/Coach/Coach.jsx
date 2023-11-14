@@ -11,7 +11,7 @@ const Coach = ({ coach }) => {
 			<Button
 				label="Coach Details"
 				onClick={() => handleCoachDetailsClick()}
-				icon="pi pi-check"
+				icon="pi pi-info"
 			/>
 		</div>
 	);

@@ -15,7 +15,7 @@ const RunningCompetitions = ({ runningCompetitions }) => {
 			<Button
 				label="Competition Details"
 				onClick={() => handleCompetitionDetailsClick(competition)}
-				icon="pi pi-check"
+				icon="pi pi-info"
 			/>
 		</div>
 	);

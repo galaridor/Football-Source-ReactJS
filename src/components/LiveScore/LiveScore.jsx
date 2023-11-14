@@ -62,7 +62,7 @@ const LiveScore = () => {
 				<Button
 					label="Match Details"
 					onClick={() => handleMatchDetailsClick(match)}
-					icon="pi pi-check"
+					icon="pi pi-info"
 				/>
 			</div>
 		)
