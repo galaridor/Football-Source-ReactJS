@@ -70,7 +70,7 @@ const LiveScore = () => {
 
 	const scoreData = (match) => {
 		if (match.score && match.status !== 'TIMED' && match.status !== "SCHEDULED" && match.status !== "IN_PLAY") {
-			return `${match.score?.fullTime?.home} : ${match.score?.fullTime?.away} / ${match.score?.halfTime?.away} : ${match.score?.halfTime?.away}`
+			return `${match.score?.fullTime?.home} : ${match.score?.fullTime?.away} / ${match.score?.halfTime?.home} : ${match.score?.halfTime?.away}`
 		}
 		else if (match.score && match.status === 'IN_PLAY') {
 			return `${match.score?.fullTime?.home} : ${match.score?.fullTime?.away}`

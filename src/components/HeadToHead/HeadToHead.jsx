@@ -59,7 +59,7 @@ const HeadToHead = ({ matchId }) => {
 
 	const scoreData = (match) => {
 		if (match.score && match.status !== "TIMED" && match.status !== "SCHEDULED") {
-			return `${match.score?.fullTime?.home} : ${match.score?.fullTime?.away} / ${match.score?.halfTime?.away} : ${match.score?.halfTime?.away}`;
+			return `${match.score?.fullTime?.home} : ${match.score?.fullTime?.away} / ${match.score?.halfTime?.home} : ${match.score?.halfTime?.away}`;
 		}
 		return "";
 	};

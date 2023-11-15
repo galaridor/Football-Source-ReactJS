@@ -1,6 +1,6 @@
 .running-competitions-section {
 	text-align: center;
-	background-image: url(/public/images/competition_background.avif);
+	/* background-image: url(/public/images/competition_background.avif); */
 }
 
 .running-competitions-title {
@@ -8,7 +8,7 @@
 	text-align: center;
 }
 
-.running-competition-container {
+.running-competitions-container {
 	white-space: normal;
 }
 

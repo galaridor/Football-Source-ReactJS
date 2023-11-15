@@ -32,7 +32,7 @@ const DoughnutChart = ({ chartTitle, chartLabels, chartInfo }) => {
 
 		setChartData(data);
 		setChartOptions(options);
-	}, []);
+	}, [chartTitle]);
 
 	if (chartData) {
 		return (

@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputTextarea } from "primereact/inputtextarea";
 import Comment from "./Comment";
-import styles from "./CommentsList.module.css";
-import Picker from '@emoji-mart/react'
+import Picker from "@emoji-mart/react";
 import * as commentService from "../../services/comentService";
+import styles from "./CommentsList.module.css";
 
 const CommentsList = ({ entityId, type }) => {
   const [comments, setComments] = useState([]);
@@ -38,7 +38,7 @@ const CommentsList = ({ entityId, type }) => {
       return;
     }
 
-	const currentDate = new Date();
+    const currentDate = new Date();
 
     const createdComment = await commentService.create(
       type,
@@ -54,30 +54,68 @@ const CommentsList = ({ entityId, type }) => {
     setNewComment("");
   };
 
-  const deleteCommentHandler = async (_id) => {	    
-	await commentService.remove(_id);
+  const deleteCommentHandler = async (_id) => {
+    await commentService.remove(_id);
 
-    setComments(state => state.filter(comment => { return comment._id !== _id}));
-  }
+    setComments((state) =>
+      state.filter((comment) => {
+        return comment._id !== _id;
+      })
+    );
+  };
 
-  const editCommentHandler = async (_id, text) => {	    
-	const currentDate = new Date();
+  const editCommentHandler = async (_id, text, dateCreated) => {
+    debugger;
 
-	await commentService.update(_id, text, currentDate);
-  }
+    const currentDate = new Date();
+
+    const updatedComment = await commentService.update(
+      _id,
+      type,
+      entityId,
+      "1",
+      "username 1",
+      text,
+      dateCreated,
+      currentDate
+    );
+
+    setComments((prevComments) =>
+      prevComments.map((comment) =>
+        comment._id === _id
+          ? {
+              ...comment,
+              text: updatedComment.text,
+              lastModifiedOn: updatedComment.lastModifiedOn,
+            }
+          : comment
+      )
+    );
+  };
 
   return (
     <div className={styles["comments-section"]}>
       <h1 className={styles["comments-title"]}>All Comments</h1>
       {comments.map((comment) => (
-        <Comment key={comment._id} {...comment} onDelete={deleteCommentHandler} onEdit={editCommentHandler}/>
+        <Comment
+          key={comment._id}
+          {...comment}
+          onDelete={deleteCommentHandler}
+          onEdit={editCommentHandler}
+        />
       ))}
       <div className={styles["create-comment"]}>
         <label>Add new comment:</label>
-
-		<button onClick={() => setShowPicker(!showPicker)}>😊</button>
-		{showPicker && <Picker onEmojiSelect={handleEmojiSelect} />}
-        <form className={styles['form']} onSubmit={addCommentHandler}>
+        <div className={styles["emoji-section"]}>
+          <label>Emojis: </label>
+          <button onClick={() => setShowPicker(!showPicker)}>😊</button>
+        </div>
+        {showPicker && (
+          <div className={styles["emoji-picker-container"]}>
+            <Picker onEmojiSelect={handleEmojiSelect} />
+          </div>
+        )}
+        <form className={styles["form"]} onSubmit={addCommentHandler}>
           <InputTextarea
             rows={5}
             cols={100}
@@ -86,13 +124,14 @@ const CommentsList = ({ entityId, type }) => {
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Comment......"
           />
-		  <br></br>
-          <button
-            type="submit"
-            className="pi pi-send p-button p-button-raised p-button-success"
-          >
-            Add Comment
-          </button>
+          <div>
+            <button
+              type="submit"
+              className="pi pi-send p-button p-button-raised p-button-success"
+            >
+              Add Comment
+            </button>
+          </div>
         </form>
       </div>
     </div>

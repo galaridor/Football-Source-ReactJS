@@ -27,8 +27,8 @@ const RunningCompetitions = ({ runningCompetitions }) => {
 	if (runningCompetitions?.length > 0) {
 		return (
 			<div className={styles['running-competitions-section']}>
-				<h1 className={styles['running-competition-title']}>All Running Competitions</h1>
-				<div className={styles['running-competition-container']}>
+				<h1 className={styles['running-competitions-title']}>All Running Competitions</h1>
+				<div className={styles['running-competitions-container']}>
 					{runningCompetitions.map((competition) => (
 						<div className={styles['card-container']} key={competition.id}>
 							<Card className={styles['card']} footer={cardFooter(competition)} header={cardHeader(competition)} title={competition.name} />

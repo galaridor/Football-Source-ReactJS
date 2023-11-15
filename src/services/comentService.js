@@ -30,9 +30,9 @@ export const create = async (type, entityId, userId, username, text, dateCreated
     }
 };
 
-export const update = async (commentId, text, dateModified) => {
+export const update = async (_id, type, entityId, userId, username, text, dateCreated, lastModifiedOn) => {
 	try {
-		const updateDcomment = await request.put(baseUrl);
+		const updateDcomment = await request.put(`${baseUrl}/${_id}`, {type, entityId, userId, username, text, dateCreated, lastModifiedOn, _id});
 
 		return updateDcomment;
     } 

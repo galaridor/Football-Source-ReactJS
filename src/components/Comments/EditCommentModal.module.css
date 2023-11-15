@@ -1,0 +1,49 @@
+/* EditCommentModal.module.css */
+.modalOpen {
+  overflow: hidden;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.edit-comment-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  color: red;
+}
+
+.modal {
+  text-align: center;
+  max-width: 30%;
+  margin: 0 auto;
+  margin-top: 15%;
+  background-color: seashell;
+  padding: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal textarea {
+  margin-bottom: 10px;
+}
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.buttons-container>*:not(:last-child) {
+  margin-right: 10px;
+}
+
+.emoji-picker-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 8px;
+}
