@@ -1,4 +1,3 @@
-/* EditCommentModal.module.css */
 .modalOpen {
   overflow: hidden;
 }
@@ -17,7 +16,7 @@
 
 .modal {
   text-align: center;
-  max-width: 30%;
+  max-width: 50%;
   margin: 0 auto;
   margin-top: 15%;
   background-color: seashell;

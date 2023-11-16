@@ -22,7 +22,7 @@ import SomethingWentWrong from "./components/Error/SomethingWentWrong";
 import Login from "./components/Authentication/Login";
 import Register from "./components/Authentication/Register";
 import SearchResult from "./components/Search/SearchResult";
-
+import UpcomingEventsAdminPage from "./components/UpcomingEvent/UpcomingEventsAdminPage";
 
 function App() {
 	return (
@@ -48,6 +48,7 @@ function App() {
 				<Route path="/livescore" element={<Livescore />} />
 				<Route path="/contacts" element={<Contacts />} />
 				<Route path="/people/:id/" element={<Person />} />
+				<Route path="/upcoming-events/" element={<UpcomingEventsAdminPage />} />
 			</Routes>
 			<Footer />
 		</div>

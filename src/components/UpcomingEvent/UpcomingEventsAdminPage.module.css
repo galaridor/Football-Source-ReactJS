@@ -1,0 +1,30 @@
+.upcoming-events-section {
+	text-align: center;
+	/* background-image: url(/public/images/competition_background.avif); */
+}
+
+.upcoming-events-title {
+	color: red;
+}
+
+.upcoming-events {
+	white-space: normal;
+}
+
+.card-container {
+	width: 600px;
+	display: inline-grid;
+	margin: 15px;
+	height: auto;
+	background-color: lightgrey;
+}
+
+.card {
+	margin: 50px;
+	width: 30rem;
+}
+
+.card-image {
+	width: 150px;
+	margin: 25px;
+}
