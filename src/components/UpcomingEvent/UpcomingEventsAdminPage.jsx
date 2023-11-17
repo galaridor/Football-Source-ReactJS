@@ -1,18 +1,25 @@
 import { useEffect, useState } from 'react';
 import Timer from '../Timer/Timer';
 import { Card } from "primereact/card";
+import { Button } from "primereact/button";
 import { useNavigate } from 'react-router-dom';
+import UpcomingEventEditModal from './UpcomingEventEditModal';
 import styles from './UpcomingEventsAdminPage.module.css';
 import * as eventService from '../../services/eventService';
+import { formatDateForTimer } from '../../utils/dateTimeUtils'
+import UpcomingEventCreateModal from './UpcomingEventCreateModal';
 
 const UpcomingEventsAdminPage = () => {
 	const [upcomingEvents, setUpcomingEvents] = useState([]);
+	const [eventToEdit, setEventToEdit] = useState({});
+	const [isEditModalOpen, setEditModalOpen] = useState(false);
+	const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		eventService
-			.getAllUpcominEvent()
+			.getAllUpcomingEvent()
 			.then((result) => {
 				if (result.error)
 					throw new Error(result.error);
@@ -29,26 +36,126 @@ const UpcomingEventsAdminPage = () => {
 		<img src={`${event?.imageUrl}`} alt="Missing Image" className={`${styles['card-image']}`} />
 	);
 
+	const editEventHandler = (event) => {
+		setEventToEdit(event);
+
+		openEditModal();
+	};
+
+	const openEditModal = () => {
+		setEditModalOpen(true);
+	};
+
+	const closeEditModal = () => {
+		setEditModalOpen(false);
+	};
+
+	const createEventHandler = () => {
+		openCreateModal();
+	};
+
+	const openCreateModal = () => {
+		setCreateModalOpen(true);
+	};
+
+	const closeCreateModal = () => {
+		setCreateModalOpen(false);
+	};
+
+	const saveEditedEventHandler = async (event) => {
+		debugger;
+		closeEditModal();
+
+		const updatedEvent = await eventService.update(event._id, event.name, event.imageUrl, event.description, event.startDate);
+
+		setUpcomingEvents((prevEvents) =>
+			prevEvents.map((ev) =>
+				ev._id === event._id
+					? {
+						...ev,
+						name: updatedEvent.name,
+						description: updatedEvent.description,
+						startDate: updatedEvent.startDate,
+						imageUrl: updatedEvent.imageUrl
+					}
+					: ev
+			)
+		);
+	};
+
+	const saveNewEventHandler = async (event) => {
+		closeCreateModal();
+
+		const createdEvent = await eventService.create(event.name, event.imageUrl, event.description, event.startDate);
+
+		setUpcomingEvents((state) => [...state, createdEvent]);
+	};
+
+	const deleteEventHandler = async (event) => {
+		await eventService.remove(event._id);
+
+		setUpcomingEvents((state) =>
+			state.filter((currentEvent) => {
+				return currentEvent._id !== event._id;
+			})
+		);
+	};
+
 	const cardFooter = (event) => (
 		<div id="date-countdown">
-			<Timer deadline={event?.startDate} />
+			<Timer deadline={formatDateForTimer(event?.startDate)} />
+			<span>
+				<Button
+					icon="pi pi-pencil"
+					className="p-button-rounded p-button-text"
+					onClick={() => editEventHandler(event)}
+				/>
+				<Button
+					icon="pi pi-trash"
+					className="p-button-rounded p-button-text p-button-danger"
+					onClick={() => deleteEventHandler(event)}
+				/>
+			</span>
 		</div>
 	);
 
 	return (
 		<div className={`${styles['upcoming-events-section']}`}>
 			<h1 className={`${styles['upcoming-events-title']}`}>All Upcoming Events</h1>
-				<div className={`${styles['upcoming-events-container']}`}>
-					{upcomingEvents.map((event) => (
-						<div className={`${styles['card-container']}`} key={event._id}>
-							<Card className={`${styles['card']}`} footer={cardFooter(event)} header={cardHeader(event)} title={event.name}>
-								<p className="text-black">
-									{event?.description}
-								</p>
-							</Card>
-						</div>
-					))}
+			<div className={`${styles['upcoming-events-container']}`}>
+				{upcomingEvents.map((event) => (
+					<div className={`${styles['card-container']}`} key={event._id}>
+						<Card className={`${styles['card']}`} footer={cardFooter(event)} header={cardHeader(event)} title={event.name}>
+							<p className="text-black">
+								{event?.description}
+							</p>
+						</Card>
+					</div>
+				))}
+				<div>
+					<UpcomingEventEditModal
+						isOpen={isEditModalOpen}
+						onClose={closeEditModal}
+						onSave={saveEditedEventHandler}
+						currentEvent={eventToEdit}
+					/>
 				</div>
+				<div>
+					<UpcomingEventCreateModal
+						isOpen={isCreateModalOpen}
+						onClose={closeCreateModal}
+						onSave={saveNewEventHandler}
+					/>
+				</div>
+				<div>
+					<Button
+						label=' Add New Upcoming Event'
+						icon="pi pi-plus"
+						className="p-button-rounded p-button-text"
+						onClick={createEventHandler}
+					/>
+				</div>
+			</div>
 		</div>
 	)
 }

@@ -5,6 +5,7 @@ import Comment from "./Comment";
 import Picker from "@emoji-mart/react";
 import * as commentService from "../../services/comentService";
 import styles from "./CommentsList.module.css";
+import { Button } from "primereact/button";
 
 const CommentsList = ({ entityId, type }) => {
 	const [comments, setComments] = useState([]);
@@ -17,7 +18,9 @@ const CommentsList = ({ entityId, type }) => {
 		commentService
 			.getAllForEntity(entityId)
 			.then((result) => {
-				if (result.error) throw new Error(result.error);
+				debugger;
+				if (result.error) 
+					throw new Error(result.error);
 
 				setComments(result);
 			})
@@ -65,8 +68,6 @@ const CommentsList = ({ entityId, type }) => {
 	};
 
 	const editCommentHandler = async (_id, text, dateCreated) => {
-		debugger;
-
 		const currentDate = new Date();
 
 		const updatedComment = await commentService.update(
@@ -125,12 +126,11 @@ const CommentsList = ({ entityId, type }) => {
 						placeholder="Comment......"
 					/>
 					<div>
-						<button
+						<Button
+							label=" Add Comment"
 							type="submit"
-							className="pi pi-send p-button p-button-raised p-button-success"
-						>
-							Add Comment
-						</button>
+							className="pi pi-plus p-button p-button-raised p-button-success"
+						/>
 					</div>
 				</form>
 			</div>

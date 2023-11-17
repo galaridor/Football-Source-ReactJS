@@ -23,7 +23,8 @@ const Header = () => {
 			'/people': 'competitions',
 			'/teams': 'competitions',
 			'/login': 'login',
-			'/register': 'register'
+			'/register': 'register',
+			'/upcoming-events': 'upcoming-events'
 		};
 
 		for (const keyword in keywordMapping) {
@@ -75,11 +76,14 @@ const Header = () => {
 								<li onClick={() => toggleClass('contacts')} className={`nav-link ${activeItem === 'contacts' ? 'active' : ''}`}>
 									<Link to="/contacts">Contacts</Link>
 								</li>
-								<li onClick={() => toggleClass('contacts')} className={`nav-link ${styles['authentication']} ${activeItem === 'login' ? 'active' : ''}`}>
+								<li onClick={() => toggleClass('login')} className={`nav-link ${styles['authentication']} ${activeItem === 'login' ? 'active' : ''}`}>
 									<Link to="/login">Login</Link>
 								</li>
-								<li onClick={() => toggleClass('contacts')} className={`nav-link ${activeItem === 'register' ? 'active' : ''}`}>
+								<li onClick={() => toggleClass('register')} className={`nav-link ${activeItem === 'register' ? 'active' : ''}`}>
 									<Link to="/register">Register</Link>
+								</li>
+								<li onClick={() => toggleClass('upcoming-events')} className={`nav-link ${activeItem === 'upcoming-events' ? 'active' : ''}`}>
+									<Link to="/upcoming-events">Manage Upcoming Events</Link>
 								</li>
 							</ul>
 						</nav>

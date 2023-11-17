@@ -6,7 +6,7 @@ export const getAllForEntity = async (entityId) => {
 	try {
 		const result = await request.get(`${baseUrl}/`);
 
-		console.log(result);
+		console.log(Object.values(result));
 	
 		return Object.values(result).filter(comment => comment.entityId === entityId);
     } 
@@ -32,9 +32,9 @@ export const create = async (type, entityId, userId, username, text, dateCreated
 
 export const update = async (_id, type, entityId, userId, username, text, dateCreated, lastModifiedOn) => {
 	try {
-		const updateDcomment = await request.put(`${baseUrl}/${_id}`, {type, entityId, userId, username, text, dateCreated, lastModifiedOn, _id});
+		const updateDocument = await request.put(`${baseUrl}/${_id}`, {type, entityId, userId, username, text, dateCreated, lastModifiedOn, _id});
 
-		return updateDcomment;
+		return updateDocument;
     } 
     catch (error) {
         console.log(error);

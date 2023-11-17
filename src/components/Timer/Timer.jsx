@@ -20,7 +20,7 @@ const Timer = ({ deadline }) => {
 		const interval = setInterval(() => getTime(deadline), 1000);
 
 		return () => clearInterval(interval);
-	}, []);
+	}, [deadline]);
 
 	return (
 		<div className={styles["timer"]} role="timer">

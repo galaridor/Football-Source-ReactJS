@@ -2,10 +2,10 @@ import * as request from "../utils/request";
 
 const baseUrl = "http://localhost:3030/jsonstore/events";
 
-export const getAllUpcominEvent = async () => {
+export const getAllUpcomingEvent = async () => {
 
     try {
-        const result = await request.get(`${baseUrl}`)
+        const result = await request.get(`${baseUrl}`);
         
         console.log(result);
 
@@ -18,14 +18,14 @@ export const getAllUpcominEvent = async () => {
     }
 };
 
-export const create = async () => {
+export const create = async (name, imageUrl, description, startDate) => {
 
     try {
-        const result = await request.get(`${baseUrl}`)
+        const newEvent = await request.post(baseUrl, {name, imageUrl, description, startDate});
         
-        console.log(result);
+        console.log(newEvent);
 
-        return result;
+        return newEvent;
     } 
     catch (error) {
         console.log(error);
@@ -34,14 +34,10 @@ export const create = async () => {
     }
 };
 
-export const remove = async () => {
+export const remove = async (_id) => {
 
     try {
-        const result = await request.get(`${baseUrl}`)
-        
-        console.log(result);
-
-        return result;
+        await request.remove(`${baseUrl}/${_id}`);
     } 
     catch (error) {
         console.log(error);
@@ -50,14 +46,12 @@ export const remove = async () => {
     }
 };
 
-export const update = async () => {
+export const update = async (_id, name, imageUrl, description, startDate) => {
 
     try {
-        const result = await request.get(`${baseUrl}`)
-        
-        console.log(result);
+		const updatedEvent = await request.put(`${baseUrl}/${_id}`, {name, imageUrl, description, startDate, _id});
 
-        return result;
+		return updatedEvent;
     } 
     catch (error) {
         console.log(error);
@@ -69,13 +63,13 @@ export const update = async () => {
 export const getLatestUpcominEvent = async () => {
 
     try {
-        const result = await request.get(`${baseUrl}`)
+        const result = await request.get(`${baseUrl}`);
         
         console.log(result);
 
         const sortedResult = Object.values(result).sort(function(a, b) {
             return a.startDate.localeCompare(b.startDate);
-        })
+        });
 
         return sortedResult;
     } 

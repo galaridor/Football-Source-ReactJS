@@ -88,7 +88,7 @@ const Register = () => {
 					</div>
 				</div>
 
-				<Button className={styles['submit-btn']} type="submit" label="Register" />
+				<Button className={`${styles['submit-btn']} pi pi-sign-in`} type="submit" label=" Register" />
 			</form>
 		</div>
 	);

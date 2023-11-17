@@ -34,7 +34,6 @@ const Comment = ({
 	};
 
 	const saveEditedCommentHandler = async (comment) => {
-		debugger;
 		closeEditModal();
 		setCurrentCOment(comment);
 		await onEdit(_id, comment, dateCreated);

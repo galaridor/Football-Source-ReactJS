@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Timer from '../Timer/Timer';
 import { useNavigate } from 'react-router-dom';
 import styles from './UpcomingEvent.module.css';
+import { formatDateForTimer } from '../../utils/dateTimeUtils'
 import * as eventService from '../../services/eventService';
 
 const UpcomingEvent = () => {
@@ -37,7 +38,7 @@ const UpcomingEvent = () => {
 									{upcomingEvent?.description}
 								</p>
 								<div id="date-countdown">
-									<Timer deadline={upcomingEvent?.startDate} />
+									<Timer deadline={formatDateForTimer(upcomingEvent?.startDate)} />
 								</div>
 							</div>
 						</div>

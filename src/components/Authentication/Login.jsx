@@ -50,7 +50,7 @@ const Login = () => {
 					</div>
 				</div>
 
-				<Button className={styles['submit-btn']} type="submit" label="Login" />
+				<Button className={`${styles['submit-btn']} pi pi-sign-in`} type="submit" label=" Login" />
 			</form>
 		</div>
 	);
