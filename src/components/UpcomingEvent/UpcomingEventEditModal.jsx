@@ -6,25 +6,21 @@ import { useEffect, useState } from "react";
 import { formatDateToIsoDate } from "../../utils/dateTimeUtils";
 import Modal from "react-modal";
 import styles from "./UpcomingEventEditModal.module.css";
+import { useForm } from "../../hooks/useForm";
 
 const UpcomingEventEditModal = ({ isOpen, onClose, onSave, currentEvent }) => {
-	const [formData, setFormData] = useState({
+	const { formValues, handleInputChange, resetForm, setForm } = useForm({
 		_id: '',
-		name: '',
-		description: '',
-		startDate: '',
-		imageUrl: '',
+        name: '',
+        description: '',
+        startDate: '',
+        imageUrl: '',
 	});
 
 	useEffect(() => {
 		if (isOpen) {
-			setFormData({
-				_id: currentEvent._id,
-				name: currentEvent.name,
-				description: currentEvent.description,
-				startDate: currentEvent.startDate,
-				imageUrl: currentEvent.imageUrl,
-			})
+			resetForm();
+			setForm(currentEvent);
 			document.body.classList.add(styles["modalOpen"]);
 		} else {
 			document.body.classList.remove(styles["modalOpen"]);
@@ -33,35 +29,12 @@ const UpcomingEventEditModal = ({ isOpen, onClose, onSave, currentEvent }) => {
 		return () => {
 			document.body.classList.remove(styles["modalOpen"]);
 		};
-	}, [isOpen]);
+	}, [isOpen, currentEvent]);
 
 	const saveEditEventHandler = async (e) => {
 		e.preventDefault();
 
-		await onSave(formData);
-	};
-
-	const handleInputChange = (e) => {
-		const { name, value } = e.target;
-		setFormData({
-			...formData,
-			[name]: value,
-		});
-	};
-
-	const handleImageInputChange = (e) => {
-		const { name, value } = e.target;
-		setFormData({
-			...formData,
-			[name]: value
-		});
-	}
-
-	const handleDateChange = (e) => {
-		setFormData({
-			...formData,
-			startDate: e.value,
-		});
+		await onSave(formValues);
 	};
 
 	return (
@@ -80,7 +53,7 @@ const UpcomingEventEditModal = ({ isOpen, onClose, onSave, currentEvent }) => {
 							<InputText
 								id="name"
 								name="name"
-								value={formData.name}
+								value={formValues.name}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -93,7 +66,7 @@ const UpcomingEventEditModal = ({ isOpen, onClose, onSave, currentEvent }) => {
 								rows={5}
 								cols={100}
 								autoResize
-								value={formData.description}
+								value={formValues.description}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -103,8 +76,8 @@ const UpcomingEventEditModal = ({ isOpen, onClose, onSave, currentEvent }) => {
 							<Calendar
 								id="startDate"
 								name="startDate"
-								value={new Date(formatDateToIsoDate(formData.startDate))}
-								onChange={handleDateChange}
+								value={new Date(formatDateToIsoDate(formValues.startDate))}
+								onChange={handleInputChange}
 								dateFormat="dd/mm/yy"
 							/>
 						</div>
@@ -114,8 +87,8 @@ const UpcomingEventEditModal = ({ isOpen, onClose, onSave, currentEvent }) => {
 							<InputText
 								id="imageUrl"
 								name="imageUrl"
-								value={formData.imageUrl}
-								onChange={handleImageInputChange}
+								value={formValues.imageUrl}
+								onChange={handleInputChange}
 							/>
 						</div>
 					</div>

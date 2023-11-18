@@ -1,26 +1,18 @@
-import { useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import styles from './Login.module.css'
+import { useForm } from '../../hooks/useForm';
 
 const Login = () => {
-	const [formData, setFormData] = useState({
+	const { formValues, handleInputChange } = useForm({
 		username: '',
 		password: '',
 	});
 
-	const handleInputChange = (e) => {
-		const { name, value } = e.target;
-		setFormData({
-			...formData,
-			[name]: value,
-		});
-	};
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		console.log(formData);
+		console.log(formValues);
 	};
 
 	return (
@@ -33,7 +25,7 @@ const Login = () => {
 						<InputText
 							id="username"
 							name="username"
-							value={formData.username}
+							value={formValues.username}
 							onChange={handleInputChange}
 						/>
 					</div>
@@ -44,7 +36,7 @@ const Login = () => {
 							id="password"
 							name="password"
 							type="password"
-							value={formData.password}
+							value={formValues.password}
 							onChange={handleInputChange}
 						/>
 					</div>

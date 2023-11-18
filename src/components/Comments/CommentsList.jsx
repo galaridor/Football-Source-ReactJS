@@ -6,10 +6,14 @@ import Picker from "@emoji-mart/react";
 import * as commentService from "../../services/comentService";
 import styles from "./CommentsList.module.css";
 import { Button } from "primereact/button";
+import { useForm } from "../../hooks/useForm";
 
 const CommentsList = ({ entityId, type }) => {
 	const [comments, setComments] = useState([]);
-	const [newComment, setNewComment] = useState("");
+	const { formValues, handleInputChange, resetForm, setForm } = useForm({
+		text: '',
+	});
+
 	const [showPicker, setShowPicker] = useState(false);
 
 	const navigate = useNavigate();
@@ -18,8 +22,7 @@ const CommentsList = ({ entityId, type }) => {
 		commentService
 			.getAllForEntity(entityId)
 			.then((result) => {
-				debugger;
-				if (result.error) 
+				if (result.error)
 					throw new Error(result.error);
 
 				setComments(result);
@@ -31,13 +34,13 @@ const CommentsList = ({ entityId, type }) => {
 	}, [entityId]);
 
 	const handleEmojiSelect = (emoji) => {
-		setNewComment((prevComment) => prevComment + emoji.native);
+		setForm({ text: formValues.text + emoji.native });
 	};
 
 	const addCommentHandler = async (e) => {
 		e.preventDefault();
 
-		if (newComment.trim() === "") {
+		if (formValues.text.trim() === "") {
 			return;
 		}
 
@@ -48,13 +51,13 @@ const CommentsList = ({ entityId, type }) => {
 			entityId,
 			"1",
 			"username 1",
-			newComment,
+			formValues.text,
 			currentDate,
 			currentDate
 		);
 
 		setComments((state) => [...state, createdComment]);
-		setNewComment("");
+		resetForm();
 	};
 
 	const deleteCommentHandler = async (_id) => {
@@ -121,8 +124,9 @@ const CommentsList = ({ entityId, type }) => {
 						rows={5}
 						cols={100}
 						autoResize
-						value={newComment}
-						onChange={(e) => setNewComment(e.target.value)}
+						name="text"
+						value={formValues.text}
+						onChange={handleInputChange}
 						placeholder="Comment......"
 					/>
 					<div>

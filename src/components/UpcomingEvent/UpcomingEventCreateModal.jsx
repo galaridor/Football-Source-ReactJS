@@ -5,18 +5,19 @@ import { Calendar } from 'primereact/calendar';
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import styles from "./UpcomingEventCreateModal.module.css";
+import { useForm } from "../../hooks/useForm";
 
 const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
-    const [formData, setFormData] = useState({});
+    const { formValues, handleInputChange, resetForm } = useForm({
+        name: '',
+        description: '',
+        startDate: '',
+        imageUrl: '',
+    });
 
     useEffect(() => {
         if (isOpen) {
-            setFormData({
-                name: '',
-                description: '',
-                startDate: '',
-                imageUrl: '',
-            })
+            resetForm();
             document.body.classList.add(styles["modalOpen"]);
         } else {
             document.body.classList.remove(styles["modalOpen"]);
@@ -30,30 +31,7 @@ const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
     const saveNewEventHandler = async (e) => {
         e.preventDefault();
 
-        await onSave(formData);
-    };
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
-
-    const handleImageInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    }
-
-    const handleDateChange = (e) => {
-        setFormData({
-            ...formData,
-            startDate: e.value,
-        });
+        await onSave(formValues);
     };
 
     return (
@@ -72,7 +50,7 @@ const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
                             <InputText
                                 id="name"
                                 name="name"
-                                value={formData.name}
+                                value={formValues.name}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -85,7 +63,7 @@ const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
                                 rows={5}
                                 cols={100}
                                 autoResize
-                                value={formData.description}
+                                value={formValues.description}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -95,8 +73,8 @@ const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
                             <Calendar
                                 id="startDate"
                                 name="startDate"
-                                value={formData.startDate}
-                                onChange={handleDateChange}
+                                value={formValues.startDate}
+                                onChange={handleInputChange}
                                 dateFormat="dd/mm/yy"
                             />
                         </div>
@@ -106,8 +84,8 @@ const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
                             <InputText
                                 id="imageUrl"
                                 name="imageUrl"
-                                value={formData.imageUrl}
-                                onChange={handleImageInputChange}
+                                value={formValues.imageUrl}
+                                onChange={handleInputChange}
                             />
                         </div>
                     </div>

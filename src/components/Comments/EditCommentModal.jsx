@@ -4,14 +4,18 @@ import { useEffect, useState } from "react";
 import Picker from "@emoji-mart/react";
 import Modal from "react-modal";
 import styles from "./EditCommentModal.module.css";
+import { useForm } from "../../hooks/useForm";
 
 const EditCommentModal = ({ isOpen, onClose, onSave, comment }) => {
-	const [editedComment, setEditeComment] = useState('');
+	const { formValues, handleInputChange, resetForm, setForm } = useForm({
+		text: '',
+	});
 	const [showPicker, setShowPicker] = useState(false);
 
 	useEffect(() => {
 		if (isOpen) {
-			setEditeComment(comment);
+			resetForm();
+			setForm({text: comment});
 			document.body.classList.add(styles["modalOpen"]);
 		} else {
 			document.body.classList.remove(styles["modalOpen"]);
@@ -23,16 +27,15 @@ const EditCommentModal = ({ isOpen, onClose, onSave, comment }) => {
 	}, [isOpen]);
 
 	const handleEmojiSelect = (emoji) => {
-		setEditeComment((prevComment) => prevComment + emoji.native);
-	};
-
-	const editCommentHandler = (e) => {
-		setEditeComment(e.target.value);
+		setForm({ text: formValues.text + emoji.native });
 	};
 
 	const saveEditCommentHandler = async (e) => {
 		e.preventDefault();
+		
 		await onSave(editedComment);
+
+		resetForm();
 	};
 
 	return (
@@ -58,8 +61,9 @@ const EditCommentModal = ({ isOpen, onClose, onSave, comment }) => {
 						rows={5}
 						cols={100}
 						autoResize
-						value={editedComment}
-						onChange={editCommentHandler}
+						name="text"
+						value={formValues.text}
+						onChange={handleInputChange}
 					/>
 					<div className={styles["buttons-container"]}>
 						<Button

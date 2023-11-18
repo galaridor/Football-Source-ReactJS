@@ -3,42 +3,20 @@ import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
 import styles from './Register.module.css'
+import { useForm } from '../../hooks/useForm';
 
 const Register = () => {
-	const [formData, setFormData] = useState({
+	const { formValues, handleInputChange } = useForm({
 		firstName: '',
 		lastName: '',
 		dob: null,
 		imageUrl: '',
 	});
 
-	const handleInputChange = (e) => {
-		const { name, value } = e.target;
-		setFormData({
-			...formData,
-			[name]: value,
-		});
-	};
-
-	const handleImageInputChange = (e) => {
-		const { name, value } = e.target;
-		setFormData({
-			...formData,
-			[name]: value
-		});
-	}
-
-	const handleDateChange = (e) => {
-		setFormData({
-			...formData,
-			dob: e.value,
-		});
-	};
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		console.log(formData);
+		console.log(formValues);
 	};
 
 	return (
@@ -51,7 +29,7 @@ const Register = () => {
 						<InputText
 							id="firstName"
 							name="firstName"
-							value={formData.firstName}
+							value={formValues.firstName}
 							onChange={handleInputChange}
 						/>
 					</div>
@@ -61,7 +39,7 @@ const Register = () => {
 						<InputText
 							id="lastName"
 							name="lastName"
-							value={formData.lastName}
+							value={formValues.lastName}
 							onChange={handleInputChange}
 						/>
 					</div>
@@ -71,8 +49,8 @@ const Register = () => {
 						<Calendar
 							id="dob"
 							name="dob"
-							value={formData.dob}
-							onChange={handleDateChange}
+							value={formValues.dob}
+							onChange={handleInputChange}
 							dateFormat="dd/mm/yy"
 						/>
 					</div>
@@ -82,8 +60,8 @@ const Register = () => {
 						<InputText
 							id="imageUrl"
 							name="imageUrl"
-							value={formData.imageUrl}
-							onChange={handleImageInputChange}
+							value={formValues.imageUrl}
+							onChange={handleInputChange}
 						/>
 					</div>
 				</div>
