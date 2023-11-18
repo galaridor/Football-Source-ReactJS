@@ -2,13 +2,14 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { formatDateToIsoDate } from "../../utils/dateTimeUtils";
 import Modal from "react-modal";
 import styles from "./UpcomingEventEditModal.module.css";
 import { useForm } from "../../hooks/useForm";
+import { UpcomingEventContext } from "../../contexts/UpcomingEventContext";
 
-const UpcomingEventEditModal = ({ isOpen, onClose, onSave, currentEvent }) => {
+const UpcomingEventEditModal = ({ isOpen, currentEvent }) => {
 	const { formValues, handleInputChange, resetForm, setForm } = useForm({
 		_id: '',
         name: '',
@@ -17,10 +18,14 @@ const UpcomingEventEditModal = ({ isOpen, onClose, onSave, currentEvent }) => {
         imageUrl: '',
 	});
 
+	const { closeEditModal, saveEditedEventHandler } = useContext(UpcomingEventContext);
+
 	useEffect(() => {
 		if (isOpen) {
+
 			resetForm();
 			setForm(currentEvent);
+
 			document.body.classList.add(styles["modalOpen"]);
 		} else {
 			document.body.classList.remove(styles["modalOpen"]);
@@ -31,22 +36,21 @@ const UpcomingEventEditModal = ({ isOpen, onClose, onSave, currentEvent }) => {
 		};
 	}, [isOpen, currentEvent]);
 
-	const saveEditEventHandler = async (e) => {
+	const handleFormSubmit = async (e) => {
 		e.preventDefault();
-
-		await onSave(formValues);
+		await saveEditedEventHandler(formValues);
 	};
-
+	
 	return (
 		<Modal
 			className={styles["modal"]}
 			isOpen={isOpen}
-			onRequestClose={onClose}
+			onRequestClose={closeEditModal}
 			ariaHideApp={false}
 		>
 			<div className="edit-event-section">
 				<h3 className={styles["edit-event-title"]}>Edit {currentEvent?.name}</h3>
-				<form className={styles['edit-event-form']} onSubmit={saveEditEventHandler}>
+				<form className={styles['edit-event-form']} onSubmit={handleFormSubmit}>
 					<div className="p-fluid">
 						<div className="p-field">
 							<label htmlFor="name">Event Name:</label>
@@ -101,7 +105,7 @@ const UpcomingEventEditModal = ({ isOpen, onClose, onSave, currentEvent }) => {
 						<Button
 							icon="pi pi-times"
 							className="p-button-rounded p-button-text p-button-danger"
-							onClick={onClose}
+							onClick={closeEditModal}
 						/>
 					</div>
 				</form>

@@ -1,21 +1,22 @@
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Picker from "@emoji-mart/react";
 import Modal from "react-modal";
-import styles from "./EditCommentModal.module.css";
+import { CommentContext } from "../../contexts/CommentContext";
 import { useForm } from "../../hooks/useForm";
+import styles from "./EditCommentModal.module.css";
 
-const EditCommentModal = ({ isOpen, onClose, onSave, comment }) => {
-	const { formValues, handleInputChange, resetForm, setForm } = useForm({
-		text: '',
-	});
+const EditCommentModal = ({ isOpen, comment }) => {
 	const [showPicker, setShowPicker] = useState(false);
+	const { formValues, handleInputChange, resetForm, setForm } = useForm({ text: '' });
+	const { saveEditedCommentHandlerClick, closeEditModal } = useContext(CommentContext);
 
 	useEffect(() => {
 		if (isOpen) {
 			resetForm();
 			setForm({text: comment});
+
 			document.body.classList.add(styles["modalOpen"]);
 		} else {
 			document.body.classList.remove(styles["modalOpen"]);
@@ -24,7 +25,7 @@ const EditCommentModal = ({ isOpen, onClose, onSave, comment }) => {
 		return () => {
 			document.body.classList.remove(styles["modalOpen"]);
 		};
-	}, [isOpen]);
+	}, [isOpen, comment]);
 
 	const handleEmojiSelect = (emoji) => {
 		setForm({ text: formValues.text + emoji.native });
@@ -33,16 +34,14 @@ const EditCommentModal = ({ isOpen, onClose, onSave, comment }) => {
 	const saveEditCommentHandler = async (e) => {
 		e.preventDefault();
 		
-		await onSave(formValues.text);
-
-		resetForm();
+		await saveEditedCommentHandlerClick(formValues.text);
 	};
 
 	return (
 		<Modal
 			className={styles["modal"]}
 			isOpen={isOpen}
-			onRequestClose={onClose}
+			onRequestClose={closeEditModal}
 			ariaHideApp={false}
 		>
 			<div className="edit-comment-section">
@@ -72,7 +71,7 @@ const EditCommentModal = ({ isOpen, onClose, onSave, comment }) => {
 						/>
 						<Button
 							className="p-button-rounded p-button-text p-button-secondary pi pi-delete-left"
-							onClick={onClose}
+							onClick={closeEditModal}
 						/>
 					</div>
 				</form>

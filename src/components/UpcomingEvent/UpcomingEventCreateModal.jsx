@@ -2,12 +2,13 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
-import { useEffect, useState } from "react";
+import { useContext, useEffect  } from "react";
 import Modal from "react-modal";
+import { UpcomingEventContext } from "../../contexts/UpcomingEventContext";
 import styles from "./UpcomingEventCreateModal.module.css";
 import { useForm } from "../../hooks/useForm";
 
-const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
+const UpcomingEventCreateModal = ({ isOpen }) => {
     const { formValues, handleInputChange, resetForm } = useForm({
         name: '',
         description: '',
@@ -15,9 +16,13 @@ const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
         imageUrl: '',
     });
 
+    const { closeCreateModal, saveNewEventHandler } = useContext(UpcomingEventContext);
+
     useEffect(() => {
         if (isOpen) {
+
             resetForm();
+
             document.body.classList.add(styles["modalOpen"]);
         } else {
             document.body.classList.remove(styles["modalOpen"]);
@@ -28,22 +33,22 @@ const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
         };
     }, [isOpen]);
 
-    const saveNewEventHandler = async (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
 
-        await onSave(formValues);
+        await saveNewEventHandler(formValues);
     };
-
+    
     return (
         <Modal
             className={styles["modal"]}
             isOpen={isOpen}
-            onRequestClose={onClose}
+            onRequestClose={closeCreateModal}
             ariaHideApp={false}
         >
             <div className="create-event-section">
                 <h3 className={styles["create-event-title"]}>Create New Upcoming Event</h3>
-                <form className={styles['create-event-form']} onSubmit={saveNewEventHandler}>
+                <form className={styles['create-event-form']} onSubmit={handleFormSubmit}>
                     <div className="p-fluid">
                         <div className="p-field">
                             <label htmlFor="name">Event Name:</label>
@@ -98,7 +103,7 @@ const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
                         <Button
                             icon="pi pi-times"
                             className="p-button-rounded p-button-text p-button-danger"
-                            onClick={onClose}
+                            onClick={closeCreateModal}
                         />
                     </div>
                 </form>

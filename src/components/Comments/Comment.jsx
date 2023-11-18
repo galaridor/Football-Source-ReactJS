@@ -1,9 +1,9 @@
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import EditCommentModal from "./EditCommentModal";
 import { formatUTCDateToLocal } from "../../utils/dateTimeUtils";
+import { useContext } from "react";
+import { CommentContext } from "../../contexts/CommentContext";
 import styles from "./Comment.module.css";
-import { useState } from "react";
 
 const Comment = ({
 	_id,
@@ -11,45 +11,20 @@ const Comment = ({
 	text,
 	dateCreated,
 	lastModifiedOn,
-	onDelete,
-	onEdit,
 }) => {
-	const [isEditModalOpen, setEditModalOpen] = useState(false);
-	const [currentComment, setCurrentComent] = useState(text);
-
-	const editCommentHandler = () => {
-		openEditModal();
-	};
-
-	const deleteCommentHandler = async () => {
-		await onDelete(_id);
-	};
-
-	const openEditModal = () => {
-		setEditModalOpen(true);
-	};
-
-	const closeEditModal = () => {
-		setEditModalOpen(false);
-	};
-
-	const saveEditedCommentHandler = async (comment) => {
-		closeEditModal();
-		setCurrentComent(comment);
-		await onEdit(_id, comment, dateCreated);
-	};
+	const { editCommentHandlerClick, deleteCommentHandlerClick } = useContext(CommentContext);
 
 	const cardFooter = (
 		<div>
 			<Button
 				icon="pi pi-pencil"
 				className="p-button-rounded p-button-text"
-				onClick={editCommentHandler}
+				onClick={()=> {editCommentHandlerClick(_id)}}
 			/>
 			<Button
 				icon="pi pi-trash"
 				className="p-button-rounded p-button-text p-button-danger"
-				onClick={deleteCommentHandler}
+				onClick={()=> {deleteCommentHandlerClick(_id)}}
 			/>
 		</div>
 	);
@@ -65,12 +40,6 @@ const Comment = ({
 				<p>{text}</p>
 				<small>Last Modified On: {formatUTCDateToLocal(lastModifiedOn)}</small>
 			</Card>
-			<EditCommentModal
-				isOpen={isEditModalOpen}
-				onClose={closeEditModal}
-				onSave={saveEditedCommentHandler}
-				comment={currentComment}
-			/>
 		</div>
 	);
 };

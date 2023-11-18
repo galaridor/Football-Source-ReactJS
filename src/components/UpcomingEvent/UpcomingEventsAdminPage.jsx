@@ -8,6 +8,7 @@ import styles from './UpcomingEventsAdminPage.module.css';
 import * as eventService from '../../services/eventService';
 import { formatDateForTimer } from '../../utils/dateTimeUtils'
 import UpcomingEventCreateModal from './UpcomingEventCreateModal';
+import { UpcomingEventContext } from "../../contexts/UpcomingEventContext";
 
 const UpcomingEventsAdminPage = () => {
 	const [upcomingEvents, setUpcomingEvents] = useState([]);
@@ -36,7 +37,7 @@ const UpcomingEventsAdminPage = () => {
 		<img src={`${event?.imageUrl}`} alt="Missing Image" className={`${styles['card-image']}`} />
 	);
 
-	const editEventHandler = (event) => {
+	const editEventHandlerClick = (event) => {
 		setEventToEdit(event);
 
 		openEditModal();
@@ -50,7 +51,7 @@ const UpcomingEventsAdminPage = () => {
 		setEditModalOpen(false);
 	};
 
-	const createEventHandler = () => {
+	const createNewEventHandlerClick = () => {
 		openCreateModal();
 	};
 
@@ -107,7 +108,7 @@ const UpcomingEventsAdminPage = () => {
 				<Button
 					icon="pi pi-pencil"
 					className="p-button-rounded p-button-text"
-					onClick={() => editEventHandler(event)}
+					onClick={() => editEventHandlerClick(event)}
 				/>
 				<Button
 					icon="pi pi-trash"
@@ -118,46 +119,51 @@ const UpcomingEventsAdminPage = () => {
 		</div>
 	);
 
+	const upcomingEventsContextValue = {
+		closeCreateModal,
+		closeEditModal,
+		saveEditedEventHandler,
+		saveNewEventHandler
+	};
+
 	return (
-		<div className={`${styles['upcoming-events-section']}`}>
-			<h1 className={`${styles['upcoming-events-title']}`}>All Upcoming Events</h1>
-			<div className={`${styles['upcoming-events-container']}`}>
-				{upcomingEvents.map((event) => (
-					<div className={`${styles['card-container']}`} key={event._id}>
-						<Card className={`${styles['card']}`} footer={cardFooter(event)} header={cardHeader(event)} title={event.name}>
-							<div className={`${styles['card-content']}`}>
-								<p className="text-black">
-									{event?.description}
-								</p>
-							</div>
-						</Card>
+		<UpcomingEventContext.Provider value={upcomingEventsContextValue}>
+			<div className={`${styles['upcoming-events-section']}`}>
+				<h1 className={`${styles['upcoming-events-title']}`}>All Upcoming Events</h1>
+				<div className={`${styles['upcoming-events-container']}`}>
+					{upcomingEvents.map((event) => (
+						<div className={`${styles['card-container']}`} key={event._id}>
+							<Card className={`${styles['card']}`} footer={cardFooter(event)} header={cardHeader(event)} title={event.name}>
+								<div className={`${styles['card-content']}`}>
+									<p className="text-black">
+										{event?.description}
+									</p>
+								</div>
+							</Card>
+						</div>
+					))}
+					<div>
+						<UpcomingEventEditModal
+							isOpen={isEditModalOpen}
+							currentEvent={eventToEdit}
+						/>
 					</div>
-				))}
-				<div>
-					<UpcomingEventEditModal
-						isOpen={isEditModalOpen}
-						onClose={closeEditModal}
-						onSave={saveEditedEventHandler}
-						currentEvent={eventToEdit}
-					/>
+					<div>
+						<UpcomingEventCreateModal
+							isOpen={isCreateModalOpen}
+						/>
+					</div>
 				</div>
 				<div>
 					<Button
 						label=' Add New Upcoming Event'
 						icon="pi pi-plus"
 						className="p-button-rounded"
-						onClick={createEventHandler}
-					/>
-				</div>
-				<div>
-					<UpcomingEventCreateModal
-						isOpen={isCreateModalOpen}
-						onClose={closeCreateModal}
-						onSave={saveNewEventHandler}
+						onClick={createNewEventHandlerClick}
 					/>
 				</div>
 			</div>
-		</div>
+		</UpcomingEventContext.Provider>
 	)
 }
 

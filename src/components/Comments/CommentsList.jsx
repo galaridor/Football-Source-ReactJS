@@ -3,18 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { InputTextarea } from "primereact/inputtextarea";
 import Comment from "./Comment";
 import Picker from "@emoji-mart/react";
-import * as commentService from "../../services/comentService";
-import styles from "./CommentsList.module.css";
 import { Button } from "primereact/button";
 import { useForm } from "../../hooks/useForm";
+import { CommentContext } from "../../contexts/CommentContext";
+import EditCommentModal from "./EditCommentModal";
+import * as commentService from "../../services/comentService";
+import styles from "./CommentsList.module.css";
 
 const CommentsList = ({ entityId, type }) => {
 	const [comments, setComments] = useState([]);
-	const { formValues, handleInputChange, resetForm, setForm } = useForm({
-		text: '',
-	});
-
+	const [selectedComment, setSelectedComment] = useState(null);
+	const [isEditModalOpen, setEditModalOpen] = useState(false);
 	const [showPicker, setShowPicker] = useState(false);
+	const { formValues, handleInputChange, resetForm, setForm } = useForm({ text: '' });
 
 	const navigate = useNavigate();
 
@@ -97,48 +98,82 @@ const CommentsList = ({ entityId, type }) => {
 		);
 	};
 
+	const editCommentHandlerClick = (_id) => {
+		setSelectedComment(comments.find(comment => comment._id === _id));
+		openEditModal();
+	};
+
+	const deleteCommentHandlerClick = async (_id) => {
+		await deleteCommentHandler(_id);
+		closeEditModal();
+	};
+
+	const openEditModal = () => {
+		setEditModalOpen(true);
+	};
+
+	const closeEditModal = () => {
+		setEditModalOpen(false);
+	};
+
+	const saveEditedCommentHandlerClick = async (comment) => {
+		await editCommentHandler(selectedComment?._id, comment, selectedComment?.dateCreated);
+		closeEditModal();
+	};
+
+	const commentContextValue = {
+		saveEditedCommentHandlerClick,
+		editCommentHandlerClick,
+		deleteCommentHandlerClick,
+		closeEditModal
+	};
+
 	return (
-		<div className={styles["comments-section"]}>
-			<h1 className={styles["comments-title"]}>All Comments</h1>
-			{comments.map((comment) => (
-				<Comment
-					key={comment._id}
-					{...comment}
-					onDelete={deleteCommentHandler}
-					onEdit={editCommentHandler}
-				/>
-			))}
-			<div className={styles["create-comment"]}>
-				<label>Add new comment:</label>
-				<div className={styles["emoji-section"]}>
-					<label>Emojis: </label>
-					<button onClick={() => setShowPicker(!showPicker)}>😊</button>
-				</div>
-				{showPicker && (
-					<div className={styles["emoji-picker-container"]}>
-						<Picker onEmojiSelect={handleEmojiSelect} />
-					</div>
-				)}
-				<form className={styles["form"]} onSubmit={addCommentHandler}>
-					<InputTextarea
-						rows={5}
-						cols={100}
-						autoResize
-						name="text"
-						value={formValues.text}
-						onChange={handleInputChange}
-						placeholder="Comment......"
+		<CommentContext.Provider value={commentContextValue}>
+			<div className={styles["comments-section"]}>
+				<h1 className={styles["comments-title"]}>All Comments</h1>
+				{comments.map((comment) => (
+					<Comment
+						key={comment._id}
+						{...comment}
 					/>
-					<div>
-						<Button
-							label=" Add Comment"
-							type="submit"
-							className="pi pi-plus p-button p-button-raised p-button-success"
-						/>
+				))}
+				<div className={styles["create-comment"]}>
+					<label>Add new comment:</label>
+					<div className={styles["emoji-section"]}>
+						<label>Emojis: </label>
+						<button onClick={() => setShowPicker(!showPicker)}>😊</button>
 					</div>
-				</form>
+					{showPicker && (
+						<div className={styles["emoji-picker-container"]}>
+							<Picker onEmojiSelect={handleEmojiSelect} />
+						</div>
+					)}
+					<form className={styles["form"]} onSubmit={addCommentHandler}>
+						<InputTextarea
+							rows={5}
+							cols={100}
+							autoResize
+							name="text"
+							value={formValues.text}
+							onChange={handleInputChange}
+							placeholder="Comment......"
+						/>
+						<div>
+							<Button
+								label=" Add Comment"
+								type="submit"
+								className="pi pi-plus p-button p-button-raised p-button-success"
+							/>
+						</div>
+					</form>
+				</div>
+				<EditCommentModal
+					isOpen={isEditModalOpen}
+					comment={selectedComment?.text}
+				/>
 			</div>
-		</div>
+		</CommentContext.Provider>
 	);
 };
 
