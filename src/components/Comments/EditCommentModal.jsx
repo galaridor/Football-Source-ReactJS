@@ -33,7 +33,7 @@ const EditCommentModal = ({ isOpen, onClose, onSave, comment }) => {
 	const saveEditCommentHandler = async (e) => {
 		e.preventDefault();
 		
-		await onSave(editedComment);
+		await onSave(formValues.text);
 
 		resetForm();
 	};

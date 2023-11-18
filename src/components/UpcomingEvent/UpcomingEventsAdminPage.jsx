@@ -63,7 +63,6 @@ const UpcomingEventsAdminPage = () => {
 	};
 
 	const saveEditedEventHandler = async (event) => {
-		debugger;
 		closeEditModal();
 
 		const updatedEvent = await eventService.update(event._id, event.name, event.imageUrl, event.description, event.startDate);
@@ -104,7 +103,7 @@ const UpcomingEventsAdminPage = () => {
 	const cardFooter = (event) => (
 		<div id="date-countdown">
 			<Timer deadline={formatDateForTimer(event?.startDate)} />
-			<span>
+			<div>
 				<Button
 					icon="pi pi-pencil"
 					className="p-button-rounded p-button-text"
@@ -115,7 +114,7 @@ const UpcomingEventsAdminPage = () => {
 					className="p-button-rounded p-button-text p-button-danger"
 					onClick={() => deleteEventHandler(event)}
 				/>
-			</span>
+			</div>
 		</div>
 	);
 
@@ -126,9 +125,11 @@ const UpcomingEventsAdminPage = () => {
 				{upcomingEvents.map((event) => (
 					<div className={`${styles['card-container']}`} key={event._id}>
 						<Card className={`${styles['card']}`} footer={cardFooter(event)} header={cardHeader(event)} title={event.name}>
-							<p className="text-black">
-								{event?.description}
-							</p>
+							<div className={`${styles['card-content']}`}>
+								<p className="text-black">
+									{event?.description}
+								</p>
+							</div>
 						</Card>
 					</div>
 				))}
@@ -141,18 +142,18 @@ const UpcomingEventsAdminPage = () => {
 					/>
 				</div>
 				<div>
+					<Button
+						label=' Add New Upcoming Event'
+						icon="pi pi-plus"
+						className="p-button-rounded"
+						onClick={createEventHandler}
+					/>
+				</div>
+				<div>
 					<UpcomingEventCreateModal
 						isOpen={isCreateModalOpen}
 						onClose={closeCreateModal}
 						onSave={saveNewEventHandler}
-					/>
-				</div>
-				<div>
-					<Button
-						label=' Add New Upcoming Event'
-						icon="pi pi-plus"
-						className="p-button-rounded p-button-text"
-						onClick={createEventHandler}
 					/>
 				</div>
 			</div>

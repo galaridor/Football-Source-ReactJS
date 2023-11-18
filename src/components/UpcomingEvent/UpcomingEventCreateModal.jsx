@@ -89,7 +89,7 @@ const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
                             />
                         </div>
                     </div>
-                    <span>
+                    <div>
                         <Button
                             icon="pi pi-check"
                             className="p-button-rounded p-button-text"
@@ -100,7 +100,7 @@ const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
                             className="p-button-rounded p-button-text p-button-danger"
                             onClick={onClose}
                         />
-                    </span>
+                    </div>
                 </form>
             </div>
         </Modal>

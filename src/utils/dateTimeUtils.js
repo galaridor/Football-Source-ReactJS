@@ -29,7 +29,6 @@ export function formatDateForTimer(isoDate) {
 };
 
 export function formatDateToIsoDate(formattedDate) {
-	debugger;
 	const date = new Date(formattedDate);
 
 	if (isNaN(date.getTime())) {

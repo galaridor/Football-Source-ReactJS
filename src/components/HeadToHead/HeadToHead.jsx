@@ -75,39 +75,42 @@ const HeadToHead = ({ matchId }) => {
 					{aggregates.homeTeam.name} vs {aggregates.awayTeam.name} Head To Head
 					Matches
 				</h1>
-				<div className={styles["card-container"]}>
-					<Card title={"Agregates"} className={styles["card"]}>
-						<p>
-							<strong>Number Of Matches:</strong> {aggregates.numberOfMatches}
-						</p>
-						<p>
-							<strong>Total Goals:</strong> {aggregates.totalGoals}
-						</p>
-						<p>
-							<strong>Total Wins for {aggregates.homeTeam.name}:</strong>{" "}
-							{aggregates.homeTeam.wins}
-						</p>
-						<p>
-							<strong>Total Draws for {aggregates.homeTeam.name}:</strong>{" "}
-							{aggregates.homeTeam.draws}
-						</p>
-						<p>
-							<strong>Total Losses for {aggregates.homeTeam.name}:</strong>{" "}
-							{aggregates.homeTeam.losses}
-						</p>
-						<p>
-							<strong>Total Wins for {aggregates.awayTeam.name}:</strong>{" "}
-							{aggregates.awayTeam.wins}
-						</p>
-						<p>
-							<strong>Total Draws for {aggregates.awayTeam.name}:</strong>{" "}
-							{aggregates.awayTeam.draws}
-						</p>
-						<p>
-							<strong>Total Losses for {aggregates.awayTeam.name}:</strong>{" "}
-							{aggregates.awayTeam.losses}
-						</p>
-					</Card>
+				<div className={styles['head-to-head-stats']}>
+					<div className={styles["card-container"]}>
+						<Card title={"Agregates"} className={styles["card"]}>
+							<p>
+								<strong>Number Of Matches:</strong> {aggregates.numberOfMatches}
+							</p>
+							<p>
+								<strong>Total Goals:</strong> {aggregates.totalGoals}
+							</p>
+							<p>
+								<strong>Total Wins for {aggregates.homeTeam.name}:</strong>{" "}
+								{aggregates.homeTeam.wins}
+							</p>
+							<p>
+								<strong>Total Draws for {aggregates.homeTeam.name}:</strong>{" "}
+								{aggregates.homeTeam.draws}
+							</p>
+							<p>
+								<strong>Total Losses for {aggregates.homeTeam.name}:</strong>{" "}
+								{aggregates.homeTeam.losses}
+							</p>
+							<p>
+								<strong>Total Wins for {aggregates.awayTeam.name}:</strong>{" "}
+								{aggregates.awayTeam.wins}
+							</p>
+							<p>
+								<strong>Total Draws for {aggregates.awayTeam.name}:</strong>{" "}
+								{aggregates.awayTeam.draws}
+							</p>
+							<p>
+								<strong>Total Losses for {aggregates.awayTeam.name}:</strong>{" "}
+								{aggregates.awayTeam.losses}
+							</p>
+						</Card>
+					</div>
+					<DoughnutChart chartTitle="Head to Head Chart" chartLabels={[`${aggregates.homeTeam.name} Wins`, `${aggregates.awayTeam.name} Wins`, "Draws"]} chartInfo={[`${aggregates.homeTeam.wins}`, `${aggregates.awayTeam.wins}`, `${aggregates.homeTeam.draws}`]} />
 				</div>
 				<h3 className={`${styles["matches-title"]}`}>
 					{aggregates.homeTeam.name} vs {aggregates.awayTeam.name} Previous Matches
@@ -131,7 +134,6 @@ const HeadToHead = ({ matchId }) => {
 						<Column field="referees" header="Referee" body={refereData} filter filterPlaceholder="Search by Referee Name" />
 					</DataTable>
 				</div>
-				<DoughnutChart chartTitle="Head to Head Chart" chartLabels={[`${aggregates.homeTeam.name} Wins`, `${aggregates.awayTeam.name} Wins`, "Draws"]} chartInfo={[`${aggregates.homeTeam.wins}`, `${aggregates.awayTeam.wins}`, `${aggregates.homeTeam.draws}`]} />
 			</div>
 		);
 	} else {

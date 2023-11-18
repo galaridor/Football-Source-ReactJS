@@ -15,7 +15,7 @@ const Comment = ({
 	onEdit,
 }) => {
 	const [isEditModalOpen, setEditModalOpen] = useState(false);
-	const [currentComment, setCurrentCOment] = useState(text);
+	const [currentComment, setCurrentComent] = useState(text);
 
 	const editCommentHandler = () => {
 		openEditModal();
@@ -35,12 +35,12 @@ const Comment = ({
 
 	const saveEditedCommentHandler = async (comment) => {
 		closeEditModal();
-		setCurrentCOment(comment);
+		setCurrentComent(comment);
 		await onEdit(_id, comment, dateCreated);
 	};
 
 	const cardFooter = (
-		<span>
+		<div>
 			<Button
 				icon="pi pi-pencil"
 				className="p-button-rounded p-button-text"
@@ -51,7 +51,7 @@ const Comment = ({
 				className="p-button-rounded p-button-text p-button-danger"
 				onClick={deleteCommentHandler}
 			/>
-		</span>
+		</div>
 	);
 
 	return (

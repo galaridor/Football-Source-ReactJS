@@ -62,11 +62,13 @@ const Teams = () => {
 					{teams.map((team) => (
 						<div className={`${styles['card-container']}`} key={team.id}>
 							<Card className={`${styles['card']}`} subTitle={cardSubtitle(team)} footer={cardFooter(team)} header={cardHeader(team)} title={team.name}>
-								<p>Founded: {team.founded}</p>
-								<p>Address: {team.address}</p>
-								<p>Club Colors: {team.clubColors}</p>
-								<p>Stadium: {team.venue}</p>
-								<p>Website: {team.website}</p>
+								<div className={`${styles['card-content']}`}>
+									<p>Founded: {team.founded}</p>
+									<p>Address: {team.address}</p>
+									<p>Club Colors: {team.clubColors}</p>
+									<p>Stadium: {team.venue}</p>
+									<p>Website: {team.website}</p>
+								</div>
 							</Card>
 						</div>
 					))}

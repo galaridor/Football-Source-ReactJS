@@ -27,3 +27,12 @@
 .home-team-emblem, .away-team-emblem {
 	width: 150px;
 }
+
+.head-to-head-stats {
+	display: flex;
+}
+
+.head-to-head-stats div {
+	flex: 1;
+	margin: 5%;
+}
