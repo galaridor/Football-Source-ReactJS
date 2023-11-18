@@ -97,6 +97,7 @@ const UpcomingEventCreateModal = ({ isOpen, onClose, onSave }) => {
                                 name="startDate"
                                 value={formData.startDate}
                                 onChange={handleDateChange}
+                                dateFormat="dd/mm/yy"
                             />
                         </div>
 

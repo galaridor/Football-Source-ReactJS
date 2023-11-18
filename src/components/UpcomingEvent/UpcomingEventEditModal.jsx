@@ -3,11 +3,18 @@ import { Button } from "primereact/button";
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { useEffect, useState } from "react";
+import { formatDateToIsoDate } from "../../utils/dateTimeUtils";
 import Modal from "react-modal";
 import styles from "./UpcomingEventEditModal.module.css";
 
 const UpcomingEventEditModal = ({ isOpen, onClose, onSave, currentEvent }) => {
-	const [formData, setFormData] = useState({});
+	const [formData, setFormData] = useState({
+		_id: '',
+		name: '',
+		description: '',
+		startDate: '',
+		imageUrl: '',
+	});
 
 	useEffect(() => {
 		if (isOpen) {
@@ -96,8 +103,9 @@ const UpcomingEventEditModal = ({ isOpen, onClose, onSave, currentEvent }) => {
 							<Calendar
 								id="startDate"
 								name="startDate"
-								value={formData.startDate}
+								value={new Date(formatDateToIsoDate(formData.startDate))}
 								onChange={handleDateChange}
+								dateFormat="dd/mm/yy"
 							/>
 						</div>
 

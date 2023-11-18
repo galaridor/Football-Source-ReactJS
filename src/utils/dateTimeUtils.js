@@ -26,4 +26,17 @@ export function formatDateForTimer(isoDate) {
 	}
 
 	return date.toLocaleDateString('en-US', options);
-};  
+};
+
+export function formatDateToIsoDate(formattedDate) {
+	debugger;
+	const date = new Date(formattedDate);
+
+	if (isNaN(date.getTime())) {
+		return "Invalid Date";
+	}
+
+	const isoDate = date.toISOString();
+
+	return isoDate;
+}
