@@ -24,7 +24,8 @@ const Header = () => {
 			'/teams': 'competitions',
 			'/login': 'login',
 			'/register': 'register',
-			'/upcoming-events': 'upcoming-events'
+			'/upcoming-events': 'upcoming-events',
+			'/my-teams': 'my-teams'
 		};
 
 		for (const keyword in keywordMapping) {
@@ -84,6 +85,9 @@ const Header = () => {
 								</li>
 								<li onClick={() => toggleClass('upcoming-events')} className={`nav-link ${activeItem === 'upcoming-events' ? 'active' : ''}`}>
 									<Link to="/upcoming-events">Manage Upcoming Events</Link>
+								</li>
+								<li onClick={() => toggleClass('my-teams')} className={`nav-link ${activeItem === 'my-teams' ? 'active' : ''}`}>
+									<Link to="/my-teams">My Teams</Link>
 								</li>
 							</ul>
 						</nav>

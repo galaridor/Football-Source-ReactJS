@@ -23,6 +23,7 @@ import Login from "./components/Authentication/Login";
 import Register from "./components/Authentication/Register";
 import SearchResult from "./components/Search/SearchResult";
 import UpcomingEventsAdminPage from "./components/UpcomingEvent/UpcomingEventsAdminPage";
+import FavouriteTeams from "./components/FavouriteTeams/FavouriteTeams";
 
 function App() {
 	return (
@@ -49,6 +50,7 @@ function App() {
 				<Route path="/contacts" element={<Contacts />} />
 				<Route path="/people/:id/" element={<Person />} />
 				<Route path="/upcoming-events/" element={<UpcomingEventsAdminPage />} />
+				<Route path="/my-teams/" element={<FavouriteTeams />} />
 			</Routes>
 			<Footer />
 		</div>
