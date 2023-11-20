@@ -1,7 +1,6 @@
-import "bootstrap/dist/css/bootstrap.css";
-import "./App.css";
-import 'primeicons/primeicons.css';
-import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+
 import MobileMenu from "./components/MobileMenu/MobileMenu";
 import Header from "../src/components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -24,36 +23,107 @@ import Register from "./components/Authentication/Register";
 import SearchResult from "./components/Search/SearchResult";
 import UpcomingEventsAdminPage from "./components/UpcomingEvent/UpcomingEventsAdminPage";
 import FavouriteTeams from "./components/FavouriteTeams/FavouriteTeams";
+import AccessDenied from "./components/Error/AccessDenied";
+
+import { AuthenticationContext } from './contexts/AuthenticationContext';
+import * as authenticationService from './services/authenticationService';
+
+import "bootstrap/dist/css/bootstrap.css";
+import "./App.css";
+import 'primeicons/primeicons.css';
+import Logout from "./components/Authentication/Logout";
 
 function App() {
+	const [authentication, setAuthentication] = useState(() => {
+		localStorage.removeItem('accessToken');
+
+		return {};
+	});
+
+	const navigate = useNavigate();
+
+	const loginHandler = async (values) => {
+		console.log(values);
+
+		authenticationService.login(values?.email, values?.password)
+			.then((result) => {
+				if (result.error || result?.code == 403)
+					throw new Error(result.error);
+
+				setAuthentication(result);
+				localStorage.setItem('accessToken', result.accessToken);
+
+				navigate(`/`);
+			})
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+			});
+	}
+
+	const registerHandler = async (values) => {
+		console.log(values);
+
+		authenticationService.register(values)
+			.then((result) => {
+				if (result.error || result?.code == 403)
+					throw new Error(result.error);
+
+				navigate(`/`);
+			})
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+			});
+	}
+
+	const logoutHandler = () => {
+		setAuthentication({});
+		localStorage.removeItem('accessToken');
+		navigate(`/`);
+	}
+
+	const authenticationProviderValues = {
+		loginHandler,
+		registerHandler,
+		logoutHandler,
+		authentication,
+		isAdmin: authentication.isAdmin,
+		isAuthenticated: !!authentication.accessToken
+	}
+
 	return (
-		<div className="site-wrap">
-			<MobileMenu />
-			<Header />
-			<Routes>
-				<Route path="*" element={<NotFound />} />
-				<Route path="/home" element={<Home />} />
-				<Route path="/" element={<Home />} />
-				<Route path="/error" element={<SomethingWentWrong />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<Register />} />
-				<Route path="/search/:phrase" element={<SearchResult />} />
-				<Route path="/competitions" element={<Competitions />} />
-				<Route path="/competitions/:alias" element={<Competition />} />
-				<Route path="/competitions/:alias/standing/:type" element={<StandingPage />} />
-				<Route path="/competitions/:alias/matches" element={<MatchesPage />} />
-				<Route path="/competitions/:alias/teams" element={<Teams />} />
-				<Route path="/competitions/:alias/goalscorers/:limit" element={<GoalScorers />} />
-				<Route path="/teams/:id/" element={<Team />} />
-				<Route path="/matches/:id/" element={<MatchPage />} />
-				<Route path="/livescore" element={<Livescore />} />
-				<Route path="/contacts" element={<Contacts />} />
-				<Route path="/people/:id/" element={<Person />} />
-				<Route path="/upcoming-events/" element={<UpcomingEventsAdminPage />} />
-				<Route path="/my-teams/" element={<FavouriteTeams />} />
-			</Routes>
-			<Footer />
-		</div>
+		<AuthenticationContext.Provider value={authenticationProviderValues}>
+			<div className="site-wrap">
+				<MobileMenu />
+				<Header />
+				<Routes>
+					<Route path="*" element={<NotFound />} />
+					<Route path="/home" element={<Home />} />
+					<Route path="/" element={<Home />} />
+					<Route path="/error" element={<SomethingWentWrong />} />
+					<Route path="/access-denied" element={<AccessDenied />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/register" element={<Register />} />
+					<Route path="/logout" element={<Logout />} />
+					<Route path="/search/:phrase" element={<SearchResult />} />
+					<Route path="/competitions" element={<Competitions />} />
+					<Route path="/competitions/:alias" element={<Competition />} />
+					<Route path="/competitions/:alias/standing/:type" element={<StandingPage />} />
+					<Route path="/competitions/:alias/matches" element={<MatchesPage />} />
+					<Route path="/competitions/:alias/teams" element={<Teams />} />
+					<Route path="/competitions/:alias/goalscorers/:limit" element={<GoalScorers />} />
+					<Route path="/teams/:id/" element={<Team />} />
+					<Route path="/matches/:id/" element={<MatchPage />} />
+					<Route path="/livescore" element={<Livescore />} />
+					<Route path="/contacts" element={<Contacts />} />
+					<Route path="/people/:id/" element={<Person />} />
+					<Route path="/upcoming-events/" element={<UpcomingEventsAdminPage />} />
+					<Route path="/my-teams/" element={<FavouriteTeams />} />
+				</Routes>
+				<Footer />
+			</div>
+		</AuthenticationContext.Provider>
 	);
 }
 

@@ -1,14 +1,14 @@
 import * as request from "../utils/request";
 
-const baseUrl = "http://localhost:3030/jsonstore/comments";
+const baseUrl = "http://localhost:3030/data/comments";
 
 export const getAllForEntity = async (entityId) => {
 	try {
 		const result = await request.get(`${baseUrl}/`);
 
-		console.log(Object.values(result));
+		console.log(result);
 	
-		return Object.values(result).filter(comment => comment.entityId === entityId);
+		return result.filter(comment => comment.entityId === entityId);
     } 
     catch (error) {
         console.log(error);

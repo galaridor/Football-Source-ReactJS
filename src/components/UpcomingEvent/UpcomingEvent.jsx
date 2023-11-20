@@ -12,12 +12,11 @@ const UpcomingEvent = () => {
 
 	useEffect(() => {
 		eventService
-			.getLatestUpcominEvent()
+			.getLatestUpcomingEvent()
 			.then((result) => {
-				if (result.error)
-					throw new Error(result.error);
-
-				setUpcomingEvent(result[0]);
+				if (result) {
+					setUpcomingEvent(result[0]);
+				}
 			})
 			.catch((error) => {
 				console.log(error);

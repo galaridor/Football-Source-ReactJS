@@ -22,10 +22,9 @@ const UpcomingEventsAdminPage = () => {
 		eventService
 			.getAllUpcomingEvent()
 			.then((result) => {
-				if (result.error)
-					throw new Error(result.error);
-
-				setUpcomingEvents(result);
+				if (result) {
+					setUpcomingEvents(result);
+				}
 			})
 			.catch((error) => {
 				console.log(error);

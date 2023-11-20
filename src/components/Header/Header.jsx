@@ -1,17 +1,24 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+
 import { InputText } from "primereact/inputtext";
 import { Button } from 'primereact/button';
 import { useNavigate } from "react-router-dom"
+
+import { AuthenticationContext } from '../../contexts/AuthenticationContext';
+
 import styles from './Header.module.css';
 
 const Header = () => {
+	debugger;
 	const [activeItem, setActiveItem] = useState('home');
 	const [searchPhrase, setSearchPhrase] = useState('');
 
 	const location = useLocation();
 
 	const navigate = useNavigate();
+
+	const { isAuthenticated, authentication, isAdmin } = useContext(AuthenticationContext);
 
 	useEffect(() => {
 		const pathName = location.pathname;
@@ -60,7 +67,7 @@ const Header = () => {
 			<div className="container">
 				<div className="d-flex align-items-center">
 					<div className="site-logo">
-						<Link to="/"><img src="images/logo.png" alt="Logo" /></Link>
+						<Link to="/"><img src="images/site-logo.png" className={styles['logo']} alt="Logo" /></Link>
 					</div>
 					<div className="ml-auto">
 						<nav className="site-navigation position-relative text-right" role="navigation">
@@ -77,18 +84,27 @@ const Header = () => {
 								<li onClick={() => toggleClass('contacts')} className={`nav-link ${activeItem === 'contacts' ? 'active' : ''}`}>
 									<Link to="/contacts">Contacts</Link>
 								</li>
-								<li onClick={() => toggleClass('login')} className={`nav-link ${styles['authentication']} ${activeItem === 'login' ? 'active' : ''}`}>
-									<Link to="/login">Login</Link>
-								</li>
-								<li onClick={() => toggleClass('register')} className={`nav-link ${activeItem === 'register' ? 'active' : ''}`}>
-									<Link to="/register">Register</Link>
-								</li>
-								<li onClick={() => toggleClass('upcoming-events')} className={`nav-link ${activeItem === 'upcoming-events' ? 'active' : ''}`}>
-									<Link to="/upcoming-events">Manage Upcoming Events</Link>
-								</li>
-								<li onClick={() => toggleClass('my-teams')} className={`nav-link ${activeItem === 'my-teams' ? 'active' : ''}`}>
-									<Link to="/my-teams">My Teams</Link>
-								</li>
+								{!isAuthenticated && <>
+									<li onClick={() => toggleClass('login')} className={`nav-link ${styles['authentication']} ${activeItem === 'login' ? 'active' : ''}`}>
+										<Link to="/login">Login</Link>
+									</li>
+									<li onClick={() => toggleClass('register')} className={`nav-link ${activeItem === 'register' ? 'active' : ''}`}>
+										<Link to="/register">Register</Link>
+									</li>
+								</>}
+
+								{isAuthenticated && <>
+									<span>{authentication.username}</span>
+									{isAdmin && <li onClick={() => toggleClass('upcoming-events')} className={`nav-link ${activeItem === 'upcoming-events' ? 'active' : ''}`}>
+										<Link to="/upcoming-events">Upcoming Events</Link>
+									</li>}
+									{!isAdmin && <li onClick={() => toggleClass('my-teams')} className={`nav-link ${activeItem === 'my-teams' ? 'active' : ''}`}>
+										<Link to="/my-teams">My Teams</Link>
+									</li>}
+									<li onClick={() => toggleClass('logout')} className={`nav-link ${activeItem === 'logout' ? 'active' : ''}`}>
+										<Link to="/logout">Logout</Link>
+									</li>
+								</>}
 							</ul>
 						</nav>
 						<a href="#" className="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white">

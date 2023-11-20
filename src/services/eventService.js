@@ -1,15 +1,19 @@
 import * as request from "../utils/request";
 
-const baseUrl = "http://localhost:3030/jsonstore/events";
+const baseUrl = "http://localhost:3030/data/events";
 
 export const getAllUpcomingEvent = async () => {
 
     try {
         const result = await request.get(`${baseUrl}`);
         
+        if (result.code){
+            throw new Error(result.message)
+        }
+
         console.log(result);
 
-        return Object.values(result);
+        return result;
     } 
     catch (error) {
         console.log(error);
@@ -60,12 +64,16 @@ export const update = async (_id, name, imageUrl, description, startDate) => {
     }
 };
 
-export const getLatestUpcominEvent = async () => {
+export const getLatestUpcomingEvent = async () => {
 
     try {
         const result = await request.get(`${baseUrl}`);
         
         console.log(result);
+
+        if (result.code){
+            throw new Error(result.message)
+        }
 
         const sortedResult = Object.values(result).sort(function(a, b) {
             return a.startDate.localeCompare(b.startDate);

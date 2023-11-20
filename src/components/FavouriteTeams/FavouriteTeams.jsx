@@ -1,54 +1,30 @@
 import { Card } from "primereact/card";
 import { Button } from 'primereact/button';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styles from './FavouriteTeams.module.css';
 import FavouriteTeamCreateModal from "./FavouriteTeamCreateModal";
 import { FavouriteTeamContext } from "../../contexts/FavouriteTeamContext";
 import FavouriteTeamEditModal from "./FavouriteTeamEditModal";
+import { AuthenticationContext } from '../../contexts/AuthenticationContext';
 
 const FavouriteTeams = () => {
     const [isCreateModalOpen, setCreateModalOpen] = useState(false);
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [teamToEdit, setTeamToEdit] = useState({});
-    const [favouriteTeams, setFavouriteTeams] = useState([
-        {
-            "teamId": 81,
-            "teamName": "FC Barcelona",
-            "teamCrest": "https://crests.football-data.org/81.svg",
-            "teamCompetitionAlias": "PD",
-            "teamCompetitonName": "Primera Division",
-            "teamCompetitionEmblem": "https://crests.football-data.org/PD.png",
-            "description": "This is my favourite team from Spain!!!"
-        },
-        {
-            "teamId": 109,
-            "teamName": "Juventus FC",
-            "teamCrest": "https://crests.football-data.org/109.svg",
-            "teamCompetitionAlias": "SA",
-            "teamCompetitonName": "Serie A",
-            "teamCompetitionEmblem": "https://crests.football-data.org/SA.png",
-            "description": "This is my favourite team from Italy!!!"
-        }
-    ]);
+    const [favouriteTeams, setFavouriteTeams] = useState([]);
 
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    // 	competitionService.getCompetitionTeamsByAlias(alias)
-    // 		.then((result) => {
-    // 			if (result.error)
-    // 			  throw new Error(result.error);
+    const { authentication } = useContext(AuthenticationContext);
 
-    // 			  setTeams(result.teams);
-    // 			  setCompetitionName(result.competition.name);
-    // 			})
-    // 		.catch((error) => {
-    // 			console.log(error);
-    // 			navigate(`/error`);
-    // 			});
-    // }, []);
+    useEffect(() => {
+        const userFavouriteTeams = authentication.favouriteTeams;
+
+        setFavouriteTeams(userFavouriteTeams);
+
+    }, []);
 
     const cardHeader = (team) => (
         <img src={`${team?.teamCrest}`} alt="Missing Image" className={`${styles['card-image']}`} />
