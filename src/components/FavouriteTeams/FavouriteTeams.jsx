@@ -72,7 +72,11 @@ const FavouriteTeams = () => {
     };
 
     const deleteFavouriteTeamHandler = async (_id) => {
-        //ToDo add logic for deletion
+        setFavouriteTeams((state) =>
+            state.filter((team) => {
+            return team.teamId !== _id;
+        })
+    );
     }
 
     const createNewFavouriteTeamHandlerClick = () => {
@@ -100,7 +104,17 @@ const FavouriteTeams = () => {
     }
 
     const saveEditedFavouriteTeamHandlerClick = (values) => {
-        console.log(values);
+        closeEditModal();
+
+        setFavouriteTeams((prevTeams) =>
+        prevTeams.map((team) =>
+        team.teamId === values.teamId
+                ? {
+                    ...values
+                }
+                : team
+        )
+    );
     }
 
     const saveNewFavouriteTeamHandler = async (team) => {
@@ -109,7 +123,7 @@ const FavouriteTeams = () => {
         // ToDO
         // const createdFavouriteTeam = await eventService.create(event.name, event.imageUrl, event.description, event.startDate);
 
-        // setFavouriteTeams((state) => [...state, createdFavouriteTeam]);
+        setFavouriteTeams((state) => [...state, team]);
     };
 
     const favouriteTeamContextValue = {

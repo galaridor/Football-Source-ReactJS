@@ -32,6 +32,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import 'primeicons/primeicons.css';
 import Logout from "./components/Authentication/Logout";
+import Predictions from "./components/Predictions/Predictions";
 
 function App() {
 	const [authentication, setAuthentication] = useState(() => {
@@ -120,6 +121,7 @@ function App() {
 					<Route path="/people/:id/" element={<Person />} />
 					<Route path="/upcoming-events/" element={<UpcomingEventsAdminPage />} />
 					<Route path="/my-teams/" element={<FavouriteTeams />} />
+					<Route path="/predictions" element={<Predictions />} />
 				</Routes>
 				<Footer />
 			</div>

@@ -32,7 +32,8 @@ const Header = () => {
 			'/login': 'login',
 			'/register': 'register',
 			'/upcoming-events': 'upcoming-events',
-			'/my-teams': 'my-teams'
+			'/my-teams': 'my-teams',
+			'/predictions': 'predictions'
 		};
 
 		for (const keyword in keywordMapping) {
@@ -72,9 +73,9 @@ const Header = () => {
 					<div className="ml-auto">
 						<nav className="site-navigation position-relative text-right" role="navigation">
 							<ul className="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-								<li onClick={() => toggleClass('home')} className={`nav-link ${activeItem === 'home' ? 'active' : ''}`}>
+								{/* <li onClick={() => toggleClass('home')} className={`nav-link ${activeItem === 'home' ? 'active' : ''}`}>
 									<Link to="/">Home</Link>
-								</li>
+								</li> */}
 								<li onClick={() => toggleClass('competitions')} className={`nav-link ${activeItem === 'competitions' ? 'active' : ''}`}>
 									<Link to="/competitions">Competitions</Link>
 								</li>
@@ -94,6 +95,9 @@ const Header = () => {
 								</>}
 
 								{isAuthenticated && <>
+									<li onClick={() => toggleClass('predictions')} className={`nav-link ${activeItem === 'predictions' ? 'active' : ''}`}>
+										<Link to="/predictions">Predictions</Link>
+									</li>
 									<span>{authentication.username}</span>
 									{isAdmin && <li onClick={() => toggleClass('upcoming-events')} className={`nav-link ${activeItem === 'upcoming-events' ? 'active' : ''}`}>
 										<Link to="/upcoming-events">Upcoming Events</Link>

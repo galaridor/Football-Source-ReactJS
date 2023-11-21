@@ -88,7 +88,7 @@ const Match = ({match, title, type}) => {
 						}			
 				</div>
 				  	{type === 'full' && <HeadToHead matchId={match.id} />}
-					{isAuthenticated && type === 'full' ? (<CommentsList entityId={match.id} type='match' />) : (<h3>Login to see comments!</h3>)}
+					{isAuthenticated && type === 'full' ? (<CommentsList entityId={match.id} type='match' />) : type === 'full' ? (<h3>Login to see comments!</h3>) : <></>}
 			</div>
 		);
 	} else {
