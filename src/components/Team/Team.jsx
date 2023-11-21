@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { Card } from 'primereact/card';
 import Map from '../Map/Map'
@@ -7,6 +7,7 @@ import RunningCompetitions from '../RunningCompetitions/RunningCompetitions';
 import Coach from '../Coach/Coach';
 import Matches from '../Matches/Matches';
 import CommentsList from "../Comments/CommentsList";
+import { AuthenticationContext } from '../../contexts/AuthenticationContext';
 import * as teamService from '../../services/teamService';
 import styles from './Team.module.css';
 
@@ -16,6 +17,8 @@ const Team = () => {
 	const { id } = useParams();
 
 	const navigate = useNavigate();
+
+	const { isAuthenticated } = useContext(AuthenticationContext);
 
 	useEffect(() => {
 		teamService.getTeamById(id)
@@ -60,7 +63,7 @@ const Team = () => {
 				<RunningCompetitions runningCompetitions={team.runningCompetitions} />
 				<Coach coach={team.coach} />
 				<Map address={team.address}/>
-				<CommentsList entityId={team.id} type='team'/>
+				{isAuthenticated ? (<CommentsList entityId={team.id} type='team' />) : (<h3>Login to see comments!</h3>)}
 			</div>
 		);
 	} else {

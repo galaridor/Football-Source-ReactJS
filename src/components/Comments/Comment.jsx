@@ -3,10 +3,12 @@ import { Button } from "primereact/button";
 import { formatUTCDateToLocal } from "../../utils/dateTimeUtils";
 import { useContext } from "react";
 import { CommentContext } from "../../contexts/CommentContext";
+import { AuthenticationContext } from "../../contexts/AuthenticationContext";
 import styles from "./Comment.module.css";
 
 const Comment = ({
 	_id,
+	_ownerId,
 	username,
 	text,
 	dateCreated,
@@ -14,26 +16,28 @@ const Comment = ({
 }) => {
 	const { editCommentHandlerClick, deleteCommentHandlerClick } = useContext(CommentContext);
 
-	const cardFooter = (
+	const { authentication } = useContext(AuthenticationContext);
+
+	const cardFooter = authentication._id === _ownerId ? (
 		<div>
-			<Button
-				icon="pi pi-pencil"
-				className="p-button-rounded p-button-text"
-				onClick={()=> {editCommentHandlerClick(_id)}}
-			/>
-			<Button
-				icon="pi pi-trash"
-				className="p-button-rounded p-button-text p-button-danger"
-				onClick={()=> {deleteCommentHandlerClick(_id)}}
-			/>
+		  <Button
+			icon="pi pi-pencil"
+			className="p-button-rounded p-button-text"
+			onClick={() => { editCommentHandlerClick(_id) }}
+		  />
+		  <Button
+			icon="pi pi-trash"
+			className="p-button-rounded p-button-text p-button-danger"
+			onClick={() => { deleteCommentHandlerClick(_id) }}
+		  />
 		</div>
-	);
+	  ) : null;
 
 	return (
 		<div className={styles["comment-section"]}>
 			<Card
 				className={[styles["comment-card"]]}
-				title={`User: ${username} (${_id})`}
+				title={`Username: ${username}`}
 				subTitle={`Created On: ${formatUTCDateToLocal(dateCreated)}`}
 				footer={cardFooter}
 			>

@@ -1,12 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import CommentsList from "../Comments/CommentsList";
+import { AuthenticationContext } from '../../contexts/AuthenticationContext';
 import HeadToHead from "../HeadToHead/HeadToHead";
 import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 import styles from "./Match.module.css";
+import { useContext } from "react";
 
 const Match = ({match, title, type}) => {
 	const navigate = useNavigate();
+
+	const { isAuthenticated } = useContext(AuthenticationContext);
 
 	const handleMatchDetailsClick = (match) => {
 		navigate(`/matches/${match.id}`);
@@ -84,7 +88,7 @@ const Match = ({match, title, type}) => {
 						}			
 				</div>
 				  	{type === 'full' && <HeadToHead matchId={match.id} />}
-					{type === 'full' && <CommentsList entityId={match.id} type='match'/>}
+					{isAuthenticated && type === 'full' ? (<CommentsList entityId={match.id} type='match' />) : (<h3>Login to see comments!</h3>)}
 			</div>
 		);
 	} else {

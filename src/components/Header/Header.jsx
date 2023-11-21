@@ -10,7 +10,7 @@ import { AuthenticationContext } from '../../contexts/AuthenticationContext';
 import styles from './Header.module.css';
 
 const Header = () => {
-	debugger;
+
 	const [activeItem, setActiveItem] = useState('home');
 	const [searchPhrase, setSearchPhrase] = useState('');
 

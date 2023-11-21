@@ -17,9 +17,9 @@ export const getAllForEntity = async (entityId) => {
     }
 };
 
-export const create = async (type, entityId, userId, username, text, dateCreated, lastModifiedOn) => {
+export const create = async (type, entityId, username, text, dateCreated, lastModifiedOn) => {
 	try {
-		const newComment = await request.post(baseUrl, {type, entityId, userId,username, text, dateCreated, lastModifiedOn});
+		const newComment = await request.post(baseUrl, {type, entityId, username, text, dateCreated, lastModifiedOn});
 
 		return newComment;
     } 

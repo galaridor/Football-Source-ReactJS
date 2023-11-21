@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputTextarea } from "primereact/inputtextarea";
 import Comment from "./Comment";
@@ -7,6 +7,7 @@ import { Button } from "primereact/button";
 import { useForm } from "../../hooks/useForm";
 import { CommentContext } from "../../contexts/CommentContext";
 import EditCommentModal from "./EditCommentModal";
+import { AuthenticationContext } from '../../contexts/AuthenticationContext';
 import * as commentService from "../../services/comentService";
 import styles from "./CommentsList.module.css";
 
@@ -16,6 +17,8 @@ const CommentsList = ({ entityId, type }) => {
 	const [isEditModalOpen, setEditModalOpen] = useState(false);
 	const [showPicker, setShowPicker] = useState(false);
 	const { formValues, handleInputChange, resetForm, setForm } = useForm({ text: '' });
+
+	const { authentication } = useContext(AuthenticationContext)
 
 	const navigate = useNavigate();
 
@@ -50,8 +53,7 @@ const CommentsList = ({ entityId, type }) => {
 		const createdComment = await commentService.create(
 			type,
 			entityId,
-			"1",
-			"username 1",
+			authentication.username,
 			formValues.text,
 			currentDate,
 			currentDate
@@ -78,8 +80,8 @@ const CommentsList = ({ entityId, type }) => {
 			_id,
 			type,
 			entityId,
-			"1",
-			"username 1",
+			authentication._id,
+			authentication.username,
 			text,
 			dateCreated,
 			currentDate

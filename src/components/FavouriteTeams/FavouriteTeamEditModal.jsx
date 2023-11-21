@@ -8,7 +8,7 @@ import styles from "./FavouriteTeamEditModal.module.css";
 import { Card } from "primereact/card";
 
 const FavouriteTeamEditModal = ({ isOpen, team }) => {
-	debugger;
+
 	const { formValues, handleInputChange, resetForm, setForm } = useForm(team);
 	const { saveEditedFavouriteTeamHandlerClick, closeEditModal, cardHeader, cardSubtitle } = useContext(FavouriteTeamContext);
 

@@ -4,7 +4,6 @@ import * as authenticationService from '../../services/authenticationService';
 import { useNavigate } from "react-router-dom";
 
 const Logout = () => {
-	debugger;
 	const { logoutHandler } = useContext(AuthenticationContext);
 
 	const navigate = useNavigate();

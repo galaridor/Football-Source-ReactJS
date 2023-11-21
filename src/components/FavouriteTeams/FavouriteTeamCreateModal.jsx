@@ -70,7 +70,7 @@ const FavouriteTeamCreateModal = ({ isOpen }) => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        debugger;
+
         await saveNewFavouriteTeamHandler(formValues);
     };
 
