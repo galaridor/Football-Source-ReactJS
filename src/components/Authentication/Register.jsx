@@ -3,7 +3,7 @@ import { Password } from 'primereact/password'
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
 import { useForm } from '../../hooks/useForm';
-import { AuthenticationContext } from '../../contexts/AuthenticationContext';
+import AuthenticationContext from '../../contexts/AuthenticationContext';
 import styles from './Register.module.css'
 import { useContext } from 'react';
 

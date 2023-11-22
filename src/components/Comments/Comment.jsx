@@ -3,7 +3,7 @@ import { Button } from "primereact/button";
 import { formatUTCDateToLocal } from "../../utils/dateTimeUtils";
 import { useContext } from "react";
 import { CommentContext } from "../../contexts/CommentContext";
-import { AuthenticationContext } from "../../contexts/AuthenticationContext";
+import AuthenticationContext from "../../contexts/AuthenticationContext";
 import styles from "./Comment.module.css";
 
 const Comment = ({

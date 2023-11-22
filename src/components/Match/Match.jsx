@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import CommentsList from "../Comments/CommentsList";
-import { AuthenticationContext } from '../../contexts/AuthenticationContext';
+import AuthenticationContext from '../../contexts/AuthenticationContext';
 import HeadToHead from "../HeadToHead/HeadToHead";
 import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 import styles from "./Match.module.css";

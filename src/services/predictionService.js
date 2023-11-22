@@ -2,6 +2,31 @@ import * as request from "../utils/request";
 
 const baseUrl = "http://localhost:3030/data/predictions";
 
+
+export const getPredictionById = async (id) => {
+
+    try {
+        const query = new URLSearchParams({
+            load: `owner=_ownerId:users`
+        })
+
+        const result = await request.get(`${baseUrl}/${id}?${query}`);
+        
+        if (result.code) {
+            throw new Error(result.message)
+        }
+
+        console.log(result);
+
+        return result;
+    } 
+    catch (error) {
+        console.log(error);
+
+        return null;
+    }
+};
+
 export const getAllPredictions = async () => {
 
     try {

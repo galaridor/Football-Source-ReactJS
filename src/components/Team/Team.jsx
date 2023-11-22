@@ -7,7 +7,7 @@ import RunningCompetitions from '../RunningCompetitions/RunningCompetitions';
 import Coach from '../Coach/Coach';
 import Matches from '../Matches/Matches';
 import CommentsList from "../Comments/CommentsList";
-import { AuthenticationContext } from '../../contexts/AuthenticationContext';
+import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as teamService from '../../services/teamService';
 import styles from './Team.module.css';
 

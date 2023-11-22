@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import MobileMenu from "./components/MobileMenu/MobileMenu";
 import Header from "../src/components/Header/Header";
@@ -24,77 +23,20 @@ import SearchResult from "./components/Search/SearchResult";
 import UpcomingEventsAdminPage from "./components/UpcomingEvent/UpcomingEventsAdminPage";
 import FavouriteTeams from "./components/FavouriteTeams/FavouriteTeams";
 import AccessDenied from "./components/Error/AccessDenied";
+import Logout from "./components/Authentication/Logout";
+import Predictions from "./components/Predictions/Predictions";
+import Prediction from "./components/Predictions/Prediction";
 
-import { AuthenticationContext } from './contexts/AuthenticationContext';
-import * as authenticationService from './services/authenticationService';
+import { AuthenticationProvider } from './contexts/AuthenticationContext';
 
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import 'primeicons/primeicons.css';
-import Logout from "./components/Authentication/Logout";
-import Predictions from "./components/Predictions/Predictions";
 
 function App() {
-	const [authentication, setAuthentication] = useState(() => {
-		localStorage.removeItem('accessToken');
-
-		return {};
-	});
-
-	const navigate = useNavigate();
-
-	const loginHandler = async (values) => {
-		console.log(values);
-
-		authenticationService.login(values?.email, values?.password)
-			.then((result) => {
-				if (result.error || result?.code == 403)
-					throw new Error(result.error);
-
-				setAuthentication(result);
-				localStorage.setItem('accessToken', result.accessToken);
-
-				navigate(`/`);
-			})
-			.catch((error) => {
-				console.log(error);
-				navigate(`/error`);
-			});
-	}
-
-	const registerHandler = async (values) => {
-		console.log(values);
-
-		authenticationService.register(values)
-			.then((result) => {
-				if (result.error || result?.code == 403)
-					throw new Error(result.error);
-
-				navigate(`/`);
-			})
-			.catch((error) => {
-				console.log(error);
-				navigate(`/error`);
-			});
-	}
-
-	const logoutHandler = () => {
-		setAuthentication({});
-		localStorage.removeItem('accessToken');
-		navigate(`/`);
-	}
-
-	const authenticationProviderValues = {
-		loginHandler,
-		registerHandler,
-		logoutHandler,
-		authentication,
-		isAdmin: authentication.isAdmin,
-		isAuthenticated: !!authentication.accessToken
-	}
 
 	return (
-		<AuthenticationContext.Provider value={authenticationProviderValues}>
+		<AuthenticationProvider>
 			<div className="site-wrap">
 				<MobileMenu />
 				<Header />
@@ -122,10 +64,11 @@ function App() {
 					<Route path="/upcoming-events/" element={<UpcomingEventsAdminPage />} />
 					<Route path="/my-teams/" element={<FavouriteTeams />} />
 					<Route path="/predictions" element={<Predictions />} />
+					<Route path="/predictions/:id/" element={<Prediction />} />
 				</Routes>
 				<Footer />
 			</div>
-		</AuthenticationContext.Provider>
+		</AuthenticationProvider>
 	);
 }
 

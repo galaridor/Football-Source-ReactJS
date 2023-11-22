@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import { useForm } from "../../hooks/useForm";
 import { CommentContext } from "../../contexts/CommentContext";
 import EditCommentModal from "./EditCommentModal";
-import { AuthenticationContext } from '../../contexts/AuthenticationContext';
+import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as commentService from "../../services/comentService";
 import styles from "./CommentsList.module.css";
 

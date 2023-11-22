@@ -6,7 +6,7 @@ import styles from './FavouriteTeams.module.css';
 import FavouriteTeamCreateModal from "./FavouriteTeamCreateModal";
 import { FavouriteTeamContext } from "../../contexts/FavouriteTeamContext";
 import FavouriteTeamEditModal from "./FavouriteTeamEditModal";
-import { AuthenticationContext } from '../../contexts/AuthenticationContext';
+import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as favouriteTeamService from '../../services/favouriteTeamService';
 
 const FavouriteTeams = () => {
