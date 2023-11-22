@@ -1,13 +1,13 @@
 import { Card } from "primereact/card";
 import { Button } from 'primereact/button';
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styles from './FavouriteTeams.module.css';
 import FavouriteTeamCreateModal from "./FavouriteTeamCreateModal";
 import { FavouriteTeamContext } from "../../contexts/FavouriteTeamContext";
 import FavouriteTeamEditModal from "./FavouriteTeamEditModal";
 import { AuthenticationContext } from '../../contexts/AuthenticationContext';
+import * as favouriteTeamService from '../../services/favouriteTeamService';
 
 const FavouriteTeams = () => {
     const [isCreateModalOpen, setCreateModalOpen] = useState(false);
@@ -16,15 +16,21 @@ const FavouriteTeams = () => {
     const [favouriteTeams, setFavouriteTeams] = useState([]);
 
     const navigate = useNavigate();
-
+ 
     const { authentication } = useContext(AuthenticationContext);
 
     useEffect(() => {
-        const userFavouriteTeams = authentication.favouriteTeams;
-
-        setFavouriteTeams(userFavouriteTeams);
-
-    }, []);
+		favouriteTeamService.getFavouriteTeamsForUser(authentication._id)
+			.then((result) => {
+				if (result) {
+					setFavouriteTeams(result);
+                }
+			  })
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+			});
+	}, []);
 
     const cardHeader = (team) => (
         <img src={`${team?.teamCrest}`} alt="Missing Image" className={`${styles['card-image']}`} />
@@ -55,7 +61,7 @@ const FavouriteTeams = () => {
                 <Button
                     icon="pi pi-trash"
                     className="p-button-rounded p-button-text p-button-danger"
-                    onClick={() => { deleteFavouriteTeamHandlerClick(team.teamId) }}
+                    onClick={() => { deleteFavouriteTeamHandlerClick(team._id) }}
                 />
             </div>
         </div>
@@ -72,9 +78,11 @@ const FavouriteTeams = () => {
     };
 
     const deleteFavouriteTeamHandler = async (_id) => {
+        await favouriteTeamService.remove(_id);
+
         setFavouriteTeams((state) =>
             state.filter((team) => {
-            return team.teamId !== _id;
+                return team._id !== _id;
         })
     );
     }
@@ -103,12 +111,14 @@ const FavouriteTeams = () => {
         navigate(`/teams/${team.teamId}`);
     }
 
-    const saveEditedFavouriteTeamHandlerClick = (values) => {
+    const saveEditedFavouriteTeamHandlerClick = async (values) => {
         closeEditModal();
 
+        await favouriteTeamService.update(values._id, values.teamId, values.teamName, values.teamCrest, values.teamCompetitionAlias, values.teamCompetitonName, values.teamCompetitionEmblem, values.description);
+
         setFavouriteTeams((prevTeams) =>
-        prevTeams.map((team) =>
-        team.teamId === values.teamId
+            prevTeams.map((team) =>
+            team._id === values._id
                 ? {
                     ...values
                 }
@@ -120,10 +130,9 @@ const FavouriteTeams = () => {
     const saveNewFavouriteTeamHandler = async (team) => {
         closeCreateModal();
 
-        // ToDO
-        // const createdFavouriteTeam = await eventService.create(event.name, event.imageUrl, event.description, event.startDate);
+        const createdFavouriteTeam = await favouriteTeamService.create(team.team.id, team.team.name, team.team.crest, team.competition.code, team.competition.name, team.competition.emblem, team.description);
 
-        setFavouriteTeams((state) => [...state, team]);
+        setFavouriteTeams((state) => [...state, createdFavouriteTeam]);
     };
 
     const favouriteTeamContextValue = {
@@ -142,7 +151,7 @@ const FavouriteTeams = () => {
                     <h1 className={`${styles['favourite-teams-title']}`}>All Favourite Teams</h1>
                     <div className={`${styles['favourite-teams-container']}`}>
                         {favouriteTeams.map((team) => (
-                            <div className={`${styles['card-container']}`} key={team.teamId}>
+                            <div className={`${styles['card-container']}`} key={team._id}>
                                 <Card className={`${styles['card']}`} subTitle={cardSubtitle(team)} footer={cardFooter(team)} header={cardHeader(team)} title={team.teamName}>
                                     <div className={styles['card-content']}>
                                         <p><strong>Description: </strong> {team.description}</p>

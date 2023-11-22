@@ -4,11 +4,15 @@ const baseUrl = "http://localhost:3030/data/comments";
 
 export const getAllForEntity = async (entityId) => {
 	try {
-		const result = await request.get(`${baseUrl}/`);
+        const query = new URLSearchParams({
+            where: `entityId="${entityId}"`
+        })
+
+		const result = await request.get(`${baseUrl}?${query}`);
 
 		console.log(result);
 	
-		return result.filter(comment => comment.entityId === entityId);
+		return result;
     } 
     catch (error) {
         console.log(error);

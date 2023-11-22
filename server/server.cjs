@@ -1326,18 +1326,7 @@
                 dateOfBirth: "1985-03-20",
                 age: 36,
                 isAdmin: false,
-                imageUrl: "",
-                favouriteTeams: [
-                    {
-                        teamId: 61,
-                        teamName: "Chelsea FC",
-                        teamCrest: "https://crests.football-data.org/61.png",
-                        teamCompetitionAlias: "PL",
-                        teamCompetitonName: "Premier League",
-                        teamCompetitionEmblem: "https://crests.football-data.org/PL.png",
-                        description: "This is my favourite team from England!!!"
-                    }
-                ],
+                imageUrl: "",            
                 _id: "23475de2-953f-4cba-b8d5-b5ce8af0f967"
             },
             "f22bddec-6591-45c0-ba3d-3075163fe05e": {
@@ -1348,26 +1337,6 @@
                 age: 31,
                 isAdmin: false,
                 imageUrl: "",
-                favouriteTeams: [
-                    {
-                        teamId: 81,
-                        teamName: "FC Barcelona",
-                        teamCrest: "https://crests.football-data.org/81.svg",
-                        teamCompetitionAlias: "PD",
-                        teamCompetitonName: "Primera Division",
-                        teamCompetitionEmblem: "https://crests.football-data.org/PD.png",
-                        description: "This is my favourite team from Spain!!!"
-                    },
-                    {
-                        teamId: 109,
-                        teamName: "Juventus FC",
-                        teamCrest: "https://crests.football-data.org/109.svg",
-                        teamCompetitionAlias: "SA",
-                        teamCompetitonName: "Serie A",
-                        teamCompetitionEmblem: "https://crests.football-data.org/SA.png",
-                        description: "This is my favourite team from Italy!!!"
-                    }
-                ],
                 "_id": "f22bddec-6591-45c0-ba3d-3075163fe05e"
             },
             "a95a58aa-b4e4-4aff-a930-6c84e6d81200": {
@@ -1378,7 +1347,6 @@
                 age: 39,
                 isAdmin: true,
                 imageUrl: "",
-                favouriteTeams: [],
                 _id: "a95a58aa-b4e4-4aff-a930-6c84e6d81200"
             }
     	},
@@ -1557,7 +1525,45 @@
                 _createdOn: 1614260681375,
                 _id: "7e64218c-3636-441d-be07-9b42a242a4d3"
             }
-        }     	
+        },
+        favouriteTeams: {
+            "e67f3a9e-b5ce-401e-a219-8368407c7e15": {
+                _ownerId: "f22bddec-6591-45c0-ba3d-3075163fe05e",
+                teamId: 81,
+                teamName: "FC Barcelona",
+                teamCrest: "https://crests.football-data.org/81.svg",
+                teamCompetitionAlias: "PD",
+                teamCompetitonName: "Primera Division",
+                teamCompetitionEmblem: "https://crests.football-data.org/PD.png",
+                description: "This is my favourite team from Spain!!!",
+                _createdOn: 1614260681375,
+                _id: "e67f3a9e-b5ce-401e-a219-8368407c7e15"
+            },
+            "3a943108-d3c8-437c-9176-2b07729501ae": {
+                _ownerId: "f22bddec-6591-45c0-ba3d-3075163fe05e",
+                teamId: 109,
+                teamName: "Juventus FC",
+                teamCrest: "https://crests.football-data.org/109.svg",
+                teamCompetitionAlias: "SA",
+                teamCompetitonName: "Serie A",
+                teamCompetitionEmblem: "https://crests.football-data.org/SA.png",
+                description: "This is my favourite team from Italy!!!",
+                _createdOn: 1614260681375,
+                _id: "3a943108-d3c8-437c-9176-2b07729501ae"
+            },
+            "394af07f-b668-4946-916f-5b12bfb87467": {
+                _ownerId: "23475de2-953f-4cba-b8d5-b5ce8af0f967",
+                teamId: 61,
+                teamName: "Chelsea FC",
+                teamCrest: "https://crests.football-data.org/61.png",
+                teamCompetitionAlias: "PL",
+                teamCompetitonName: "Premier League",
+                teamCompetitionEmblem: "https://crests.football-data.org/PL.png",
+                description: "This is my favourite team from England!!!",
+                _createdOn: 1614260681375,
+                _id: "394af07f-b668-4946-916f-5b12bfb87467"
+            }
+        }    	
     };
     var rules$1 = {
     	users: {

@@ -21,9 +21,7 @@ const Predictions = () => {
 		predictionService
 			.getAllPredictions()
 			.then((result) => {
-                debugger;
-				if (result)
-                {
+				if (result) {
                     setPredictions(result);
                 }
 			})
@@ -115,7 +113,7 @@ const Predictions = () => {
                     <Column body={matchAwayEmblemBodyTemplate} header="Away Team Emblem" />
                     <Column field="match.awayTeam.name" header="Away Team Name" sortable />
                     <Column body={matchDateBodyTemplate} header="Date" sortable />
-                    <Column field="_ownerId" header="User" sortable />
+                    <Column field="owner.username" header="User" sortable />
 					<Column header="Options" body={optionsBodyTemplate} />
 				</DataTable>
 			</div>

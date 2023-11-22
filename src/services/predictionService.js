@@ -5,9 +5,13 @@ const baseUrl = "http://localhost:3030/data/predictions";
 export const getAllPredictions = async () => {
 
     try {
-        const result = await request.get(`${baseUrl}`);
+        const query = new URLSearchParams({
+            load: `owner=_ownerId:users`
+        })
+
+        const result = await request.get(`${baseUrl}?${query}`);
         
-        if (result.code){
+        if (result.code) {
             throw new Error(result.message)
         }
 
@@ -22,14 +26,14 @@ export const getAllPredictions = async () => {
     }
 };
 
-export const create = async (name, imageUrl, description, startDate) => {
+export const create = async (matchId, match, prediction, notes, entityDate, dateCreated, lastModifiedOn) => {
 
     try {
-        const newEvent = await request.post(baseUrl, {name, imageUrl, description, startDate});
+        const newPrediction = await request.post(baseUrl, {matchId, match, prediction, notes, entityDate, dateCreated, lastModifiedOn});
         
-        console.log(newEvent);
+        console.log(newPrediction);
 
-        return newEvent;
+        return newPrediction;
     } 
     catch (error) {
         console.log(error);
@@ -50,12 +54,12 @@ export const remove = async (_id) => {
     }
 };
 
-export const update = async (_id, name, imageUrl, description, startDate) => {
+export const update = async (_id, matchId, match, prediction, notes, entityDate, dateCreated, lastModifiedOn) => {
 
     try {
-		const updatedEvent = await request.put(`${baseUrl}/${_id}`, {name, imageUrl, description, startDate, _id});
+		const updatedPrediction = await request.put(`${baseUrl}/${_id}`, {matchId, match, prediction, notes, entityDate, dateCreated, lastModifiedOn, _id});
 
-		return updatedEvent;
+		return updatedPrediction;
     } 
     catch (error) {
         console.log(error);
