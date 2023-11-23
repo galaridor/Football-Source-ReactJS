@@ -9,14 +9,13 @@ import styles from "./UpcomingEventCreateModal.module.css";
 import { useForm } from "../../hooks/useForm";
 
 const UpcomingEventCreateModal = ({ isOpen }) => {
-    const { formValues, handleInputChange, resetForm } = useForm({
+    const { closeCreateModal, saveNewEventHandler } = useContext(UpcomingEventContext);
+    const { formValues, handleInputChange, handleSubmit, resetForm } = useForm({
         name: '',
         description: '',
         startDate: '',
         imageUrl: '',
-    });
-
-    const { closeCreateModal, saveNewEventHandler } = useContext(UpcomingEventContext);
+    }, saveNewEventHandler);
 
     useEffect(() => {
         if (isOpen) {
@@ -32,13 +31,7 @@ const UpcomingEventCreateModal = ({ isOpen }) => {
             document.body.classList.remove(styles["modalOpen"]);
         };
     }, [isOpen]);
-
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-
-        await saveNewEventHandler(formValues);
-    };
-    
+ 
     return (
         <Modal
             className={styles["modal"]}
@@ -48,7 +41,7 @@ const UpcomingEventCreateModal = ({ isOpen }) => {
         >
             <div className="create-event-section">
                 <h3 className={styles["create-event-title"]}>Create New Upcoming Event</h3>
-                <form className={styles['create-event-form']} onSubmit={handleFormSubmit}>
+                <form className={styles['create-event-form']} onSubmit={handleSubmit}>
                     <div className="p-fluid">
                         <div className="p-field">
                             <label htmlFor="name">Event Name:</label>

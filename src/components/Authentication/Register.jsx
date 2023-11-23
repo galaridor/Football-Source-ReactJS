@@ -8,22 +8,16 @@ import styles from './Register.module.css'
 import { useContext } from 'react';
 
 const Register = () => {
-	const { formValues, handleInputChange } = useForm({
+	const { registerHandler } = useContext(AuthenticationContext);
+
+	const { formValues, handleInputChange, handleSubmit } = useForm({
 		username: '',
 		imageUrl: '',
 		dateOfBirth: null,
 		email: '',
 		password: '',
 		favouriteTeams: []
-	});
-
-	const { registerHandler } = useContext(AuthenticationContext);
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		registerHandler(formValues);
-	};
+	}, registerHandler);
 
 	return (
 		<div className={styles['register-section']}>

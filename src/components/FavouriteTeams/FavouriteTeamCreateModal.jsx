@@ -11,12 +11,12 @@ import * as competitionService from "../../services/competitionService";
 const FavouriteTeamCreateModal = ({ isOpen }) => {
     const [competitions, setCompetitions] = useState([]);
     const [teams, setTeams] = useState([]);
-
-    const { formValues, handleInputChange, resetForm } = useForm({
+    const { closeCreateModal, saveNewFavouriteTeamHandler } = useContext(FavouriteTeamContext);
+    const { formValues, handleInputChange, handleSubmit, resetForm } = useForm({
         competition: null,
         team: null,
         description: '',
-    });
+    }, saveNewFavouriteTeamHandler);
 
     useEffect(() => {
         competitionService
@@ -49,9 +49,6 @@ const FavouriteTeamCreateModal = ({ isOpen }) => {
         }
     }, [formValues.competition])
 
-
-    const { closeCreateModal, saveNewFavouriteTeamHandler } = useContext(FavouriteTeamContext);
-
     useEffect(() => {
         if (isOpen) {
 
@@ -67,12 +64,6 @@ const FavouriteTeamCreateModal = ({ isOpen }) => {
             document.body.classList.remove(styles["modalOpen"]);
         };
     }, [isOpen]);
-
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-
-        await saveNewFavouriteTeamHandler(formValues);
-    };
 
     const competitionsTemplate = (option) => {
         return (
@@ -101,7 +92,7 @@ const FavouriteTeamCreateModal = ({ isOpen }) => {
         >
             <div className="create-favourite-team-section">
                 <h3 className={styles["create-favourite-team-title"]}>Create New Favourite Event</h3>
-                <form className={styles['create-favourite-team-form']} onSubmit={handleFormSubmit}>
+                <form className={styles['create-favourite-team-form']} onSubmit={handleSubmit}>
                     <div className="p-fluid">
 
                         <div className="p-field">

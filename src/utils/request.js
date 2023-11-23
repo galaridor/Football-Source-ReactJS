@@ -8,12 +8,12 @@ const buildOptions = (data) => {
 		};
 	}
 
-	const accessToken = localStorage.getItem('accessToken');
+	const auth = JSON.parse(localStorage.getItem('auth'));
 
-	if (accessToken) {
+	if (auth.accessToken) {
 		options.headers = {
 			...options.headers,
-			'X-Authorization': accessToken
+			'X-Authorization': auth.accessToken
 		}
 	}
 

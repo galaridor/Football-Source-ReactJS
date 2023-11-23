@@ -68,7 +68,7 @@ const Header = () => {
 			<div className="container">
 				<div className="d-flex align-items-center">
 					<div className="site-logo">
-						<Link to="/"><img src="images/site-logo.png" className={styles['logo']} alt="Logo" /></Link>
+						<Link to="/"><img src="../images/site-logo.png" className={styles['logo']} alt="Logo" /></Link>
 					</div>
 					<div className="ml-auto">
 						<nav className="site-navigation position-relative text-right" role="navigation">

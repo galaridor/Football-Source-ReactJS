@@ -7,18 +7,12 @@ import AuthenticationContext from '../../contexts/AuthenticationContext';
 import styles from './Login.module.css'
 
 const Login = () => {
-	const { formValues, handleInputChange } = useForm({
-		email: '',
-		password: '',
-	});
-
 	const { loginHandler } = useContext(AuthenticationContext);
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		loginHandler(formValues);
-	};
+	const { formValues, handleInputChange, handleSubmit } = useForm({
+		email: '',
+		password: '',
+	}, loginHandler);
 
 	return (
 		<div className={styles['login-section']}>

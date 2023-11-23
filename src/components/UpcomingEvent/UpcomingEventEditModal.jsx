@@ -10,15 +10,14 @@ import { useForm } from "../../hooks/useForm";
 import { UpcomingEventContext } from "../../contexts/UpcomingEventContext";
 
 const UpcomingEventEditModal = ({ isOpen, currentEvent }) => {
-	const { formValues, handleInputChange, resetForm, setForm } = useForm({
+	const { closeEditModal, saveEditedEventHandler } = useContext(UpcomingEventContext);
+	const { formValues, handleInputChange, handleSubmit, resetForm, setForm } = useForm({
 		_id: '',
         name: '',
         description: '',
         startDate: '',
         imageUrl: '',
-	});
-
-	const { closeEditModal, saveEditedEventHandler } = useContext(UpcomingEventContext);
+	}, saveEditedEventHandler);
 
 	useEffect(() => {
 		if (isOpen) {
@@ -36,11 +35,6 @@ const UpcomingEventEditModal = ({ isOpen, currentEvent }) => {
 		};
 	}, [isOpen, currentEvent]);
 
-	const handleFormSubmit = async (e) => {
-		e.preventDefault();
-		await saveEditedEventHandler(formValues);
-	};
-	
 	return (
 		<Modal
 			className={styles["modal"]}
@@ -50,7 +44,7 @@ const UpcomingEventEditModal = ({ isOpen, currentEvent }) => {
 		>
 			<div className="edit-event-section">
 				<h3 className={styles["edit-event-title"]}>Edit {currentEvent?.name}</h3>
-				<form className={styles['edit-event-form']} onSubmit={handleFormSubmit}>
+				<form className={styles['edit-event-form']} onSubmit={handleSubmit}>
 					<div className="p-fluid">
 						<div className="p-field">
 							<label htmlFor="name">Event Name:</label>

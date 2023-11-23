@@ -56,9 +56,9 @@ export const remove = async (_id) => {
 export const update = async (_id, teamId, teamName, teamCrest, teamCompetitionAlias, teamCompetitonName, teamCompetitionEmblem, description) => {
 
     try {
-		const updatedEvent = await request.put(`${baseUrl}/${_id}`, {teamId, teamName, teamCrest, teamCompetitionAlias, teamCompetitonName, teamCompetitionEmblem, description, _id});
+		const updatedFavouriteTeam = await request.put(`${baseUrl}/${_id}`, {teamId, teamName, teamCrest, teamCompetitionAlias, teamCompetitonName, teamCompetitionEmblem, description, _id});
 
-		return updatedEvent;
+		return updatedFavouriteTeam;
     } 
     catch (error) {
         console.log(error);

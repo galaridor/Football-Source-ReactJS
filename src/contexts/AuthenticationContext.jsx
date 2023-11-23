@@ -22,7 +22,6 @@ export const AuthenticationProvider = ({
 					throw new Error(result.error);
 
 				setAuthentication(result);
-				localStorage.setItem('accessToken', result.accessToken);
 
 				navigate(`/my-teams`);
 			})
@@ -50,7 +49,6 @@ export const AuthenticationProvider = ({
 
 	const logoutHandler = () => {
 		setAuthentication({});
-		localStorage.removeItem('accessToken');
 		navigate(`/`);
 	}
 

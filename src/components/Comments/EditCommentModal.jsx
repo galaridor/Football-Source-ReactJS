@@ -9,7 +9,6 @@ import styles from "./EditCommentModal.module.css";
 
 const EditCommentModal = ({ isOpen, comment }) => {
 	const [showPicker, setShowPicker] = useState(false);
-	const { formValues, handleInputChange, resetForm, setForm } = useForm({ text: '' });
 	const { saveEditedCommentHandlerClick, closeEditModal } = useContext(CommentContext);
 
 	useEffect(() => {
@@ -31,11 +30,11 @@ const EditCommentModal = ({ isOpen, comment }) => {
 		setForm({ text: formValues.text + emoji.native });
 	};
 
-	const saveEditCommentHandler = async (e) => {
-		e.preventDefault();
-		
-		await saveEditedCommentHandlerClick(formValues.text);
+	const saveEditCommentHandler = async (values) => {	
+		await saveEditedCommentHandlerClick(values.text);
 	};
+
+	const { formValues, handleInputChange, resetForm, setForm, handleSubmit } = useForm({ text: '' }, saveEditCommentHandler);
 
 	return (
 		<Modal
@@ -55,7 +54,7 @@ const EditCommentModal = ({ isOpen, comment }) => {
 						<Picker onEmojiSelect={handleEmojiSelect} />
 					</div>
 				)}
-				<form className={styles["form"]} onSubmit={saveEditCommentHandler}>
+				<form className={styles["form"]} onSubmit={handleSubmit}>
 					<InputTextarea
 						rows={5}
 						cols={100}

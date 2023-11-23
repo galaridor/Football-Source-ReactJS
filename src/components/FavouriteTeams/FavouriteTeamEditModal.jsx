@@ -8,9 +8,8 @@ import styles from "./FavouriteTeamEditModal.module.css";
 import { Card } from "primereact/card";
 
 const FavouriteTeamEditModal = ({ isOpen, team }) => {
-
-	const { formValues, handleInputChange, resetForm, setForm } = useForm(team);
 	const { saveEditedFavouriteTeamHandlerClick, closeEditModal, cardHeader, cardSubtitle } = useContext(FavouriteTeamContext);
+	const { formValues, handleInputChange, handleSubmit, resetForm, setForm } = useForm(team, saveEditedFavouriteTeamHandlerClick);
 
 	useEffect(() => {
 		if (isOpen) {
@@ -28,12 +27,6 @@ const FavouriteTeamEditModal = ({ isOpen, team }) => {
 		};
 	}, [isOpen, team]);
 
-	const saveEditFavouriteTeamHandler = async (e) => {
-		e.preventDefault();
-
-		await saveEditedFavouriteTeamHandlerClick(formValues);
-	};
-
 	return (
 		<Modal
 			className={styles["modal"]}
@@ -43,7 +36,7 @@ const FavouriteTeamEditModal = ({ isOpen, team }) => {
 		>
 			<div className="edit-favourite-team-section">
 				<h3 className={styles["edit-favourite-team-title"]}>Edit Favourite Team</h3>
-				<form className={styles["form"]} onSubmit={saveEditFavouriteTeamHandler}>
+				<form className={styles["form"]} onSubmit={handleSubmit}>
 					<div className={`${styles['card-container']}`} key={team?.teamId}>
 						<Card className={`${styles['card']}`} subTitle={cardSubtitle(team)} header={cardHeader(team)} title={team?.teamName}>
 							<div className={styles['card-content']}>

@@ -16,7 +16,6 @@ const CommentsList = ({ entityId, type }) => {
 	const [selectedComment, setSelectedComment] = useState(null);
 	const [isEditModalOpen, setEditModalOpen] = useState(false);
 	const [showPicker, setShowPicker] = useState(false);
-	const { formValues, handleInputChange, resetForm, setForm } = useForm({ text: '' });
 
 	const { authentication } = useContext(AuthenticationContext)
 
@@ -41,10 +40,9 @@ const CommentsList = ({ entityId, type }) => {
 		setForm({ text: formValues.text + emoji.native });
 	};
 
-	const addCommentHandler = async (e) => {
-		e.preventDefault();
+	const addCommentHandler = async (values) => {
 
-		if (formValues.text.trim() === "") {
+		if (values.text.trim() === "") {
 			return;
 		}
 
@@ -54,7 +52,7 @@ const CommentsList = ({ entityId, type }) => {
 			type,
 			entityId,
 			authentication.username,
-			formValues.text,
+			values.text,
 			currentDate,
 			currentDate
 		);
@@ -62,6 +60,8 @@ const CommentsList = ({ entityId, type }) => {
 		setComments((state) => [...state, createdComment]);
 		resetForm();
 	};
+
+	const { formValues, handleInputChange, resetForm, setForm, handleSubmit } = useForm({ text: '' }, addCommentHandler);
 
 	const deleteCommentHandler = async (_id) => {
 		await commentService.remove(_id);
@@ -151,7 +151,7 @@ const CommentsList = ({ entityId, type }) => {
 							<Picker onEmojiSelect={handleEmojiSelect} />
 						</div>
 					)}
-					<form className={styles["form"]} onSubmit={addCommentHandler}>
+					<form className={styles["form"]} onSubmit={handleSubmit}>
 						<InputTextarea
 							rows={5}
 							cols={100}
