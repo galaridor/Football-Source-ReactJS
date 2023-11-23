@@ -17,6 +17,13 @@ const buildOptions = (data) => {
 		}
 	}
 
+	if (auth.isAdmin) {
+		options.headers = {
+			...options.headers,
+			'X-Admin': ''
+		}
+	}
+
 	return options;
 };
 

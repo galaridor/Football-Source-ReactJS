@@ -65,7 +65,7 @@ const Predictions = () => {
 					className="p-button-rounded p-button-text"
 					title="Details"
 				/>
-				{authentication._id === prediction._ownerId && <>
+				{(authentication._id === prediction._ownerId || authentication.isAdmin) && <>
 					<Button
 						icon="pi pi-pencil"
 						className="p-button-rounded p-button-text"
@@ -128,7 +128,12 @@ const Predictions = () => {
 
 		const currentDate = new Date();
 
-		const updatedPrediction = await predictionService.update(prediction._id, prediction.matchId, prediction.match, prediction.prediction, prediction.notes, prediction.entitidyDate, prediction.dateCreated, currentDate);
+		const pred = {
+			homeTeamScore: prediction.homePrediction ?? predictionToEdit.prediction.homeTeamScore,
+            awayTeamScore: prediction.awayPrediction ?? predictionToEdit.prediction.awayTeamScore
+		}
+
+		const updatedPrediction = await predictionService.update(prediction._id, predictionToEdit.matchId, predictionToEdit.match, pred, prediction.notes, predictionToEdit.entityDate, predictionToEdit.dateCreated, currentDate);
 
 		setPredictions((prevPredictions) =>
 			prevPredictions.map((pr) =>
@@ -148,7 +153,23 @@ const Predictions = () => {
 
 		const currentDate = new Date();
 
-		const createdPrediction = await predictionService.create(prediction.matchId, prediction.match, prediction.prediction, prediction.notes, prediction.entitidyDate, currentDate, currentDate);
+		const match = {
+			homeTeam: {
+				name: prediction.match.homeTeam.name,
+				crest: prediction.match.homeTeam.crest
+			},
+			awayTeam: {
+				name: prediction.match.awayTeam.name,
+				crest: prediction.match.awayTeam.crest
+			}
+		}
+
+		const pred = {
+			homeTeamScore: prediction.homePrediction ?? 0,
+            awayTeamScore: prediction.awayPrediction ?? 0
+		}
+
+		const createdPrediction = await predictionService.create(prediction.match.id, match, pred, prediction.notes, prediction.date, currentDate, currentDate);
 
 		setPredictions((state) => [...state, createdPrediction]);
 	}
@@ -174,13 +195,13 @@ const Predictions = () => {
 						totalRecords={predictions?.length}
 					>
 						<Column field="matchId" header="Match ID" sortable />
-						<Column field="match.homeTeam.name" header="Home Team Name" sortable />
+						<Column field="match.homeTeam.name" header="Home Team Name" sortable filter />
 						<Column body={matchHomeEmblemBodyTemplate} header="Home Team Emblem" />
 						<Column body={predictionData} header="Prediction" />
-						<Column body={matchAwayEmblemBodyTemplate} header="Away Team Emblem" />
+						<Column body={matchAwayEmblemBodyTemplate} header="Away Team Emblem" filter />
 						<Column field="match.awayTeam.name" header="Away Team Name" sortable />
-						<Column body={matchDateBodyTemplate} header="Date" sortable />
-						<Column field="owner.username" header="User" sortable />
+						<Column body={matchDateBodyTemplate} header="Date" sortable filter />
+						<Column field="owner.username" header="User" sortable filter />
 						<Column header="Options" body={optionsBodyTemplate} />
 					</DataTable>
 				</div>

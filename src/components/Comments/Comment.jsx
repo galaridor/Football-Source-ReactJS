@@ -18,7 +18,7 @@ const Comment = ({
 
 	const { authentication } = useContext(AuthenticationContext);
 
-	const cardFooter = authentication._id === _ownerId ? (
+	const cardFooter = (authentication._id === _ownerId || authentication.isAdmin) ? (
 		<div>
 		  <Button
 			icon="pi pi-pencil"
