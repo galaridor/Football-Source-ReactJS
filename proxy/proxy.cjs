@@ -110,6 +110,33 @@ app.get(`/competitions/:alias/matches`, async (_req, res) => {
 	}
 });
 
+// Get Competition matches by alias filtered by Date e.g: 'PL' for Premier League matches
+app.get(`/competitions/:alias/matches/filter/:dateFrom/:dateTo`, async (_req, res) => {
+	const alias = _req.params.alias;
+	const dateFrom = _req.params.dateFrom;
+	const dateTo = _req.params.dateTo;
+
+	const url = `${baseUrl}/competitions/${alias}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`;
+
+	try {
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: { 'X-Auth-Token': apiKey },
+		});
+
+		if (!response.ok) {
+			throw new Error(`Error! status: ${response.status}`);
+		}
+
+		const result = await response.json();
+
+		return res.json(result);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: 'An error occurred' });
+	}
+});
+
 // Get Competition teams by alias e.g: 'PL' for Premier League teams
 app.get(`/competitions/:alias/teams`, async (_req, res) => {
 	const alias = _req.params.alias;

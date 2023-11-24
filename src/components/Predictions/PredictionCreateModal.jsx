@@ -55,7 +55,15 @@ const PredictionCreateModal = ({ isOpen }) => {
 
 	useEffect(() => {
 		if (formValues?.competition && formValues?.date) {
-			competitionService.getCompetitionMatchesByAlias(formValues.competition.code, formValues.date)
+			let year = formValues.date.getFullYear();
+			let month = (formValues.date.getMonth() + 1).toString().padStart(2, '0'); 
+			let day = formValues.date.getDate().toString().padStart(2, '0');
+	
+			const dateFrom = `${year}-${month}-${day}`;
+	
+			const dateTo = dateFrom;
+
+			competitionService.getCompetitionMatchesByAliasFiltered(formValues.competition.code, dateFrom, dateTo)
 				.then((result) => {
 					if (result.error)
 						throw new Error(result.error);

@@ -66,6 +66,21 @@ export const getCompetitionMatchesByAlias = async (alias) => {
     }
 };
 
+export const getCompetitionMatchesByAliasFiltered = async (alias, dateFrom, dateTo) => {
+    try {
+        const result = await request.get(`${baseUrl}/${alias}/matches/filter/${dateFrom}/${dateTo}`);
+
+        console.log(result);
+
+        return result;
+    } 
+    catch (error) {
+        console.log(error);
+
+        return [];
+    }
+};
+
 export const getCompetitionTeamsByAlias = async (alias) => {
 
     try {
