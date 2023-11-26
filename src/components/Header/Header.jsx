@@ -98,9 +98,9 @@ const Header = () => {
 									<li onClick={() => toggleClass('predictions')} className={`nav-link ${activeItem === 'predictions' ? 'active' : ''}`}>
 										<Link to="/predictions">Predictions</Link>
 									</li>
-									<span>{authentication.username}</span>
+									<Link to="/my-profile"><span>{authentication.username}</span></Link>
 									{isAdmin && <li onClick={() => toggleClass('upcoming-events')} className={`nav-link ${activeItem === 'upcoming-events' ? 'active' : ''}`}>
-										<Link to="/upcoming-events">Upcoming Events</Link>
+										<Link to="/upcoming-events">Events</Link>
 									</li>}
 									{!isAdmin && <li onClick={() => toggleClass('my-teams')} className={`nav-link ${activeItem === 'my-teams' ? 'active' : ''}`}>
 										<Link to="/my-teams">My Teams</Link>

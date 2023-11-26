@@ -17,7 +17,11 @@ const FavouriteTeams = () => {
 
     const navigate = useNavigate();
  
-    const { authentication } = useContext(AuthenticationContext);
+	const { authentication } = useContext(AuthenticationContext);
+
+	if (!authentication._id) {
+		navigate(`/access-denied`);
+	}
 
     useEffect(() => {
 		favouriteTeamService.getFavouriteTeamsForUser(authentication._id)
@@ -154,7 +158,7 @@ const FavouriteTeams = () => {
                             <div className={`${styles['card-container']}`} key={team._id}>
                                 <Card className={`${styles['card']}`} subTitle={cardSubtitle(team)} footer={cardFooter(team)} header={cardHeader(team)} title={team.teamName}>
                                     <div className={styles['card-content']}>
-                                        <p><strong>Description: </strong> {team.description}</p>
+                                        <p><strong>Description: </strong><br></br> {team.description}</p>
                                     </div>
                                 </Card>
                             </div>

@@ -20,8 +20,12 @@ const Predictions = () => {
 	const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
 	const navigate = useNavigate();
-
+	
 	const { authentication } = useContext(AuthenticationContext);
+
+	if (!authentication._id) {
+		navigate(`/access-denied`);
+	}
 
 	useEffect(() => {
 		predictionService

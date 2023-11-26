@@ -1,14 +1,14 @@
-.coach-section {
+.profile-section {
 	text-align: center;
 	/* background-image: url('/public/images/default_coach_background.jpg'); */
 }
 
-.coach-title {
+.profile-title {
 	text-align: center;
 	color: red;
 }
 
-.coach-card-container {
+.profile-card-container {
 	width: 500px;
 	display: inline-grid;
 	margin: 15px;
@@ -16,7 +16,7 @@
 	background-color: lightgrey;
 }
 
-.coach-card {
+.profile-card {
 	margin: 50px;
 }
 

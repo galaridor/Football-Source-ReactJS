@@ -1,6 +1,5 @@
 .upcoming-events-section {
 	text-align: center;
-	/* background-image: url(/public/images/competition_background.avif); */
 }
 
 .upcoming-events-title {
@@ -37,4 +36,11 @@
 .card-image {
 	width: 150px;
 	margin: 25px auto;
+}
+
+.card-content p {
+	width: auto;
+	overflow-wrap: break-word;
+	overflow: auto;
+	max-height: 250px;
 }

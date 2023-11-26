@@ -20,6 +20,11 @@ const Coach = ({ coach }) => {
 		navigate(`/people/${coach.id}`);
 	};
 
+	const cardHeader = (competition) => (
+		<img src='../images/default_coach_background.jpg' className={styles['card-image']} alt="Missing Image" />
+	);
+
+
 	if (coach) {
 		return (
 			<div className={styles['coach-section']}>
@@ -28,6 +33,7 @@ const Coach = ({ coach }) => {
 					<Card
 						className={`${styles['coach-card']} md:w-25rem`}
 						title={coach.name}
+						header={cardHeader}
 						footer={cardFooter}
 					>
 						<p><strong>Name:</strong> {coach.name}</p>

@@ -3,12 +3,19 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Card } from 'primereact/card';
 import { Button } from "primereact/button";
 import styles from './Prediction.module.css';
+import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as predictionService from '../../services/predictionService';
 
 const Prediction = () => {
 	const [prediction, setPrediction] = useState(null);
 	
 	const navigate = useNavigate();
+
+	const { authentication } = useContext(AuthenticationContext);
+
+	if (!authentication._id) {
+		navigate(`/access-denied`);
+	}
 
 	const { id } = useParams();
 

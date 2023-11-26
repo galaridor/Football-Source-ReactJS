@@ -16,6 +16,7 @@ const Register = () => {
 		dateOfBirth: null,
 		email: '',
 		password: '',
+		age: '',
 		favouriteTeams: []
 	}, registerHandler);
 

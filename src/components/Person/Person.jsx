@@ -28,7 +28,7 @@ const Person = () => {
 	}, []);
 	
 	const personCardHeader = (
-		<img src={`${person?.crest}`} className={styles['card-image']} alt="Missing Image" />
+		<img src='../images/person.jpg' className={styles['card-main-image']} alt="Missing Image" />
 	);
 
 	const teamCardHeader = (
@@ -74,7 +74,7 @@ const Person = () => {
 							<p><strong>Address:</strong> {person.currentTeam.address}</p>
 							<p><strong>Club Colors:</strong> {person.currentTeam.clubColors}</p>
 							<p><strong>Stadium:</strong> {person.currentTeam.venue}</p>
-							<p><strong>Website:</strong> {person.currentTeam.website}</p>
+							<p><strong>Website:</strong> <a href={person.currentTeam.website}>{person.currentTeam.website}</a></p>
 						</Card>
 					</Card>
 				</div>

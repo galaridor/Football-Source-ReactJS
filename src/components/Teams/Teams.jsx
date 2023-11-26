@@ -63,11 +63,11 @@ const Teams = () => {
 						<div className={`${styles['card-container']}`} key={team.id}>
 							<Card className={`${styles['card']}`} subTitle={cardSubtitle(team)} footer={cardFooter(team)} header={cardHeader(team)} title={team.name}>
 								<div className={`${styles['card-content']}`}>
-									<p>Founded: {team.founded}</p>
-									<p>Address: {team.address}</p>
-									<p>Club Colors: {team.clubColors}</p>
-									<p>Stadium: {team.venue}</p>
-									<p>Website: {team.website}</p>
+									<p><strong>Founded: </strong>{team.founded}</p>
+									<p><strong>Address: </strong>{team.address}</p>
+									<p><strong>Club Colors: </strong>{team.clubColors}</p>
+									<p><strong>Stadium: </strong>{team.venue}</p>
+									<p><strong>Website: </strong><a href={team.website}>{team.website}</a></p>
 								</div>
 							</Card>
 						</div>

@@ -55,7 +55,7 @@ const Team = () => {
 						<p><strong>Address:</strong> {team.address}</p>
 						<p><strong>Club Colors:</strong> {team.clubColors}</p>
 						<p><strong>Stadium:</strong> {team.venue}</p>
-						<p><strong>Website:</strong> {team.website}</p>
+						<p><strong>Website:</strong> <a href={team.website}>{team.website}</a></p>
 					</Card>
 				</div>
 				<Matches id={team.id} type={'team'}/>

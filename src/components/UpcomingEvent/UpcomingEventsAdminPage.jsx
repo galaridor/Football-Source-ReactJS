@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Timer from '../Timer/Timer';
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
@@ -9,6 +9,7 @@ import * as eventService from '../../services/eventService';
 import { formatDateForTimer } from '../../utils/dateTimeUtils'
 import UpcomingEventCreateModal from './UpcomingEventCreateModal';
 import { UpcomingEventContext } from "../../contexts/UpcomingEventContext";
+import AuthenticationContext from '../../contexts/AuthenticationContext';
 
 const UpcomingEventsAdminPage = () => {
 	const [upcomingEvents, setUpcomingEvents] = useState([]);
@@ -17,6 +18,12 @@ const UpcomingEventsAdminPage = () => {
 	const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
 	const navigate = useNavigate();
+
+	const { authentication } = useContext(AuthenticationContext);
+
+	if (!authentication._id || authentication.isAdmin == false) {
+		navigate(`/access-denied`);
+	}
 
 	useEffect(() => {
 		eventService

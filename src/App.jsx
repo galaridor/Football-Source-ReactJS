@@ -26,6 +26,7 @@ import AccessDenied from "./components/Error/AccessDenied";
 import Logout from "./components/Authentication/Logout";
 import Predictions from "./components/Predictions/Predictions";
 import Prediction from "./components/Predictions/Prediction";
+import Profile from "./components/Profile/Profile";
 
 import { AuthenticationProvider } from './contexts/AuthenticationContext';
 
@@ -34,7 +35,6 @@ import "./App.css";
 import 'primeicons/primeicons.css';
 
 function App() {
-
 	return (
 		<AuthenticationProvider>
 			<div className="site-wrap">
@@ -65,6 +65,7 @@ function App() {
 					<Route path="/my-teams/" element={<FavouriteTeams />} />
 					<Route path="/predictions" element={<Predictions />} />
 					<Route path="/predictions/:id/" element={<Prediction />} />
+					<Route path="/my-profile" element={<Profile />} />
 				</Routes>
 				<Footer />
 			</div>
