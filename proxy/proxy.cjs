@@ -12,20 +12,35 @@ app.use((_req, res, next) => {
 	next();
 });
 
-const sendRequest = async (url, method, apiKey, res) => {
-	const response = await fetch(url, {
-		method: method,
-		headers: { 'X-Auth-Token': apiKey },
-	});
+const sendRequest = async (url, method, apiKey, res, retryCount = 0) => {
+	try {
+		const response = await fetch(url, {
+			method: method,
+			headers: { 'X-Auth-Token': apiKey },
+		});
 
-	if (!response.ok) {
-		throw new Error(`Error! status: ${response.status}`);
+		if (response.status === 429) {
+			if (retryCount < apiKeys.length - 1) {
+				// Retry with the next API key
+				return sendRequest(url, method, apiKeys[retryCount + 1], res, retryCount + 1);
+			} else {
+				// All API keys failed, return an error response
+				throw new Error('All API keys failed, exceeded retry limit');
+			}
+		}
+
+		if (!response.ok) {
+			throw new Error(`Error! status: ${response.status}`);
+		}
+
+		const result = await response.json();
+
+		return res.json(result);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: 'An error occurred' });
 	}
-
-	const result = await response.json();
-
-	return res.json(result);
-}
+};
 
 // Get All Competitions
 app.get('/competitions/', async (_req, res) => {

@@ -12,7 +12,7 @@ const FixtureOnFocus = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const id = 442012;
+		const id = 436108;
 
 		matchService.getMatchById(id)
 			.then((result) => {
