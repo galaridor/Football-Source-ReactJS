@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 const app = express();
 
 const baseUrl = 'https://api.football-data.org/v4';
-const apiKey = '9c5d28d5c644455a94efe4e3c2e4befc'
+const apiKeys = ['9c5d28d5c644455a94efe4e3c2e4befc', '8b2321f513a64d8d8d166ed202dbb623']
 
 app.use((_req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
@@ -12,23 +12,27 @@ app.use((_req, res, next) => {
 	next();
 });
 
+const sendRequest = async (url, method, apiKey, res) => {
+	const response = await fetch(url, {
+		method: method,
+		headers: { 'X-Auth-Token': apiKey },
+	});
+
+	if (!response.ok) {
+		throw new Error(`Error! status: ${response.status}`);
+	}
+
+	const result = await response.json();
+
+	return res.json(result);
+}
+
 // Get All Competitions
 app.get('/competitions/', async (_req, res) => {
 	const url = `${baseUrl}/competitions/`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -42,18 +46,7 @@ app.get(`/competitions/:alias`, async (_req, res) => {
 	const url = `${baseUrl}/competitions/${alias}`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -67,18 +60,7 @@ app.get(`/competitions/:alias/standings`, async (_req, res) => {
 	const url = `${baseUrl}/competitions/${alias}/standings`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -92,18 +74,7 @@ app.get(`/competitions/:alias/matches`, async (_req, res) => {
 	const url = `${baseUrl}/competitions/${alias}/matches`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -119,18 +90,7 @@ app.get(`/competitions/:alias/matches/filter/:dateFrom/:dateTo`, async (_req, re
 	const url = `${baseUrl}/competitions/${alias}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -144,18 +104,7 @@ app.get(`/competitions/:alias/teams`, async (_req, res) => {
 	const url = `${baseUrl}/competitions/${alias}/teams`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -170,18 +119,7 @@ app.get(`/competitions/:alias/scorers/:limit`, async (_req, res) => {
 	const url = `${baseUrl}/competitions/${alias}/scorers/?limit=${limit}`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -195,18 +133,7 @@ app.get(`/teams/all/:limit/`, async (_req, res) => {
 	const url = `${baseUrl}/teams?limit=${limit}`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -220,18 +147,7 @@ app.get(`/teams/:id/`, async (_req, res) => {
 	const url = `${baseUrl}/teams/${id}/`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -245,18 +161,7 @@ app.get(`/teams/:id/matches`, async (_req, res) => {
 	const url = `${baseUrl}/teams/${id}/matches`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -270,18 +175,7 @@ app.get(`/people/:id/`, async (_req, res) => {
 	const url = `${baseUrl}/persons/${id}/`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -295,18 +189,7 @@ app.get(`/people/:id/matches`, async (_req, res) => {
 	const url = `${baseUrl}/persons/${id}/matches`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -320,18 +203,7 @@ app.get(`/matches/:id/`, async (_req, res) => {
 	const url = `${baseUrl}/matches/${id}/`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -345,18 +217,7 @@ app.get(`/matches/:id/headtohead`, async (_req, res) => {
 	const url = `${baseUrl}/matches/${id}/head2head`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });
@@ -371,18 +232,7 @@ app.get(`/matches/:dateFrom/:dateTo`, async (_req, res) => {
 	const url = `${baseUrl}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`;
 
 	try {
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: { 'X-Auth-Token': apiKey },
-		});
-
-		if (!response.ok) {
-			throw new Error(`Error! status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		return res.json(result);
+		await sendRequest(url, 'GET', apiKeys[0], res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: 'An error occurred' });

@@ -14,7 +14,7 @@ export const getMatchesByDate = async (dateFrom, dateTo) => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };
 
@@ -30,7 +30,7 @@ export const getMatchById = async (id) => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };
 
@@ -45,6 +45,6 @@ export const getMatchHeadToHeadById = async (id) => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };

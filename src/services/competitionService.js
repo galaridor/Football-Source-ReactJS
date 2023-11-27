@@ -14,7 +14,7 @@ export const getAllCompetitions = async () => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };
 
@@ -30,7 +30,7 @@ export const getCompetitionByAlias = async (alias) => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };
 
@@ -46,7 +46,7 @@ export const getCompetitionStandingsByAlias = async (alias) => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };
 
@@ -62,7 +62,7 @@ export const getCompetitionMatchesByAlias = async (alias) => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };
 
@@ -77,7 +77,7 @@ export const getCompetitionMatchesByAliasFiltered = async (alias, dateFrom, date
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };
 
@@ -93,7 +93,7 @@ export const getCompetitionTeamsByAlias = async (alias) => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };
 
@@ -109,6 +109,6 @@ export const getCompetitionTopScorersByAlias = async (alias, limit) => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };

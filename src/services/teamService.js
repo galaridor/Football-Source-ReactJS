@@ -16,7 +16,7 @@ export const getAllTeams = async () => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };
 
@@ -32,7 +32,7 @@ export const getTeamById = async (id) => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };
 
@@ -48,6 +48,6 @@ export const getTeamMatchesById = async (id) => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };

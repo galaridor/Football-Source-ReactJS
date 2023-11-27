@@ -14,7 +14,7 @@ export const getPersonById = async (id) => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };
 
@@ -30,6 +30,6 @@ export const getPersonMatchesById = async (id) => {
     catch (error) {
         console.log(error);
 
-        return [];
+        return null;
     }
 };
