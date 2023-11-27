@@ -1,9 +1,12 @@
+import { useContext } from "react";
+
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { formatUTCDateToLocal } from "../../utils/dateTimeUtils";
-import { useContext } from "react";
+
 import { CommentContext } from "../../contexts/CommentContext";
 import AuthenticationContext from "../../contexts/AuthenticationContext";
+import { formatUTCDateToLocal } from "../../utils/dateTimeUtils";
+
 import styles from "./Comment.module.css";
 
 const Comment = ({
@@ -20,18 +23,18 @@ const Comment = ({
 
 	const cardFooter = (authentication._id === _ownerId || authentication.isAdmin) ? (
 		<div>
-		  <Button
-			icon="pi pi-pencil"
-			className="p-button-rounded p-button-text"
-			onClick={() => { editCommentHandlerClick(_id) }}
-		  />
-		  <Button
-			icon="pi pi-trash"
-			className="p-button-rounded p-button-text p-button-danger"
-			onClick={() => { deleteCommentHandlerClick(_id) }}
-		  />
+			<Button
+				icon="pi pi-pencil"
+				className="p-button-rounded p-button-text"
+				onClick={() => { editCommentHandlerClick(_id) }}
+			/>
+			<Button
+				icon="pi pi-trash"
+				className="p-button-rounded p-button-text p-button-danger"
+				onClick={() => { deleteCommentHandlerClick(_id) }}
+			/>
 		</div>
-	  ) : null;
+	) : null;
 
 	return (
 		<div className={styles["comment-section"]}>

@@ -1,17 +1,17 @@
 .modalOpen {
-  overflow: hidden;
+	overflow: hidden;
 }
 
 .overlay {
-  background: rgba(0, 0, 0, 0.5);
+	background: rgba(0, 0, 0, 0.5);
 }
 
 .edit-comment-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  color: red;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	color: red;
 }
 
 .modal {
@@ -34,14 +34,14 @@
 }
 
 .buttons-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
 }
 
 .buttons-container>*:not(:last-child) {
-  margin-right: 10px;
+	margin-right: 10px;
 }
 
 .emoji-picker-container {

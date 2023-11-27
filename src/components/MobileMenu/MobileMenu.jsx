@@ -1,8 +1,6 @@
-import styles from './MobileMenu.module.css';
-
 const MobileMenu = () => {
 	return (
-		<div className={styles['mobile-menu-section']}>
+		<div className='mobile-menu-section'>
 			<div className="site-mobile-menu site-navbar-target">
 				<div className="site-mobile-menu-header">
 					<div className="site-mobile-menu-close">

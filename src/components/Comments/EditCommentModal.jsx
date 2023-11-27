@@ -1,10 +1,13 @@
+import { useContext, useEffect, useState } from "react";
+
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
-import { useContext, useEffect, useState } from "react";
 import Picker from "@emoji-mart/react";
 import Modal from "react-modal";
+
 import { CommentContext } from "../../contexts/CommentContext";
 import { useForm } from "../../hooks/useForm";
+
 import styles from "./EditCommentModal.module.css";
 
 const EditCommentModal = ({ isOpen, comment }) => {
@@ -14,7 +17,7 @@ const EditCommentModal = ({ isOpen, comment }) => {
 	useEffect(() => {
 		if (isOpen) {
 			resetForm();
-			setForm({text: comment});
+			setForm({ text: comment });
 
 			document.body.classList.add(styles["modalOpen"]);
 		} else {
@@ -30,7 +33,7 @@ const EditCommentModal = ({ isOpen, comment }) => {
 		setForm({ text: formValues.text + emoji.native });
 	};
 
-	const saveEditCommentHandler = async (values) => {	
+	const saveEditCommentHandler = async (values) => {
 		await saveEditedCommentHandlerClick(values.text);
 	};
 

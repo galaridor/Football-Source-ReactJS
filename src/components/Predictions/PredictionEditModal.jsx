@@ -1,12 +1,15 @@
+import { useContext, useEffect } from "react";
+
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { InputNumber } from 'primereact/inputnumber';
-import { useContext, useEffect, useState } from "react";
+import { Card } from "primereact/card";
 import Modal from "react-modal";
-import styles from "./PredictionEditModal.module.css";
+
 import { useForm } from "../../hooks/useForm";
 import { PredictionContext } from "../../contexts/PredictionContext";
-import { Card } from "primereact/card";
+
+import styles from "./PredictionEditModal.module.css";
 
 const PredictionEditModal = ({ isOpen, currentPrediction }) => {
 	const { closeEditModal, saveEditedPredictionHandler } = useContext(PredictionContext);
@@ -52,7 +55,7 @@ const PredictionEditModal = ({ isOpen, currentPrediction }) => {
 			<p>{currentPrediction?.match?.homeTeam?.name} - {currentPrediction?.match?.awayTeam?.name}</p>
 		</div>
 	);
-		
+
 	return (
 		<Modal
 			className={styles["modal"]}

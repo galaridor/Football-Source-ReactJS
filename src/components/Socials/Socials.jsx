@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styles from './Socials.module.css';
 
 const Socials = () => {
 	const [socials, setSocials] = useState([
@@ -22,7 +21,7 @@ const Socials = () => {
 	]);
 
 	return (
-		<div className={styles['socials-section']}>
+		<div className='socials-section'>
 			<h3>Socials</h3>
 			<ul className="list-unstyled links">
 				{socials.map((social) => (

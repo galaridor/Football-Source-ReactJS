@@ -1,12 +1,15 @@
+import { useContext, useEffect, useState } from "react";
+
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
-import { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
-import { FavouriteTeamContext } from "../../contexts/FavouriteTeamContext";
-import styles from "./FavouriteTeamCreateModal.module.css";
-import { useForm } from "../../hooks/useForm";
 import { ListBox } from "primereact/listbox";
+
+import { useForm } from "../../hooks/useForm";
 import * as competitionService from "../../services/competitionService";
+import { FavouriteTeamContext } from "../../contexts/FavouriteTeamContext";
+
+import styles from "./FavouriteTeamCreateModal.module.css";
 
 const FavouriteTeamCreateModal = ({ isOpen }) => {
     const [competitions, setCompetitions] = useState([]);
@@ -68,7 +71,7 @@ const FavouriteTeamCreateModal = ({ isOpen }) => {
     const competitionsTemplate = (option) => {
         return (
             <div className="flex align-items-center">
-                <img alt="Missing Image" src={option.emblem} className="flag" style={{ width: '1.25rem', marginRight: '.5rem' }}/>
+                <img alt="Missing Image" src={option.emblem} className="flag" style={{ width: '1.25rem', marginRight: '.5rem' }} />
                 <div>{option.name}</div>
             </div>
         );
@@ -77,7 +80,7 @@ const FavouriteTeamCreateModal = ({ isOpen }) => {
     const teamsTemplate = (option) => {
         return (
             <div className="flex align-items-center">
-                <img alt="Missing Image" src={option.crest} className="flag" style={{ width: '1.25rem', marginRight: '.5rem' }}/>
+                <img alt="Missing Image" src={option.crest} className="flag" style={{ width: '1.25rem', marginRight: '.5rem' }} />
                 <div>{option.name}</div>
             </div>
         );
@@ -97,32 +100,32 @@ const FavouriteTeamCreateModal = ({ isOpen }) => {
 
                         <div className="p-field">
                             <label htmlFor="competition">Competitions:</label>
-                            <ListBox 
-                                value={formValues.competition} 
-                                onChange={handleInputChange} 
-                                options={competitions} 
-                                filter   
+                            <ListBox
+                                value={formValues.competition}
+                                onChange={handleInputChange}
+                                options={competitions}
+                                filter
                                 optionLabel="name"
-                                itemTemplate={competitionsTemplate} 
-                                className="w-full md:w-14rem" 
-                                id="competition" 
-                                name="competition" 
+                                itemTemplate={competitionsTemplate}
+                                className="w-full md:w-14rem"
+                                id="competition"
+                                name="competition"
                                 listStyle={{ maxHeight: '250px' }}
                             />
                         </div>
 
-                       {formValues.competition && <div className="p-field">
+                        {formValues.competition && <div className="p-field">
                             <label htmlFor="team">Teams:</label>
-                            <ListBox 
-                                value={formValues.team} 
-                                onChange={handleInputChange} 
-                                options={teams} 
-                                filter   
+                            <ListBox
+                                value={formValues.team}
+                                onChange={handleInputChange}
+                                options={teams}
+                                filter
                                 optionLabel="name"
-                                itemTemplate={teamsTemplate} 
-                                className="w-full md:w-14rem" 
-                                id="team" 
-                                name="team" 
+                                itemTemplate={teamsTemplate}
+                                className="w-full md:w-14rem"
+                                id="team"
+                                name="team"
                                 listStyle={{ maxHeight: '250px' }}
                             />
                         </div>}

@@ -1,9 +1,12 @@
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import { Card } from "primereact/card";
 import { Button } from 'primereact/button';
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
 import * as competitionService from '../../services/competitionService';
+
 import styles from './Teams.module.css';
 
 const Teams = () => {
@@ -18,15 +21,15 @@ const Teams = () => {
 		competitionService.getCompetitionTeamsByAlias(alias)
 			.then((result) => {
 				if (result.error)
-				  throw new Error(result.error);
-			
-				  setTeams(result.teams);
-				  setCompetitionName(result.competition.name);
-				})
+					throw new Error(result.error);
+
+				setTeams(result.teams);
+				setCompetitionName(result.competition.name);
+			})
 			.catch((error) => {
 				console.log(error);
 				navigate(`/error`);
-				});
+			});
 	}, []);
 
 	const cardHeader = (team) => (

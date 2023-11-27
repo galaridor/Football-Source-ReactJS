@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
+
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from 'primereact/button';
+
 import * as competitionService from '../../services/competitionService';
+
 import styles from './GoalScorers.module.css';
 
 const GoalScorers = () => {
@@ -22,11 +25,11 @@ const GoalScorers = () => {
 
 				setGoalScorers(result.scorers);
 				setCompetitionName(result.competition.name);
-			  })
+			})
 			.catch((error) => {
 				console.log(error);
 				navigate(`/error`);
-			  });
+			});
 	}, []);
 
 	const handlePlayerDetailsClick = (scorer) => {
@@ -62,16 +65,16 @@ const GoalScorers = () => {
 					totalRecords={goalScorers?.length}
 				>
 					<Column field="player.id" header="ID" sortable />
-					<Column field="player.name" header="Player" sortable filter filterPlaceholder="Search by Player Name"/>
-					<Column header="Date of Birth" field='player.dateOfBirth' sortable filter filterPlaceholder="Search by Date Of Birth"/>
-					<Column field="player.nationality" header="Nationality" sortable filter filterPlaceholder="Search by Nationality"/>
-					<Column header="Position" field='player.section' sortable filter filterPlaceholder="Search by Player Position"/>
-					<Column field="team.name" header="Team" sortable filter filterPlaceholder="Search by Player Team"/>
+					<Column field="player.name" header="Player" sortable filter filterPlaceholder="Search by Player Name" />
+					<Column header="Date of Birth" field='player.dateOfBirth' sortable filter filterPlaceholder="Search by Date Of Birth" />
+					<Column field="player.nationality" header="Nationality" sortable filter filterPlaceholder="Search by Nationality" />
+					<Column header="Position" field='player.section' sortable filter filterPlaceholder="Search by Player Position" />
+					<Column field="team.name" header="Team" sortable filter filterPlaceholder="Search by Player Team" />
 					<Column header="Emblem" body={teamEmblemBodyTemplate} />
-					<Column field="playedMatches" header="Played Matches" sortable filter filterPlaceholder="Search by Played Matches"/>
-					<Column field="goals" header="Goals" sortable filter filterPlaceholder="Search by Goals"/>
-					<Column field="assists" header="Assists" sortable filter filterPlaceholder="Search by Assists"/>
-					<Column field="penalties" header="Penalties" sortable filter filterPlaceholder="Search by Penalties"/>
+					<Column field="playedMatches" header="Played Matches" sortable filter filterPlaceholder="Search by Played Matches" />
+					<Column field="goals" header="Goals" sortable filter filterPlaceholder="Search by Goals" />
+					<Column field="assists" header="Assists" sortable filter filterPlaceholder="Search by Assists" />
+					<Column field="penalties" header="Penalties" sortable filter filterPlaceholder="Search by Penalties" />
 					<Column header="Options" body={optionsBodyTemplate} />
 				</DataTable>
 			</div>

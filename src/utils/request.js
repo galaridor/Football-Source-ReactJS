@@ -10,14 +10,14 @@ const buildOptions = (data) => {
 
 	const auth = JSON.parse(localStorage.getItem('auth'));
 
-	if (auth.accessToken) {
+	if (auth?.accessToken) {
 		options.headers = {
 			...options.headers,
 			'X-Authorization': auth.accessToken
 		}
 	}
 
-	if (auth.isAdmin) {
+	if (auth?.isAdmin) {
 		options.headers = {
 			...options.headers,
 			'X-Admin': ''

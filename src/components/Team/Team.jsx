@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
+
 import { Card } from 'primereact/card';
 import Map from '../Map/Map'
 import Squad from '../Squad/Squad';
@@ -7,8 +8,10 @@ import RunningCompetitions from '../RunningCompetitions/RunningCompetitions';
 import Coach from '../Coach/Coach';
 import Matches from '../Matches/Matches';
 import CommentsList from "../Comments/CommentsList";
+
 import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as teamService from '../../services/teamService';
+
 import styles from './Team.module.css';
 
 const Team = () => {
@@ -24,14 +27,14 @@ const Team = () => {
 		teamService.getTeamById(id)
 			.then((result) => {
 				if (result.error)
-				  throw new Error(result.error);
-			
-				  setTeam(result);
-				})
+					throw new Error(result.error);
+
+				setTeam(result);
+			})
 			.catch((error) => {
 				console.log(error);
 				navigate(`/error`);
-				});
+			});
 	}, []);
 
 	const cardHeader = (
@@ -58,11 +61,11 @@ const Team = () => {
 						<p><strong>Website:</strong> <a href={team.website}>{team.website}</a></p>
 					</Card>
 				</div>
-				<Matches id={team.id} type={'team'}/>
+				<Matches id={team.id} type={'team'} />
 				<Squad squad={team.squad} />
 				<RunningCompetitions runningCompetitions={team.runningCompetitions} />
 				<Coach coach={team.coach} />
-				<Map address={team.address}/>
+				<Map address={team.address} />
 				{isAuthenticated ? (<CommentsList entityId={team.id} type='team' />) : (<h3>Login to see comments!</h3>)}
 			</div>
 		);

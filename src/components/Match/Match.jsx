@@ -1,11 +1,14 @@
-import { useNavigate } from "react-router-dom";
-import { Button } from "primereact/button";
-import CommentsList from "../Comments/CommentsList";
-import AuthenticationContext from '../../contexts/AuthenticationContext';
-import HeadToHead from "../HeadToHead/HeadToHead";
-import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
-import styles from "./Match.module.css";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { Button } from "primereact/button";
+import HeadToHead from "../HeadToHead/HeadToHead";
+import CommentsList from "../Comments/CommentsList";
+
+import AuthenticationContext from '../../contexts/AuthenticationContext';
+import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
+
+import styles from "./Match.module.css";
 
 const Match = ({match, title, type}) => {
 	const navigate = useNavigate();

@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { InputTextarea } from "primereact/inputtextarea";
 import Comment from "./Comment";
 import Picker from "@emoji-mart/react";
@@ -7,8 +8,10 @@ import { Button } from "primereact/button";
 import { useForm } from "../../hooks/useForm";
 import { CommentContext } from "../../contexts/CommentContext";
 import EditCommentModal from "./EditCommentModal";
+
 import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as commentService from "../../services/comentService";
+
 import styles from "./CommentsList.module.css";
 
 const CommentsList = ({ entityId, type }) => {
@@ -17,7 +20,7 @@ const CommentsList = ({ entityId, type }) => {
 	const [isEditModalOpen, setEditModalOpen] = useState(false);
 	const [showPicker, setShowPicker] = useState(false);
 
-	const { authentication } = useContext(AuthenticationContext)
+	const { authentication, showSuccess } = useContext(AuthenticationContext)
 
 	const navigate = useNavigate();
 
@@ -59,6 +62,8 @@ const CommentsList = ({ entityId, type }) => {
 
 		setComments((state) => [...state, createdComment]);
 		resetForm();
+
+		showSuccess('Successfully added comment');
 	};
 
 	const { formValues, handleInputChange, resetForm, setForm, handleSubmit } = useForm({ text: '' }, addCommentHandler);
@@ -71,6 +76,8 @@ const CommentsList = ({ entityId, type }) => {
 				return comment._id !== _id;
 			})
 		);
+
+		showSuccess('Successfully deleted comment');
 	};
 
 	const editCommentHandler = async (_id, text, dateCreated) => {
@@ -98,6 +105,8 @@ const CommentsList = ({ entityId, type }) => {
 					: comment
 			)
 		);
+
+		showSuccess('Successfully edited comment');
 	};
 
 	const editCommentHandlerClick = (_id) => {

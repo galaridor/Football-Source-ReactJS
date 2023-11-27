@@ -1,22 +1,25 @@
+import { useContext, useEffect } from "react";
+
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
-import { useContext, useEffect, useState } from "react";
-import { formatDateToIsoDate } from "../../utils/dateTimeUtils";
 import Modal from "react-modal";
-import styles from "./UpcomingEventEditModal.module.css";
+
+import { formatDateToIsoDate } from "../../utils/dateTimeUtils";
 import { useForm } from "../../hooks/useForm";
 import { UpcomingEventContext } from "../../contexts/UpcomingEventContext";
+
+import styles from "./UpcomingEventEditModal.module.css";
 
 const UpcomingEventEditModal = ({ isOpen, currentEvent }) => {
 	const { closeEditModal, saveEditedEventHandler } = useContext(UpcomingEventContext);
 	const { formValues, handleInputChange, handleSubmit, resetForm, setForm } = useForm({
 		_id: '',
-        name: '',
-        description: '',
-        startDate: '',
-        imageUrl: '',
+		name: '',
+		description: '',
+		startDate: '',
+		imageUrl: '',
 	}, saveEditedEventHandler);
 
 	useEffect(() => {

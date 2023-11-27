@@ -1,8 +1,11 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import styles from './Map.module.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom"
+
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+
 import * as locationService from '../../services/locationService';
+
+import styles from './Map.module.css'
 import 'leaflet/dist/leaflet.css';
 
 function Map({ address }) {

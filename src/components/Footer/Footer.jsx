@@ -1,6 +1,7 @@
 import Copyright from "../Copyright/Copyright";
 import Socials from "../Socials/Socials";
 import TopCompetitions from "../TopCompetitions/TopCompetitions";
+
 import styles from './Footer.module.css';
 
 const Footer = () => {

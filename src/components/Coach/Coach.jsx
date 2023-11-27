@@ -1,6 +1,8 @@
-import { Card } from 'primereact/card';
 import { useNavigate } from 'react-router-dom';
+
+import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
+
 import styles from './Coach.module.css';
 
 const Coach = ({ coach }) => {

@@ -1,11 +1,14 @@
+import { useContext } from 'react';
+
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password'
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
+
 import { useForm } from '../../hooks/useForm';
 import AuthenticationContext from '../../contexts/AuthenticationContext';
+
 import styles from './Register.module.css'
-import { useContext } from 'react';
 
 const Register = () => {
 	const { registerHandler } = useContext(AuthenticationContext);
@@ -49,13 +52,13 @@ const Register = () => {
 
 					<div className="p-field">
 						<label htmlFor="dateOfBirth">Date of Birth</label>
-						<Calendar 
+						<Calendar
 							id="dateOfBirth"
 							name="dateOfBirth"
 							dateFormat='dd/mm/yy'
 							placeholder={new Date().toDateString('dd/mm/yy')}
-							value={formValues.dateOfBirth} 
-							onChange={handleInputChange} showIcon 
+							value={formValues.dateOfBirth}
+							onChange={handleInputChange} showIcon
 						/>
 					</div>
 
@@ -73,16 +76,16 @@ const Register = () => {
 
 					<div className="p-field">
 						<label htmlFor="password">Password</label>
-						<Password 
-							value={formValues.password} 
-							onChange={handleInputChange} 
-							toggleMask 							
+						<Password
+							value={formValues.password}
+							onChange={handleInputChange}
+							toggleMask
 							id="password"
 							placeholder='Password'
 							name="password"
-    						promptLabel="Choose a password" 
-							weakLabel="Too simple" 
-							mediumLabel="Average complexity" 
+							promptLabel="Choose a password"
+							weakLabel="Too simple"
+							mediumLabel="Average complexity"
 							strongLabel="Complex password"
 						/>
 					</div>

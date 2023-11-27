@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
-import { useNavigate } from "react-router-dom";
+
 import * as competitionService from "../../services/competitionService";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
+
 import styles from "./Competitions.module.css";
 
 const Competitions = () => {
@@ -73,7 +76,7 @@ const Competitions = () => {
 					<Column field="area.name" header="Area" sortable filter filterPlaceholder="Search by Area" />
 					<Column field="currentSeason.currentMatchday" header="Current Matchday" sortable filter filterPlaceholder="Search by Current Matchday" />
 					<Column field="currentSeason.startDate" header="Start Date" sortable filter filterPlaceholder="Search by Start Date" />
-					<Column field="currentSeason.endDate" header="End Date" sortable filter filterPlaceholder="Search by End Date"/>
+					<Column field="currentSeason.endDate" header="End Date" sortable filter filterPlaceholder="Search by End Date" />
 					<Column header="Options" body={optionsBodyTemplate} />
 				</DataTable>
 			</div>

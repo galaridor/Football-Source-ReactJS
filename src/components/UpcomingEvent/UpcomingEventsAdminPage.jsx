@@ -1,15 +1,18 @@
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Timer from '../Timer/Timer';
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { useNavigate } from 'react-router-dom';
 import UpcomingEventEditModal from './UpcomingEventEditModal';
-import styles from './UpcomingEventsAdminPage.module.css';
-import * as eventService from '../../services/eventService';
-import { formatDateForTimer } from '../../utils/dateTimeUtils'
 import UpcomingEventCreateModal from './UpcomingEventCreateModal';
+
+import { formatDateForTimer } from '../../utils/dateTimeUtils'
+import * as eventService from '../../services/eventService';
 import { UpcomingEventContext } from "../../contexts/UpcomingEventContext";
 import AuthenticationContext from '../../contexts/AuthenticationContext';
+
+import styles from './UpcomingEventsAdminPage.module.css';
 
 const UpcomingEventsAdminPage = () => {
 	const [upcomingEvents, setUpcomingEvents] = useState([]);
@@ -19,10 +22,20 @@ const UpcomingEventsAdminPage = () => {
 
 	const navigate = useNavigate();
 
-	const { authentication } = useContext(AuthenticationContext);
+	const { authentication, showSuccess, showError } = useContext(AuthenticationContext);
 
 	if (!authentication._id || authentication.isAdmin == false) {
 		navigate(`/access-denied`);
+	}
+
+	const validateEvent = (event) => {
+		if (new Date(event.startDate) < new Date()) {
+			showError('Cannot create event in the past')
+
+			return false
+		}
+
+		return true;
 	}
 
 	useEffect(() => {
@@ -70,31 +83,40 @@ const UpcomingEventsAdminPage = () => {
 	};
 
 	const saveEditedEventHandler = async (event) => {
-		closeEditModal();
+		if (validateEvent(event) == true) {
 
-		const updatedEvent = await eventService.update(event._id, event.name, event.imageUrl, event.description, event.startDate);
+			closeEditModal();
 
-		setUpcomingEvents((prevEvents) =>
-			prevEvents.map((ev) =>
-				ev._id === event._id
-					? {
-						...ev,
-						name: updatedEvent.name,
-						description: updatedEvent.description,
-						startDate: updatedEvent.startDate,
-						imageUrl: updatedEvent.imageUrl
-					}
-					: ev
-			)
-		);
+			const updatedEvent = await eventService.update(event._id, event.name, event.imageUrl, event.description, event.startDate);
+
+			setUpcomingEvents((prevEvents) =>
+				prevEvents.map((ev) =>
+					ev._id === event._id
+						? {
+							...ev,
+							name: updatedEvent.name,
+							description: updatedEvent.description,
+							startDate: updatedEvent.startDate,
+							imageUrl: updatedEvent.imageUrl
+						}
+						: ev
+				)
+			);
+
+			showSuccess('Successfully edited event');
+		}
 	};
 
 	const saveNewEventHandler = async (event) => {
-		closeCreateModal();
+		if (validateEvent(event) == true) {
+			closeCreateModal();
 
-		const createdEvent = await eventService.create(event.name, event.imageUrl, event.description, event.startDate);
+			const createdEvent = await eventService.create(event.name, event.imageUrl, event.description, event.startDate);
 
-		setUpcomingEvents((state) => [...state, createdEvent]);
+			setUpcomingEvents((state) => [...state, createdEvent]);
+
+			showSuccess('Successfully added new event');
+		}
 	};
 
 	const deleteEventHandler = async (event) => {
@@ -105,6 +127,8 @@ const UpcomingEventsAdminPage = () => {
 				return currentEvent._id !== event._id;
 			})
 		);
+
+		showSuccess('Successfully deleted event');
 	};
 
 	const cardFooter = (event) => (

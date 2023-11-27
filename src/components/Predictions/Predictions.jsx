@@ -1,17 +1,20 @@
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
-import { useNavigate } from "react-router-dom";
-import * as predictionService from "../../services/predictionService";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "primereact/resources/primereact.min.css";
-import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
-import AuthenticationContext from '../../contexts/AuthenticationContext';
-import styles from "./Predictions.module.css";
 import PredictionEditModal from "./PredictionEditModal";
 import PredictionCreateModal from "./PredictionCreateModal";
+
+import * as predictionService from "../../services/predictionService";
+import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
+import AuthenticationContext from '../../contexts/AuthenticationContext';
 import { PredictionContext } from "../../contexts/PredictionContext";
+
+import styles from "./Predictions.module.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
 
 const Predictions = () => {
 	const [predictions, setPredictions] = useState([]);
@@ -20,11 +23,27 @@ const Predictions = () => {
 	const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
 	const navigate = useNavigate();
-	
-	const { authentication } = useContext(AuthenticationContext);
+
+	const { authentication, showSuccess, showError } = useContext(AuthenticationContext);
 
 	if (!authentication._id) {
 		navigate(`/access-denied`);
+	}
+
+	const validatePrediction = (prediction) => {
+		if (new Date(prediction.date) < new Date()) {
+			showError('Cannot create prediction for finished matches')
+
+			return false
+		}
+
+		if (prediction.homePrediction < 0 || prediction.awayPrediction < 0) {
+			showError('Score prediction cannot be less than 0')
+
+			return false
+		}
+
+		return true;
 	}
 
 	useEffect(() => {
@@ -52,6 +71,8 @@ const Predictions = () => {
 			state.filter((currentPrediction) => {
 				return currentPrediction._id !== prediction._id;
 			}));
+
+		showSuccess('Successfully deleted prediction');
 	};
 
 	const handlePredictionEditClick = (prediction) => {
@@ -128,54 +149,63 @@ const Predictions = () => {
 	}
 
 	const saveEditedPredictionHandler = async (prediction) => {
-		closeEditModal();
+		if (validatePrediction(prediction) == true) {
 
-		const currentDate = new Date();
+			closeEditModal();
 
-		const pred = {
-			homeTeamScore: prediction.homePrediction ?? predictionToEdit.prediction.homeTeamScore,
-            awayTeamScore: prediction.awayPrediction ?? predictionToEdit.prediction.awayTeamScore
+			const currentDate = new Date();
+
+			const pred = {
+				homeTeamScore: prediction.homePrediction ?? predictionToEdit.prediction.homeTeamScore,
+				awayTeamScore: prediction.awayPrediction ?? predictionToEdit.prediction.awayTeamScore
+			}
+
+			const updatedPrediction = await predictionService.update(prediction._id, predictionToEdit.matchId, predictionToEdit.match, pred, prediction.notes, predictionToEdit.entityDate, predictionToEdit.dateCreated, currentDate);
+
+			setPredictions((prevPredictions) =>
+				prevPredictions.map((pr) =>
+					pr._id === prediction._id
+						? {
+							...pr,
+							prediction: updatedPrediction.prediction,
+							notes: updatedPrediction.notes
+						}
+						: pr
+				)
+			);
+
+			showSuccess('Successfully edited prediction');
 		}
-
-		const updatedPrediction = await predictionService.update(prediction._id, predictionToEdit.matchId, predictionToEdit.match, pred, prediction.notes, predictionToEdit.entityDate, predictionToEdit.dateCreated, currentDate);
-
-		setPredictions((prevPredictions) =>
-			prevPredictions.map((pr) =>
-				pr._id === prediction._id
-					? {
-						...pr,
-						prediction: updatedPrediction.prediction,
-						notes: updatedPrediction.notes
-					}
-					: pr
-			)
-		);
 	}
 
 	const saveNewPredictionHandler = async (prediction) => {
-		closeCreateModal();
+		if (validatePrediction(prediction) == true) {
+			closeCreateModal();
 
-		const currentDate = new Date();
+			const currentDate = new Date();
 
-		const match = {
-			homeTeam: {
-				name: prediction.match.homeTeam.name,
-				crest: prediction.match.homeTeam.crest
-			},
-			awayTeam: {
-				name: prediction.match.awayTeam.name,
-				crest: prediction.match.awayTeam.crest
+			const match = {
+				homeTeam: {
+					name: prediction.match.homeTeam.name,
+					crest: prediction.match.homeTeam.crest
+				},
+				awayTeam: {
+					name: prediction.match.awayTeam.name,
+					crest: prediction.match.awayTeam.crest
+				}
 			}
+
+			const pred = {
+				homeTeamScore: prediction.homePrediction ?? 0,
+				awayTeamScore: prediction.awayPrediction ?? 0
+			}
+
+			const createdPrediction = await predictionService.create(prediction.match.id, match, pred, prediction.notes, prediction.date, currentDate, currentDate);
+
+			setPredictions((state) => [...state, createdPrediction]);
+
+			showSuccess('Successfully added new prediction');
 		}
-
-		const pred = {
-			homeTeamScore: prediction.homePrediction ?? 0,
-            awayTeamScore: prediction.awayPrediction ?? 0
-		}
-
-		const createdPrediction = await predictionService.create(prediction.match.id, match, pred, prediction.notes, prediction.date, currentDate, currentDate);
-
-		setPredictions((state) => [...state, createdPrediction]);
 	}
 
 	const predicitonContextValue = {

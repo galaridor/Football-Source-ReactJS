@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+
 import { Chart } from 'primereact/chart';
+
 import styles from './DoughnutChart.module.css';
 
 const DoughnutChart = ({ chartTitle, chartLabels, chartInfo }) => {

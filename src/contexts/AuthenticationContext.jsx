@@ -10,16 +10,16 @@ const AuthenticationContext = createContext();
 const calculateAge = (endDate) => {
 	const today = new Date();
 	const birthDate = new Date(endDate);
-  
+
 	let age = today.getFullYear() - birthDate.getFullYear();
 	const monthDiff = today.getMonth() - birthDate.getMonth();
-  
+
 	if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-	  age--;
+		age--;
 	}
-  
+
 	return age;
-  };
+};
 
 export const AuthenticationProvider = ({
 	children,
@@ -34,6 +34,28 @@ export const AuthenticationProvider = ({
 		toast.current.show({ severity: 'error', summary: 'Error', detail: message, life: 5000 });
 	}
 
+	const showSuccess = (message) => {
+		toast.current.show({ severity: 'success', summary: 'Success', detail: message, life: 5000 });
+	}
+
+	const showInfo = (message) => {
+		toast.current.show({ severity: 'info', summary: 'Info', detail: message, life: 5000 });
+	}
+
+	const showWarning = (message) => {
+		toast.current.show({ severity: 'warn', summary: 'Warning', detail: message, life: 5000 });
+	}
+
+	const validateRegister = (values) => {
+		if (new Date(values.dateOfBirth) > new Date()) {
+			showError('Date of Birth cannot be in the future')
+
+			return false
+		}
+
+		return true;
+	}
+
 	const loginHandler = async (values) => {
 		console.log(values);
 
@@ -43,43 +65,58 @@ export const AuthenticationProvider = ({
 					throw new Error(result.error);
 
 				if (result?.code == 403) {
-					showError('Wrong credentials!');
+					showError(result.message);
 				}
 				else {
 					setAuthentication(result);
 
 					navigate(`/my-profile`);
+
+					showSuccess(`Successfully logged in profile: ${result?.username}`);
 				}
 			})
 			.catch((error) => {
 				console.log(error);
 				navigate(`/error`);
+
+				showError('Something went wrong');
 			});
 	}
 
 	const registerHandler = async (values) => {
-		debugger;
-
 		console.log(values);
 
-		values.age = calculateAge(values.dateOfBirth);
+		if (validateRegister(values) == true) {
+			values.age = calculateAge(values.dateOfBirth);
 
-		authenticationService.register(values)
-			.then((result) => {
-				if (result.error || result?.code == 403)
-					throw new Error(result.error);
+			authenticationService.register(values)
+				.then((result) => {
+					if (result.error)
+						throw new Error(result.error);
 
-				navigate(`/login`);
-			})
-			.catch((error) => {
-				console.log(error);
-				navigate(`/error`);
-			});
+					if (result?.code == 403) {
+						showError(result.message);
+					}
+					else {
+						navigate(`/login`);
+
+						showSuccess(`Successfully registered`);
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+					navigate(`/error`);
+
+					showError('Something went wrong');
+				});
+		}
 	}
 
 	const logoutHandler = () => {
 		setAuthentication({});
 		navigate(`/`);
+
+		showSuccess(`Successfully logged out`);
 	}
 
 	const authenticationProviderValues = {
@@ -88,7 +125,11 @@ export const AuthenticationProvider = ({
 		logoutHandler,
 		authentication,
 		isAdmin: authentication.isAdmin,
-		isAuthenticated: !!authentication.accessToken
+		isAuthenticated: !!authentication.accessToken,
+		showSuccess,
+		showError,
+		showInfo,
+		showWarning
 	}
 
 	return (

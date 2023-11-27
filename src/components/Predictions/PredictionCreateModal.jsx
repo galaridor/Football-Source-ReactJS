@@ -1,14 +1,17 @@
+import { useContext, useEffect, useState } from "react";
+
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { InputNumber } from 'primereact/inputnumber';
 import { Calendar } from 'primereact/calendar';
-import { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
-import { PredictionContext } from "../../contexts/PredictionContext";
-import styles from "./PredictionCreateModal.module.css";
-import { useForm } from "../../hooks/useForm";
 import { ListBox } from "primereact/listbox";
+
+import { useForm } from "../../hooks/useForm";
+import { PredictionContext } from "../../contexts/PredictionContext";
 import * as competitionService from "../../services/competitionService";
+
+import styles from "./PredictionCreateModal.module.css";
 
 const PredictionCreateModal = ({ isOpen }) => {
 	const { closeCreateModal, saveNewPredictionHandler } = useContext(PredictionContext);
@@ -56,11 +59,11 @@ const PredictionCreateModal = ({ isOpen }) => {
 	useEffect(() => {
 		if (formValues?.competition && formValues?.date) {
 			let year = formValues.date.getFullYear();
-			let month = (formValues.date.getMonth() + 1).toString().padStart(2, '0'); 
+			let month = (formValues.date.getMonth() + 1).toString().padStart(2, '0');
 			let day = formValues.date.getDate().toString().padStart(2, '0');
-	
+
 			const dateFrom = `${year}-${month}-${day}`;
-	
+
 			const dateTo = dateFrom;
 
 			competitionService.getCompetitionMatchesByAliasFiltered(formValues.competition.code, dateFrom, dateTo)
@@ -89,10 +92,10 @@ const PredictionCreateModal = ({ isOpen }) => {
 	const matchesTemplate = (option) => {
 		return (
 			<div className="flex justify-content">
-                {option.homeTeam.name}
-				<img alt="Missing Image" src={option.homeTeam.crest} className="flag" style={{ width: '1.25rem', marginRight: '.15rem' }}/>
+				{option.homeTeam.name}
+				<img alt="Missing Image" src={option.homeTeam.crest} className="flag" style={{ width: '1.25rem', marginRight: '.15rem' }} />
 				<span>VS</span>
-				<img alt="Missing Image" src={option.awayTeam.crest} className="flag" style={{ width: '1.25rem', marginLeft: '.15rem' }}/>
+				<img alt="Missing Image" src={option.awayTeam.crest} className="flag" style={{ width: '1.25rem', marginLeft: '.15rem' }} />
 				{option.awayTeam.name}
 			</div>
 		);
@@ -152,30 +155,30 @@ const PredictionCreateModal = ({ isOpen }) => {
 								listStyle={{ maxHeight: '250px' }}
 							/>
 						</div>}
-				
-						{(formValues.competition && formValues.date && formValues.match) && <div className="p-field">
-							 <label htmlFor="homePrediction">Home Team Prediction Score:</label>
-           					 <InputNumber
-								value={formValues.homePrediction} 
-								onValueChange={handleInputChange} 
-								showButtons 
-								id="homePrediction"
-								name="homePrediction"
-								style={{ width: '50rem' }} 
-							 />
-        				</div>}
 
 						{(formValues.competition && formValues.date && formValues.match) && <div className="p-field">
-							 <label htmlFor="awayPrediction">Away Team Prediction Score:</label>
-           					 <InputNumber
-								value={formValues.awayPrediction} 
-								onValueChange={handleInputChange} 
-								showButtons 
+							<label htmlFor="homePrediction">Home Team Prediction Score:</label>
+							<InputNumber
+								value={formValues.homePrediction}
+								onValueChange={handleInputChange}
+								showButtons
+								id="homePrediction"
+								name="homePrediction"
+								style={{ width: '50rem' }}
+							/>
+						</div>}
+
+						{(formValues.competition && formValues.date && formValues.match) && <div className="p-field">
+							<label htmlFor="awayPrediction">Away Team Prediction Score:</label>
+							<InputNumber
+								value={formValues.awayPrediction}
+								onValueChange={handleInputChange}
+								showButtons
 								id="awayPrediction"
 								name="awayPrediction"
-								style={{ width: '50rem' }} 
-							 />
-        				</div>}
+								style={{ width: '50rem' }}
+							/>
+						</div>}
 
 						<div className="p-field">
 							<label htmlFor="notes">Notes:</label>

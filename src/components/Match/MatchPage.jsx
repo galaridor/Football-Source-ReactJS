@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Match from "./Match";
-import * as matchService from '../../services/matchService';
-import styles from "./MatchPage.module.css";
 
-const MatchPage = () => {  
+import Match from "./Match";
+
+import * as matchService from '../../services/matchService';
+
+const MatchPage = () => {
 	const { id } = useParams();
 
-    const [match, setMatch] = useState(null);
+	const [match, setMatch] = useState(null);
 
 	const navigate = useNavigate();
 
@@ -23,14 +24,14 @@ const MatchPage = () => {
 			.catch((error) => {
 				console.log(error);
 				navigate(`/error`);
-			});	
+			});
 	}, []);
 
 	return (
-        <div className={styles['match-page-section']}>
-            <Match match={match} type="full"/>
-        </div>
-    )
+		<div className='match-page-section'>
+			<Match match={match} type="full" />
+		</div>
+	)
 };
 
 export default MatchPage;

@@ -1,6 +1,8 @@
 import { useState } from "react";
-import styles from './Contacts.module.css';
+
 import Map from '../Map/Map';
+
+import styles from './Contacts.module.css';
 
 const Contacts = () => {
 	const [contacts, setContacts] = useState({

@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { Button } from "primereact/button";
-import styles from "./ResultOnFocus.module.css";
+
 import * as matchService from "../../services/matchService";
+
+import styles from "./ResultOnFocus.module.css";
 
 const ResultOnFocus = () => {
 	const [resultOnFocus, setResultOnFocus] = useState(null);

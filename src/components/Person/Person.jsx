@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
+
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import Matches from '../Matches/Matches';
-import styles from './Person.module.css';
+
 import * as personService from '../../services/personService';
+
+import styles from './Person.module.css';
 
 const Person = () => {
 	const [person, setPerson] = useState(null);
@@ -17,16 +20,16 @@ const Person = () => {
 		personService.getPersonById(id)
 			.then((result) => {
 				if (result.error)
-				  throw new Error(result.error);
-			
-				  setPerson(result);
-				})
+					throw new Error(result.error);
+
+				setPerson(result);
+			})
 			.catch((error) => {
 				console.log(error);
 				navigate(`/error`);
-				});
+			});
 	}, []);
-	
+
 	const personCardHeader = (
 		<img src='../images/person.jpg' className={styles['card-main-image']} alt="Missing Image" />
 	);
@@ -69,7 +72,7 @@ const Person = () => {
 						<p><strong>Position:</strong> {person.section}</p>
 						<br></br>
 						<p><strong>Current Team:</strong></p>
-						<Card style={{ backgroundColor: 'salmon'}} footer={teamCardFooter} subTitle={teamCardSubTitle} title={person.currentTeam.name} header={teamCardHeader} className='md-w-25rem'>
+						<Card style={{ backgroundColor: 'salmon' }} footer={teamCardFooter} subTitle={teamCardSubTitle} title={person.currentTeam.name} header={teamCardHeader} className='md-w-25rem'>
 							<p><strong>Founded:</strong> {person.currentTeam.founded}</p>
 							<p><strong>Address:</strong> {person.currentTeam.address}</p>
 							<p><strong>Club Colors:</strong> {person.currentTeam.clubColors}</p>
@@ -78,7 +81,7 @@ const Person = () => {
 						</Card>
 					</Card>
 				</div>
-				<Matches id={person.id} type={'person'}/>
+				<Matches id={person.id} type={'person'} />
 			</div>
 		)
 	}

@@ -1,11 +1,14 @@
+import { useContext, useEffect } from "react";
+
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
-import { useContext, useEffect } from "react";
 import Modal from "react-modal";
+import { Card } from "primereact/card";
+
 import { FavouriteTeamContext } from "../../contexts/FavouriteTeamContext";
 import { useForm } from "../../hooks/useForm";
+
 import styles from "./FavouriteTeamEditModal.module.css";
-import { Card } from "primereact/card";
 
 const FavouriteTeamEditModal = ({ isOpen, team }) => {
 	const { saveEditedFavouriteTeamHandlerClick, closeEditModal, cardHeader, cardSubtitle } = useContext(FavouriteTeamContext);

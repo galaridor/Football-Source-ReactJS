@@ -1,12 +1,16 @@
+import { useContext, useEffect } from "react";
+
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
-import { useContext, useEffect  } from "react";
+
 import Modal from "react-modal";
+
 import { UpcomingEventContext } from "../../contexts/UpcomingEventContext";
-import styles from "./UpcomingEventCreateModal.module.css";
 import { useForm } from "../../hooks/useForm";
+
+import styles from "./UpcomingEventCreateModal.module.css";
 
 const UpcomingEventCreateModal = ({ isOpen }) => {
     const { closeCreateModal, saveNewEventHandler } = useContext(UpcomingEventContext);
@@ -31,7 +35,7 @@ const UpcomingEventCreateModal = ({ isOpen }) => {
             document.body.classList.remove(styles["modalOpen"]);
         };
     }, [isOpen]);
- 
+
     return (
         <Modal
             className={styles["modal"]}

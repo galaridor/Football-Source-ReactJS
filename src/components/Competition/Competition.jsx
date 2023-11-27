@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom"
+
 import { Card } from 'primereact/card';
 import { SplitButton } from 'primereact/splitbutton';
-import styles from './Competition.module.css';
+
 import * as competitionService from '../../services/competitionService';
+
+import styles from './Competition.module.css';
 
 const Competition = () => {
 	const [competition, setCompetition] = useState(null);
-	
+
 	const navigate = useNavigate();
 
 	const { alias } = useParams();
@@ -17,13 +20,13 @@ const Competition = () => {
 			.then((result) => {
 				if (result.error)
 					throw new Error(result.error);
-		
-					setCompetition(result);
-			  })
+
+				setCompetition(result);
+			})
 			.catch((error) => {
 				console.log(error);
 				navigate(`/error`);
-			  });
+			});
 	}, []);
 
 	const cardHeader = (

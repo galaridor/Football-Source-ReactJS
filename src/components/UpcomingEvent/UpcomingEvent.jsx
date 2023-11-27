@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
-import Timer from '../Timer/Timer';
 import { useNavigate } from 'react-router-dom';
-import styles from './UpcomingEvent.module.css';
+
+import Timer from '../Timer/Timer';
+
 import { formatDateForTimer } from '../../utils/dateTimeUtils'
 import * as eventService from '../../services/eventService';
+
+import styles from './UpcomingEvent.module.css';
 
 const UpcomingEvent = () => {
 	const [upcomingEvent, setUpcomingEvent] = useState(null);

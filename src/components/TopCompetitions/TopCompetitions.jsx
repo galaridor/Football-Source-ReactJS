@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styles from "./TopCompetitions.module.css";
 import { Link } from "react-router-dom";
 
 const TopCompetitions = () => {
@@ -31,7 +30,7 @@ const TopCompetitions = () => {
 	]);
 
 	return (
-		<div className={styles["top-competitions-section"]}>
+		<div className="top-competitions-section">
 			<h3>Top Competitions</h3>
 			<ul className="list-unstyled links">
 				{topCompetitions.map((competition) => (

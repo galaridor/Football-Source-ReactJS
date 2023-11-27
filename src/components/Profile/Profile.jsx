@@ -1,9 +1,12 @@
-import { useNavigate } from "react-router-dom";
-import { Card } from 'primereact/card';
-import styles from './Profile.module.css';
-import AuthenticationContext from '../../contexts/AuthenticationContext';
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { Card } from 'primereact/card';
+
+import AuthenticationContext from '../../contexts/AuthenticationContext';
 import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
+
+import styles from './Profile.module.css';
 
 const Profile = () => {
 	const navigate = useNavigate();

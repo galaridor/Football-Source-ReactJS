@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
-import { DataTable } from "primereact/datatable";
 import { useNavigate } from "react-router-dom";
+
+import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Card } from "primereact/card";
 import DoughnutChart from "../Charts/DoughnutChart";
+
 import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 import * as matchService from "../../services/matchService";
+
 import styles from "./HeadToHead.module.css";
 
 const HeadToHead = ({ matchId }) => {

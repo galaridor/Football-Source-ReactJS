@@ -1,12 +1,15 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { useState, useEffect } from "react";
 import { Button } from 'primereact/button';
-import { useNavigate } from "react-router-dom";
-import styles from './Standing.module.css';
+
 import * as competitionService from '../../services/competitionService';
 
-const Standing = ({alias, type}) => {
+import styles from './Standing.module.css';
+
+const Standing = ({ alias, type }) => {
 	const [isMultipleGroups, setIsMultipleGroups] = useState(false);
 	const [standing, setStanding] = useState(null);
 	const [competitionName, setCompetitionName] = useState("");
@@ -17,22 +20,22 @@ const Standing = ({alias, type}) => {
 		competitionService.getCompetitionStandingsByAlias(alias)
 			.then((result) => {
 				if (result.error)
-				  throw new Error(result.error);
-			
-				  if (result.standings.length == 1) {
+					throw new Error(result.error);
+
+				if (result.standings.length == 1) {
 					setStanding(result.standings[0].table);
-				  }
-				  else if (result.standings.length > 1) {
+				}
+				else if (result.standings.length > 1) {
 					setStanding(result.standings);
 					setIsMultipleGroups(true);
-				  }
+				}
 
-				  setCompetitionName(result.competition.name);
-				})
+				setCompetitionName(result.competition.name);
+			})
 			.catch((error) => {
 				console.log(error);
 				navigate(`/error`);
-				});
+			});
 	}, []);
 
 	const emblemBodyTemplate = (rowData) => {
@@ -102,17 +105,17 @@ const Standing = ({alias, type}) => {
 									totalRecords={s?.table?.length}
 								>
 									<Column field="position" header="Position" sortable />
-									<Column field="team.name" header="Team Name" sortable filter filterPlaceholder="Search by Team Name"/>
+									<Column field="team.name" header="Team Name" sortable filter filterPlaceholder="Search by Team Name" />
 									<Column body={emblemBodyTemplate} header="Team Emblem" />
-									<Column field="playedGames" header="Played Games" sortable filter filterPlaceholder="Search by Played Games"/>
-									<Column field="won" header="Won" sortable filter filterPlaceholder="Search by Won Games"/>
-									<Column field="draw" header="Draw" sortable filter filterPlaceholder="Search by Drawn Games"/>
-									<Column field="lost" header="Lost" sortable filter filterPlaceholder="Search by Lost Games"/>
-									<Column field="points" header="Points" sortable filter filterPlaceholder="Search by Points"/>
-									<Column field="goalsFor" header="Goals Scored" sortable filter filterPlaceholder="Search by Goals Scored"/>
-									<Column field="goalsAgainst" header="Goals Conceded" sortable filter filterPlaceholder="Search by Goals Conceded"/>
-									<Column field="goalDifference" header="Goal Difference" sortable filter filterPlaceholder="Search by Goal Difference"/>
-									<Column field="points" header="Points" sortable filter filterPlaceholder="Search by Won Points"/>
+									<Column field="playedGames" header="Played Games" sortable filter filterPlaceholder="Search by Played Games" />
+									<Column field="won" header="Won" sortable filter filterPlaceholder="Search by Won Games" />
+									<Column field="draw" header="Draw" sortable filter filterPlaceholder="Search by Drawn Games" />
+									<Column field="lost" header="Lost" sortable filter filterPlaceholder="Search by Lost Games" />
+									<Column field="points" header="Points" sortable filter filterPlaceholder="Search by Points" />
+									<Column field="goalsFor" header="Goals Scored" sortable filter filterPlaceholder="Search by Goals Scored" />
+									<Column field="goalsAgainst" header="Goals Conceded" sortable filter filterPlaceholder="Search by Goals Conceded" />
+									<Column field="goalDifference" header="Goal Difference" sortable filter filterPlaceholder="Search by Goal Difference" />
+									<Column field="points" header="Points" sortable filter filterPlaceholder="Search by Won Points" />
 									<Column header="Options" body={optionsBodyTemplate} />
 								</DataTable>
 							</div>
@@ -134,17 +137,17 @@ const Standing = ({alias, type}) => {
 								totalRecords={standing?.length}
 							>
 								<Column field="position" header="Position" sortable />
-								<Column field="team.name" header="Team Name" sortable filter filterPlaceholder="Search by Team Name"/>
+								<Column field="team.name" header="Team Name" sortable filter filterPlaceholder="Search by Team Name" />
 								<Column body={emblemBodyTemplate} header="Team Emblem" />
-								<Column field="playedGames" header="Played Games" sortable filter filterPlaceholder="Search by Played Games"/>
-								<Column field="won" header="Won" sortable filter filterPlaceholder="Search by Won Games"/>
-								<Column field="draw" header="Draw" sortable filter filterPlaceholder="Search by Drawn Games"/>
-								<Column field="lost" header="Lost" sortable filter filterPlaceholder="Search by Lost Games"/>
-								<Column field="points" header="Points" sortable filter filterPlaceholder="Search by Points"/>
-								<Column field="goalsFor" header="Goals Scored" sortable filter filterPlaceholder="Search by Goals Scored"/>
-								<Column field="goalsAgainst" header="Goals Conceded" sortable filter filterPlaceholder="Search by Goals Conceded"/>
-								<Column field="goalDifference" header="Goal Difference" sortable filter filterPlaceholder="Search by Goal Difference"/>
-								<Column field="points" header="Points" sortable filter filterPlaceholder="Search by Won Points"/>
+								<Column field="playedGames" header="Played Games" sortable filter filterPlaceholder="Search by Played Games" />
+								<Column field="won" header="Won" sortable filter filterPlaceholder="Search by Won Games" />
+								<Column field="draw" header="Draw" sortable filter filterPlaceholder="Search by Drawn Games" />
+								<Column field="lost" header="Lost" sortable filter filterPlaceholder="Search by Lost Games" />
+								<Column field="points" header="Points" sortable filter filterPlaceholder="Search by Points" />
+								<Column field="goalsFor" header="Goals Scored" sortable filter filterPlaceholder="Search by Goals Scored" />
+								<Column field="goalsAgainst" header="Goals Conceded" sortable filter filterPlaceholder="Search by Goals Conceded" />
+								<Column field="goalDifference" header="Goal Difference" sortable filter filterPlaceholder="Search by Goal Difference" />
+								<Column field="points" header="Points" sortable filter filterPlaceholder="Search by Won Points" />
 								<Column header="Options" body={optionsBodyTemplate} />
 							</DataTable>
 						</div>

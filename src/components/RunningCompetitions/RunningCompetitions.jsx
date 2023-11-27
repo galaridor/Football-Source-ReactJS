@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 import { Card } from "primereact/card";
 import { Button } from 'primereact/button';
-import { useNavigate } from "react-router-dom";
+
 import styles from './RunningCompetitions.module.css';
 
 const RunningCompetitions = ({ runningCompetitions }) => {

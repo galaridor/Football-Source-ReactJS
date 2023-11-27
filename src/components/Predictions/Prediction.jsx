@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom"
+
 import { Card } from 'primereact/card';
 import { Button } from "primereact/button";
-import styles from './Prediction.module.css';
+
 import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as predictionService from '../../services/predictionService';
 
+import styles from './Prediction.module.css';
+
 const Prediction = () => {
 	const [prediction, setPrediction] = useState(null);
-	
+
 	const navigate = useNavigate();
 
 	const { authentication } = useContext(AuthenticationContext);
@@ -23,13 +26,13 @@ const Prediction = () => {
 		predictionService.getPredictionById(id)
 			.then((result) => {
 				if (result) {
-                    setPrediction(result);
-                }
-			  })
+					setPrediction(result);
+				}
+			})
 			.catch((error) => {
 				console.log(error);
 				navigate(`/error`);
-			  });
+			});
 	}, [id]);
 
 	const handleMatchDetailsClick = () => {

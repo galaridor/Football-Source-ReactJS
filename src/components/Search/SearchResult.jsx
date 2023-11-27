@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
+
 import * as competitionService from "../../services/competitionService";
 import * as teamService from "../../services/teamService";
+
 import styles from './SearchResult.module.css';
 
 const SearchResult = () => {

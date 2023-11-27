@@ -1,13 +1,16 @@
-import { Card } from "primereact/card";
-import { Button } from 'primereact/button';
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from './FavouriteTeams.module.css';
-import FavouriteTeamCreateModal from "./FavouriteTeamCreateModal";
-import { FavouriteTeamContext } from "../../contexts/FavouriteTeamContext";
+
+import { Card } from "primereact/card";
+import { Button } from 'primereact/button';
 import FavouriteTeamEditModal from "./FavouriteTeamEditModal";
+import FavouriteTeamCreateModal from "./FavouriteTeamCreateModal";
+
+import { FavouriteTeamContext } from "../../contexts/FavouriteTeamContext";
 import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as favouriteTeamService from '../../services/favouriteTeamService';
+
+import styles from './FavouriteTeams.module.css';
 
 const FavouriteTeams = () => {
     const [isCreateModalOpen, setCreateModalOpen] = useState(false);
@@ -16,36 +19,40 @@ const FavouriteTeams = () => {
     const [favouriteTeams, setFavouriteTeams] = useState([]);
 
     const navigate = useNavigate();
- 
-	const { authentication } = useContext(AuthenticationContext);
 
-	if (!authentication._id) {
-		navigate(`/access-denied`);
-	}
+    const { authentication, showSuccess, showError } = useContext(AuthenticationContext);
+
+    if (!authentication._id) {
+        navigate(`/access-denied`);
+    }
+
+    const validateFavouriteTeam = (team) => {
+        return true;
+    }
 
     useEffect(() => {
-		favouriteTeamService.getFavouriteTeamsForUser(authentication._id)
-			.then((result) => {
-				if (result) {
-					setFavouriteTeams(result);
+        favouriteTeamService.getFavouriteTeamsForUser(authentication._id)
+            .then((result) => {
+                if (result) {
+                    setFavouriteTeams(result);
                 }
-			  })
-			.catch((error) => {
-				console.log(error);
-				navigate(`/error`);
-			});
-	}, []);
+            })
+            .catch((error) => {
+                console.log(error);
+                navigate(`/error`);
+            });
+    }, []);
 
     const cardHeader = (team) => (
         <img src={`${team?.teamCrest}`} alt="Missing Image" className={`${styles['card-image']}`} />
     );
 
     const cardSubtitle = (team) => (
-		<div className={`${styles['card-subtitle']}`}>
-			<p>{team?.teamCompetitonName}</p>
-			<img src={`${team?.teamCompetitionEmblem}`} alt="Missing Image" className={`${styles['card-image']}`} />
-		</div>
-	);
+        <div className={`${styles['card-subtitle']}`}>
+            <p>{team?.teamCompetitonName}</p>
+            <img src={`${team?.teamCompetitionEmblem}`} alt="Missing Image" className={`${styles['card-image']}`} />
+        </div>
+    );
 
     const cardFooter = (team) => (
         <div>
@@ -58,10 +65,10 @@ const FavouriteTeams = () => {
             </div>
             <div>
                 <Button
-				    icon="pi pi-pencil"
-				    className="p-button-rounded p-button-text"
-				    onClick={()=> { editFavouriteTeamHandlerClick(team.teamId) }}
-			    />
+                    icon="pi pi-pencil"
+                    className="p-button-rounded p-button-text"
+                    onClick={() => { editFavouriteTeamHandlerClick(team.teamId) }}
+                />
                 <Button
                     icon="pi pi-trash"
                     className="p-button-rounded p-button-text p-button-danger"
@@ -87,8 +94,10 @@ const FavouriteTeams = () => {
         setFavouriteTeams((state) =>
             state.filter((team) => {
                 return team._id !== _id;
-        })
-    );
+            })
+        );
+
+        showSuccess('Successfully deleted favourite team');
     }
 
     const createNewFavouriteTeamHandlerClick = () => {
@@ -122,21 +131,28 @@ const FavouriteTeams = () => {
 
         setFavouriteTeams((prevTeams) =>
             prevTeams.map((team) =>
-            team._id === values._id
-                ? {
-                    ...values
-                }
-                : team
-        )
-    );
+                team._id === values._id
+                    ? {
+                        ...values
+                    }
+                    : team
+            )
+        );
+
+        showSuccess('Successfully edited favourite team');
     }
 
     const saveNewFavouriteTeamHandler = async (team) => {
-        closeCreateModal();
+        if (validateFavouriteTeam(team) == true) {
 
-        const createdFavouriteTeam = await favouriteTeamService.create(team.team.id, team.team.name, team.team.crest, team.competition.code, team.competition.name, team.competition.emblem, team.description);
+            closeCreateModal();
 
-        setFavouriteTeams((state) => [...state, createdFavouriteTeam]);
+            const createdFavouriteTeam = await favouriteTeamService.create(team.team.id, team.team.name, team.team.crest, team.competition.code, team.competition.name, team.competition.emblem, team.description);
+
+            setFavouriteTeams((state) => [...state, createdFavouriteTeam]);
+
+            showSuccess('Successfully added new favourite team');
+        }
     };
 
     const favouriteTeamContextValue = {

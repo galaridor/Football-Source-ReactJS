@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import Match from "../Match/Match";
 import Standing from "../Standing/Standing";
+
 import * as matchService from '../../services/matchService';
-import styles from "./FixtureOnFocus.module.css";
 
 const FixtureOnFocus = () => {
 	const [matchOnFocus, setMatchOnFocus] = useState(null);
@@ -17,18 +18,18 @@ const FixtureOnFocus = () => {
 			.then((result) => {
 				if (result.error)
 					throw new Error(result.error);
-		
-					setMatchOnFocus(result);
-			  })
+
+				setMatchOnFocus(result);
+			})
 			.catch((error) => {
 				console.log(error);
 				navigate(`/error`);
-			  });
+			});
 	}, []);
 
 	if (matchOnFocus) {
 		return (
-			<div className={styles['fixture-on-focus-section']}>
+			<div className='fixture-on-focus-section'>
 				<div className="site-section bg-dark">
 					<div className="container">
 						<div className="row">
