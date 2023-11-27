@@ -26,11 +26,37 @@ const Predictions = () => {
 
 	const { authentication, showSuccess, showError } = useContext(AuthenticationContext);
 
-	if (!authentication._id) {
-		navigate(`/access-denied`);
-	}
-
 	const validatePrediction = (prediction) => {
+		if (!prediction.competition) {
+			showError(`'Competition' is required`)
+
+			return false
+		}
+
+		if (!prediction.date) {
+			showError(`'Date' is required`)
+
+			return false
+		}
+
+		if (!prediction.match) {
+			showError(`'Match' is required`)
+
+			return false
+		}
+
+		if (!prediction.homePrediction) {
+			showError(`'Home Prediction' is required`)
+
+			return false
+		}
+
+		if (!prediction.awayPrediction) {
+			showError(`'Away Prediction' is required`)
+
+			return false
+		}
+
 		if (new Date(prediction.date) < new Date()) {
 			showError('Cannot create prediction for finished matches')
 

@@ -20,11 +20,7 @@ const FavouriteTeams = () => {
 
     const navigate = useNavigate();
 
-    const { authentication, showSuccess, showError } = useContext(AuthenticationContext);
-
-    if (!authentication._id) {
-        navigate(`/access-denied`);
-    }
+    const { authentication, showSuccess } = useContext(AuthenticationContext);
 
     const validateFavouriteTeam = (team) => {
         return true;

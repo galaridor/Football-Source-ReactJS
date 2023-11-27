@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { Card } from 'primereact/card';
 
@@ -9,13 +8,7 @@ import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 import styles from './Profile.module.css';
 
 const Profile = () => {
-	const navigate = useNavigate();
-
 	const { authentication } = useContext(AuthenticationContext);
-
-	if (!authentication._id) {
-		navigate(`/access-denied`);
-	}
 
 	const cardHeader = (
 		<img src={authentication?.imageUrl} className={styles['card-image']} alt="Missing Image" />

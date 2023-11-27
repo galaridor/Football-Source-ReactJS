@@ -22,13 +22,27 @@ const UpcomingEventsAdminPage = () => {
 
 	const navigate = useNavigate();
 
-	const { authentication, showSuccess, showError } = useContext(AuthenticationContext);
-
-	if (!authentication._id || authentication.isAdmin == false) {
-		navigate(`/access-denied`);
-	}
+	const { showSuccess, showError } = useContext(AuthenticationContext);
 
 	const validateEvent = (event) => {
+		if (event.name.trim() == '') {
+			showError(`'Name' is required`)
+
+			return false
+		}
+
+		if (event.description.trim() == '') {
+			showError(`'Description' is required`)
+
+			return false
+		}
+
+		if (!event.startDate) {
+			showError(`'Start Date' is required`)
+
+			return false
+		}
+
 		if (new Date(event.startDate) < new Date()) {
 			showError('Cannot create event in the past')
 

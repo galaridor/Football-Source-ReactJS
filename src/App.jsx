@@ -27,6 +27,8 @@ import Logout from "./components/Authentication/Logout";
 import Predictions from "./components/Predictions/Predictions";
 import Prediction from "./components/Predictions/Prediction";
 import Profile from "./components/Profile/Profile";
+import AuthGuard from "./components/Guards/AuthGuard";
+import AdminGuard from "./components/Guards/AdminGuard";
 
 import { AuthenticationProvider } from './contexts/AuthenticationContext';
 
@@ -61,11 +63,17 @@ function App() {
 					<Route path="/livescore" element={<Livescore />} />
 					<Route path="/contacts" element={<Contacts />} />
 					<Route path="/people/:id/" element={<Person />} />
-					<Route path="/upcoming-events/" element={<UpcomingEventsAdminPage />} />
-					<Route path="/my-teams/" element={<FavouriteTeams />} />
-					<Route path="/predictions" element={<Predictions />} />
-					<Route path="/predictions/:id/" element={<Prediction />} />
-					<Route path="/my-profile" element={<Profile />} />
+
+					<Route element={<AuthGuard />}>
+						<Route element={<AdminGuard />}>
+							<Route path="/upcoming-events/" element={<UpcomingEventsAdminPage />} />
+						</Route>
+						<Route path="/my-teams/" element={<FavouriteTeams />} />
+						<Route path="/predictions" element={<Predictions />} />
+						<Route path="/predictions/:id/" element={<Prediction />} />
+						<Route path="/my-profile" element={<Profile />} />
+					</Route>
+
 				</Routes>
 				<Footer />
 			</div>

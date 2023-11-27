@@ -47,8 +47,48 @@ export const AuthenticationProvider = ({
 	}
 
 	const validateRegister = (values) => {
+		if (values.username.trim() == '') {
+			showError(`'Username' is required`)
+
+			return false
+		}
+
+		if (!values.dateOfBirth) {
+			showError(`'Date Of Birth' is required`)
+
+			return false
+		}
+
+		if (values.email.trim() == '') {
+			showError(`'Email' is required`)
+
+			return false
+		}
+
+		if (values.password.trim() == '') {
+			showError(`'Password' is required`)
+
+			return false
+		}
+
 		if (new Date(values.dateOfBirth) > new Date()) {
 			showError('Date of Birth cannot be in the future')
+
+			return false
+		}
+
+		return true;
+	}
+
+	const validateLogin = (values) => {
+		if (values.email.trim() == '') {
+			showError(`'Email' is required`)
+
+			return false
+		}
+
+		if (values.password.trim() == '') {
+			showError(`'Password' is required`)
 
 			return false
 		}
@@ -59,28 +99,30 @@ export const AuthenticationProvider = ({
 	const loginHandler = async (values) => {
 		console.log(values);
 
-		authenticationService.login(values?.email, values?.password)
-			.then((result) => {
-				if (result.error)
-					throw new Error(result.error);
+		if (validateLogin(values) == true) {
+			authenticationService.login(values?.email, values?.password)
+				.then((result) => {
+					if (result.error)
+						throw new Error(result.error);
 
-				if (result?.code == 403) {
-					showError(result.message);
-				}
-				else {
-					setAuthentication(result);
+					if (result?.code == 403) {
+						showError(result.message);
+					}
+					else {
+						setAuthentication(result);
 
-					navigate(`/my-profile`);
+						navigate(`/my-profile`);
 
-					showSuccess(`Successfully logged in profile: ${result?.username}`);
-				}
-			})
-			.catch((error) => {
-				console.log(error);
-				navigate(`/error`);
+						showSuccess(`Successfully logged in profile: ${result?.username}`);
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+					navigate(`/error`);
 
-				showError('Something went wrong');
-			});
+					showError('Something went wrong');
+				});
+		}
 	}
 
 	const registerHandler = async (values) => {
