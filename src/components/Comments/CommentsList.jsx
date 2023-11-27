@@ -13,11 +13,13 @@ import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as commentService from "../../services/comentService";
 
 import styles from "./CommentsList.module.css";
+import DeleteModal from "../Modals/DeleteModal";
 
 const CommentsList = ({ entityId, type }) => {
 	const [comments, setComments] = useState([]);
 	const [selectedComment, setSelectedComment] = useState(null);
 	const [isEditModalOpen, setEditModalOpen] = useState(false);
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 	const [showPicker, setShowPicker] = useState(false);
 
 	const { authentication, showSuccess } = useContext(AuthenticationContext)
@@ -77,6 +79,8 @@ const CommentsList = ({ entityId, type }) => {
 			})
 		);
 
+		closeDeleteModal();
+
 		showSuccess('Successfully deleted comment');
 	};
 
@@ -115,12 +119,20 @@ const CommentsList = ({ entityId, type }) => {
 	};
 
 	const deleteCommentHandlerClick = async (_id) => {
-		await deleteCommentHandler(_id);
-		closeEditModal();
+		setSelectedComment(comments.find(comment => comment._id === _id));
+		openDeleteModal();
 	};
 
 	const openEditModal = () => {
 		setEditModalOpen(true);
+	};
+
+	const openDeleteModal = () => {
+		setIsDeleteModalOpen(true);
+	};
+
+	const closeDeleteModal = () => {
+		setIsDeleteModalOpen(false);
 	};
 
 	const closeEditModal = () => {
@@ -182,6 +194,12 @@ const CommentsList = ({ entityId, type }) => {
 				<EditCommentModal
 					isOpen={isEditModalOpen}
 					comment={selectedComment?.text}
+				/>
+				<DeleteModal 
+					isOpen={isDeleteModalOpen}
+					closeDeleteModal={closeDeleteModal}
+					onConfirm={deleteCommentHandler}
+					_id={selectedComment?._id}
 				/>
 			</div>
 		</CommentContext.Provider>

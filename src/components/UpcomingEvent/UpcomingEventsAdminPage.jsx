@@ -6,6 +6,7 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import UpcomingEventEditModal from './UpcomingEventEditModal';
 import UpcomingEventCreateModal from './UpcomingEventCreateModal';
+import DeleteModal from '../Modals/DeleteModal';
 
 import { formatDateForTimer } from '../../utils/dateTimeUtils'
 import * as eventService from '../../services/eventService';
@@ -16,8 +17,9 @@ import styles from './UpcomingEventsAdminPage.module.css';
 
 const UpcomingEventsAdminPage = () => {
 	const [upcomingEvents, setUpcomingEvents] = useState([]);
-	const [eventToEdit, setEventToEdit] = useState({});
+	const [selectedEvent, setSelectedEvent] = useState({});
 	const [isEditModalOpen, setEditModalOpen] = useState(false);
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 	const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
 	const navigate = useNavigate();
@@ -71,7 +73,7 @@ const UpcomingEventsAdminPage = () => {
 	);
 
 	const editEventHandlerClick = (event) => {
-		setEventToEdit(event);
+		setSelectedEvent(event);
 
 		openEditModal();
 	};
@@ -95,7 +97,15 @@ const UpcomingEventsAdminPage = () => {
 	const closeCreateModal = () => {
 		setCreateModalOpen(false);
 	};
+	
+	const openDeleteModal = () => {
+		setIsDeleteModalOpen(true);
+	};
 
+	const closeDeleteModal = () => {
+		setIsDeleteModalOpen(false);
+	};
+	
 	const saveEditedEventHandler = async (event) => {
 		if (validateEvent(event) == true) {
 
@@ -133,14 +143,21 @@ const UpcomingEventsAdminPage = () => {
 		}
 	};
 
-	const deleteEventHandler = async (event) => {
-		await eventService.remove(event._id);
+	const deleteEventHandlerClick = async (event) => {
+		setSelectedEvent(event);
+		openDeleteModal();
+	};
+
+	const deleteEventHandler = async (_id) => {
+		await eventService.remove(_id);
 
 		setUpcomingEvents((state) =>
 			state.filter((currentEvent) => {
-				return currentEvent._id !== event._id;
+				return currentEvent._id !== _id;
 			})
 		);
+
+		closeDeleteModal();
 
 		showSuccess('Successfully deleted event');
 	};
@@ -157,7 +174,7 @@ const UpcomingEventsAdminPage = () => {
 				<Button
 					icon="pi pi-trash"
 					className="p-button-rounded p-button-text p-button-danger"
-					onClick={() => deleteEventHandler(event)}
+					onClick={() => deleteEventHandlerClick(event)}
 				/>
 			</div>
 		</div>
@@ -189,12 +206,20 @@ const UpcomingEventsAdminPage = () => {
 					<div>
 						<UpcomingEventEditModal
 							isOpen={isEditModalOpen}
-							currentEvent={eventToEdit}
+							currentEvent={selectedEvent}
 						/>
 					</div>
 					<div>
 						<UpcomingEventCreateModal
 							isOpen={isCreateModalOpen}
+						/>
+					</div>
+					<div>
+						<DeleteModal
+							isOpen={isDeleteModalOpen}
+							closeDeleteModal={closeDeleteModal}
+							onConfirm={deleteEventHandler}
+							_id={selectedEvent?._id}
 						/>
 					</div>
 				</div>

@@ -27,7 +27,6 @@ const UpcomingEvent = () => {
 			});
 	}, []);
 
-
 	if (upcomingEvent) {
 		return (
 			<div className={`${styles['upcoming-event-section']}`}>

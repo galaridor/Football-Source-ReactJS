@@ -6,6 +6,7 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import PredictionEditModal from "./PredictionEditModal";
 import PredictionCreateModal from "./PredictionCreateModal";
+import DeleteModal from "../Modals/DeleteModal";
 
 import * as predictionService from "../../services/predictionService";
 import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
@@ -18,8 +19,9 @@ import "primereact/resources/primereact.min.css";
 
 const Predictions = () => {
 	const [predictions, setPredictions] = useState([]);
-	const [predictionToEdit, setPredictionToEdit] = useState({});
+	const [selectedPrediction, setSelectedPrediction] = useState({});
 	const [isEditModalOpen, setEditModalOpen] = useState(false);
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 	const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
 	const navigate = useNavigate();
@@ -90,19 +92,26 @@ const Predictions = () => {
 		navigate(`/predictions/${prediction._id}`);
 	};
 
-	const handlePredictionDeleteClick = async (prediction) => {
-		await predictionService.remove(prediction._id);
+	const deletePrediction = async (_id) => {
+		await predictionService.remove(_id);
 
 		setPredictions((state) =>
 			state.filter((currentPrediction) => {
-				return currentPrediction._id !== prediction._id;
+				return currentPrediction._id !== _id;
 			}));
+
+		closeDeleteModal();
 
 		showSuccess('Successfully deleted prediction');
 	};
 
+	const handlePredictionDeleteClick = async (prediction) => {
+		setSelectedPrediction(prediction);
+		openDeleteModal();
+	};
+
 	const handlePredictionEditClick = (prediction) => {
-		setPredictionToEdit(prediction);
+		setSelectedPrediction(prediction);
 
 		openEditModal();
 	};
@@ -170,6 +179,14 @@ const Predictions = () => {
 		setCreateModalOpen(false);
 	};
 
+	const openDeleteModal = () => {
+		setIsDeleteModalOpen(true);
+	};
+
+	const closeDeleteModal = () => {
+		setIsDeleteModalOpen(false);
+	};
+
 	const createNewPredictionHandlerClick = () => {
 		openCreateModal();
 	}
@@ -182,11 +199,11 @@ const Predictions = () => {
 			const currentDate = new Date();
 
 			const pred = {
-				homeTeamScore: prediction.homePrediction ?? predictionToEdit.prediction.homeTeamScore,
-				awayTeamScore: prediction.awayPrediction ?? predictionToEdit.prediction.awayTeamScore
+				homeTeamScore: prediction.homePrediction ?? selectedPrediction.prediction.homeTeamScore,
+				awayTeamScore: prediction.awayPrediction ?? selectedPrediction.prediction.awayTeamScore
 			}
 
-			const updatedPrediction = await predictionService.update(prediction._id, predictionToEdit.matchId, predictionToEdit.match, pred, prediction.notes, predictionToEdit.entityDate, predictionToEdit.dateCreated, currentDate);
+			const updatedPrediction = await predictionService.update(prediction._id, selectedPrediction.matchId, selectedPrediction.match, pred, prediction.notes, selectedPrediction.entityDate, selectedPrediction.dateCreated, currentDate);
 
 			setPredictions((prevPredictions) =>
 				prevPredictions.map((pr) =>
@@ -268,12 +285,20 @@ const Predictions = () => {
 				<div>
 					<PredictionEditModal
 						isOpen={isEditModalOpen}
-						currentPrediction={predictionToEdit}
+						currentPrediction={selectedPrediction}
 					/>
 				</div>
 				<div>
 					<PredictionCreateModal
 						isOpen={isCreateModalOpen}
+					/>
+				</div>
+				<div>
+					<DeleteModal
+						isOpen={isDeleteModalOpen}
+						closeDeleteModal={closeDeleteModal}
+						onConfirm={deletePrediction}
+						_id={selectedPrediction?._id}
 					/>
 				</div>
 				<div>

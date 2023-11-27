@@ -4,7 +4,6 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
-
 import Modal from "react-modal";
 
 import { UpcomingEventContext } from "../../contexts/UpcomingEventContext";
