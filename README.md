@@ -3,7 +3,7 @@
 
 # Football Source App
 
-Welcome to the Football Source App! This web application allows users to register, login, and explore real-time football data, including different competitions, standings, live scores, teams, matches, and players. The app integrates with the Football-Data API for football-related data and the OpenCageData API to retrieve geographic coordinates for displaying team locations on a map.
+Welcome to the Football Source App! This web application allows users to register, login, and explore real-time football data, including different competitions, standings, live scores, teams, matches, predictions, events, and players. The app integrates with the Football-Data API for football-related data and the OpenCageData API to retrieve geographic coordinates for displaying team locations on a map.
 
 ## Table of Contents
 
@@ -20,6 +20,8 @@ Welcome to the Football Source App! This web application allows users to registe
 - Real-time Competitions Information
 - Real-time Standings Information
 - Real-time Live Score
+- Predictions
+- Upcoming Events
 - Teams, Players and Matches Details
 - User comments under Teams and Matches
 - Geographic Map Representation of Team Locations
