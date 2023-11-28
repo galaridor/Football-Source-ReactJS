@@ -30,7 +30,7 @@ const CommentsList = ({ entityId, type }) => {
 		isEditModalOpen,
 		isDeleteModalOpen
 	} = useModal()
-	const { currentPage, itemsPerPage, totalPages, handlePageChange, setTotalCount } = usePagination()
+	const { currentPage, itemsPerPage, totalPages, totalCount, handlePageChange, setTotalCount } = usePagination()
 	const [showPicker, setShowPicker] = useState(false);
 
 	const { authentication, showSuccess } = useContext(AuthenticationContext)
@@ -49,7 +49,7 @@ const CommentsList = ({ entityId, type }) => {
 				console.log(error);
 				navigate(`/error`);
 			});
-	}, [entityId, currentPage]);
+	}, [entityId, currentPage, totalCount]);
 
 	useEffect(() => {
 		commentService
@@ -89,6 +89,12 @@ const CommentsList = ({ entityId, type }) => {
 		setComments((state) => [...state, createdComment]);
 		resetForm();
 
+		if (comments.length == itemsPerPage) {
+			handlePageChange(currentPage + 1);
+		} 
+
+		setTotalCount((prevCount) => prevCount + 1)
+
 		showSuccess('Successfully added comment');
 	};
 
@@ -102,6 +108,12 @@ const CommentsList = ({ entityId, type }) => {
 				return comment._id !== _id;
 			})
 		);
+
+		if (comments.length == 1) {
+			handlePageChange(currentPage - 1);
+		} 
+
+		setTotalCount((prevCount) => prevCount - 1)
 
 		closeDeleteModal();
 
@@ -172,7 +184,7 @@ const CommentsList = ({ entityId, type }) => {
 						{...comment}
 					/>
 				))}
-				<Pagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
+				{comments.length > 0 && <Pagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />}
 				<div className={styles["create-comment"]}>
 					<label>Add new comment:</label>
 					<div className={styles["emoji-section"]}>

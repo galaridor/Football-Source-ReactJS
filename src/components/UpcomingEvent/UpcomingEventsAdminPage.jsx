@@ -33,7 +33,7 @@ const UpcomingEventsAdminPage = () => {
 		isEditModalOpen,
 		isDeleteModalOpen
 	} = useModal()
-	const { currentPage, itemsPerPage, totalPages, handlePageChange, setTotalCount } = usePagination()
+	const { currentPage, itemsPerPage, totalCount, totalPages, handlePageChange, setTotalCount } = usePagination()
 
 	const navigate = useNavigate();
 
@@ -89,7 +89,7 @@ const UpcomingEventsAdminPage = () => {
 				console.log(error);
 				navigate(`/error`);
 			});
-	}, [currentPage]);
+	}, [currentPage, totalCount]);
 
 	useEffect(() => {
 		eventService
@@ -148,6 +148,12 @@ const UpcomingEventsAdminPage = () => {
 
 			setUpcomingEvents((state) => [...state, createdEvent]);
 
+			if (upcomingEvents.length == itemsPerPage) {
+				handlePageChange(currentPage + 1);
+			} 
+
+			setTotalCount((prevCount) => prevCount + 1)
+
 			showSuccess('Successfully added new event');
 		}
 	};
@@ -168,6 +174,12 @@ const UpcomingEventsAdminPage = () => {
 		);
 
 		closeDeleteModal();
+	
+		if (upcomingEvents.length == 1) {
+			handlePageChange(currentPage - 1);
+		} 
+
+		setTotalCount((prevCount) => prevCount - 1)
 
 		showSuccess('Successfully deleted event');
 	};
@@ -233,7 +245,7 @@ const UpcomingEventsAdminPage = () => {
 						/>
 					</div>
 				</div>
-				<Pagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
+				{upcomingEvents.length > 0 && <Pagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />}
 				<div>
 					<Button
 						label=' Add New Upcoming Event'

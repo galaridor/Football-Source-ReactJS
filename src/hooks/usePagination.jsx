@@ -14,16 +14,13 @@ export const usePagination = () => {
         setCurrentPage(newPage);
     };
 
-    const handlePageSizeChange = (newPageSize) => {
-        setItemsPerPage(newPageSize);
-    };
 
 	return {
         currentPage,
         itemsPerPage,
         totalPages,
+        totalCount,
         setTotalCount,
         handlePageChange,
-        handlePageSizeChange
 	};
 };

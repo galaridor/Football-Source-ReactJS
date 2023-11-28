@@ -31,7 +31,7 @@ const FavouriteTeams = () => {
 		isEditModalOpen,
 		isDeleteModalOpen
 	} = useModal()
-	const { currentPage, itemsPerPage, totalPages, handlePageChange, setTotalCount } = usePagination()
+	const { currentPage, itemsPerPage, totalPages, totalCount, handlePageChange, setTotalCount } = usePagination()
 
 	const navigate = useNavigate();
 
@@ -72,7 +72,7 @@ const FavouriteTeams = () => {
 				console.log(error);
 				navigate(`/error`);
 			});
-	}, [currentPage]);
+	}, [currentPage, totalCount]);
 
 	useEffect(() => {
 		favouriteTeamService
@@ -146,6 +146,12 @@ const FavouriteTeams = () => {
 
 		closeDeleteModal();
 
+		if (favouriteTeams.length == 1) {
+			handlePageChange(currentPage - 1);
+		} 
+
+		setTotalCount((prevCount) => prevCount - 1)		
+	
 		showSuccess('Successfully deleted favourite team');
 	}
 
@@ -179,6 +185,12 @@ const FavouriteTeams = () => {
 			const createdFavouriteTeam = await favouriteTeamService.create(team.team.id, team.team.name, team.team.crest, team.competition.code, team.competition.name, team.competition.emblem, team.description);
 
 			setFavouriteTeams((state) => [...state, createdFavouriteTeam]);
+
+			if (favouriteTeams.length == itemsPerPage) {
+				handlePageChange(currentPage + 1);
+			} 
+
+			setTotalCount((prevCount) => prevCount + 1)
 
 			showSuccess('Successfully added new favourite team');
 		}
@@ -228,7 +240,7 @@ const FavouriteTeams = () => {
 							/>
 						</div>
 					</div>
-					<Pagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
+					{favouriteTeams.length > 0 && <Pagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange}/>}
 					<div>
 						<Button
 							label=' Add New Favourite Team'
