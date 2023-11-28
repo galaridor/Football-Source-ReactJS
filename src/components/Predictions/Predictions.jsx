@@ -39,6 +39,7 @@ const Predictions = () => {
 	const { authentication, showSuccess, showError } = useContext(AuthenticationContext);
 
 	const validatePrediction = (prediction, mode) => {
+
 		if (!prediction.competition && mode === 'NEW') {
 			showError(`'Competition' is required`)
 
@@ -57,13 +58,13 @@ const Predictions = () => {
 			return false
 		}
 
-		if (!prediction.homePrediction && mode === 'NEW') {
+		if (!prediction.homePrediction && prediction.homePrediction != 0 && mode === 'NEW') {
 			showError(`'Home Prediction' is required`)
 
 			return false
 		}
 
-		if (!prediction.awayPrediction && mode === 'NEW') {
+		if (!prediction.awayPrediction && prediction.awayPrediction != 0 && mode === 'NEW') {
 			showError(`'Away Prediction' is required`)
 
 			return false
@@ -97,7 +98,7 @@ const Predictions = () => {
 			.getAllPredictions()
 			.then((result) => {
 				if (result) {
-					setPredictions(result);
+					setPredictions(result.sort((a, b) => b._createdOn - a._createdOn));
 				}
 			})
 			.catch((error) => {
@@ -235,7 +236,7 @@ const Predictions = () => {
 
 			const createdPrediction = await predictionService.create(prediction.match.id, match, pred, prediction.notes, prediction.date, currentDate, currentDate);
 
-			setPredictions((state) => [...state, createdPrediction]);
+			setPredictions((state) => [createdPrediction, ...state]);
 
 			showSuccess('Successfully added new prediction');
 		}

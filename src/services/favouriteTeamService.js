@@ -7,12 +7,11 @@ export const getFavouriteTeamsForUser = async (userId, offset, pageSize) => {
     try {
         const query = new URLSearchParams({
             where: `_ownerId="${userId}"`,
-            // sortBy: `_createdOn`,
             offset: offset,
             pageSize: pageSize
         })
 
-        const result = await request.get(`${baseUrl}?${query}`);
+        const result = await request.get(`${baseUrl}?${query}&sortBy=_createdOn desc`);
         
         if (result.code){
             throw new Error(result.message)

@@ -6,12 +6,11 @@ export const getAllForEntity = async (entityId, offset, pageSize) => {
 	try {
         const query = new URLSearchParams({
             where: `entityId="${entityId}"`,
-            // sortBy: `_createdOn`,
             offset: offset,
             pageSize: pageSize
         })
 
-		const result = await request.get(`${baseUrl}?${query}`);
+		const result = await request.get(`${baseUrl}?${query}&sortBy=_createdOn desc`);
 
 		console.log(result);
 	

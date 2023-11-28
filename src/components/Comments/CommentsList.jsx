@@ -55,7 +55,7 @@ const CommentsList = ({ entityId, type }) => {
 		commentService
 			.getTotalCountForEntity(entityId)
 			.then((result) => {
-				if (result.error) {
+				if (result) {
 					setTotalCount(result);
 				}
 			})
@@ -86,12 +86,8 @@ const CommentsList = ({ entityId, type }) => {
 			currentDate
 		);
 
-		setComments((state) => [...state, createdComment]);
+		setComments((state) => [createdComment, ...state]);
 		resetForm();
-
-		if (comments.length == itemsPerPage) {
-			handlePageChange(currentPage + 1);
-		} 
 
 		setTotalCount((prevCount) => prevCount + 1)
 

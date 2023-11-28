@@ -184,11 +184,7 @@ const FavouriteTeams = () => {
 
 			const createdFavouriteTeam = await favouriteTeamService.create(team.team.id, team.team.name, team.team.crest, team.competition.code, team.competition.name, team.competition.emblem, team.description);
 
-			setFavouriteTeams((state) => [...state, createdFavouriteTeam]);
-
-			if (favouriteTeams.length == itemsPerPage) {
-				handlePageChange(currentPage + 1);
-			} 
+			setFavouriteTeams((state) => [createdFavouriteTeam, ...state]);
 
 			setTotalCount((prevCount) => prevCount + 1)
 

@@ -10,7 +10,7 @@ export const getPredictionById = async (id) => {
             load: `owner=_ownerId:users`
         })
 
-        const result = await request.get(`${baseUrl}/${id}?${query}`);
+        const result = await request.get(`${baseUrl}/${id}?${query}&sortBy=_createdOn desc`);
         
         if (result.code) {
             throw new Error(result.message)

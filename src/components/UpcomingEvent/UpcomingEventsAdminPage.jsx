@@ -146,11 +146,7 @@ const UpcomingEventsAdminPage = () => {
 
 			const createdEvent = await eventService.create(event.name, event.imageUrl, event.description, event.startDate);
 
-			setUpcomingEvents((state) => [...state, createdEvent]);
-
-			if (upcomingEvents.length == itemsPerPage) {
-				handlePageChange(currentPage + 1);
-			} 
+			setUpcomingEvents((state) => [createdEvent, ...state]);
 
 			setTotalCount((prevCount) => prevCount + 1)
 
