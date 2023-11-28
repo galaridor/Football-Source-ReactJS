@@ -6,6 +6,7 @@ import { Button } from 'primereact/button';
 import FavouriteTeamEditModal from "./FavouriteTeamEditModal";
 import FavouriteTeamCreateModal from "./FavouriteTeamCreateModal";
 import DeleteModal from "../Modals/DeleteModal";
+import { useModal } from "../../hooks/useModal";
 
 import { FavouriteTeamContext } from "../../contexts/FavouriteTeamContext";
 import AuthenticationContext from '../../contexts/AuthenticationContext';
@@ -14,17 +15,38 @@ import * as favouriteTeamService from '../../services/favouriteTeamService';
 import styles from './FavouriteTeams.module.css';
 
 const FavouriteTeams = () => {
-	const [isCreateModalOpen, setCreateModalOpen] = useState(false);
-	const [isEditModalOpen, setEditModalOpen] = useState(false);
-	const [selectedTeam, setSelectedTeam] = useState({});
-	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 	const [favouriteTeams, setFavouriteTeams] = useState([]);
+	const {
+		setSelectedItem,
+		openCreateModal,
+		closeCreateModal,
+		openEditModal,
+		closeEditModal,
+		openDeleteModal,
+		closeDeleteModal,
+		selectedItem,
+		isCreateModalOpen,
+		isEditModalOpen,
+		isDeleteModalOpen
+	} = useModal()
 
 	const navigate = useNavigate();
 
-	const { authentication, showSuccess } = useContext(AuthenticationContext);
+	const { authentication, showSuccess, showError } = useContext(AuthenticationContext);
 
 	const validateFavouriteTeam = (team) => {
+		if (!team.competition) {
+			showError(`'Competition' is required`)
+
+			return false
+		}
+
+		if (!team.team) {
+			showError(`'Team' is required`)
+
+			return false
+		}
+
 		return true;
 	}
 
@@ -77,12 +99,13 @@ const FavouriteTeams = () => {
 	);
 
 	const deleteFavouriteTeamHandlerClick = async (_id) => {
-		setSelectedTeam(favouriteTeams.find(team => team.teamId === _id));
+		setSelectedItem(favouriteTeams.find(team => team.teamId === _id));
+
 		openDeleteModal();
 	};
 
 	const editFavouriteTeamHandlerClick = async (_id) => {
-		setSelectedTeam(favouriteTeams.find(team => team.teamId === _id));
+		setSelectedItem(favouriteTeams.find(team => team.teamId === _id));
 
 		openEditModal();
 	};
@@ -100,34 +123,6 @@ const FavouriteTeams = () => {
 
 		showSuccess('Successfully deleted favourite team');
 	}
-
-	const createNewFavouriteTeamHandlerClick = () => {
-		openCreateModal();
-	};
-
-	const openCreateModal = () => {
-		setCreateModalOpen(true);
-	};
-
-	const closeCreateModal = () => {
-		setCreateModalOpen(false);
-	};
-
-	const openEditModal = () => {
-		setEditModalOpen(true);
-	};
-
-	const closeEditModal = () => {
-		setEditModalOpen(false);
-	};
-
-	const openDeleteModal = () => {
-		setIsDeleteModalOpen(true);
-	};
-
-	const closeDeleteModal = () => {
-		setIsDeleteModalOpen(false);
-	};
 
 	const handleTeamDetailsClick = (team) => {
 		navigate(`/teams/${team.teamId}`);
@@ -196,7 +191,7 @@ const FavouriteTeams = () => {
 						<div>
 							<FavouriteTeamEditModal
 								isOpen={isEditModalOpen}
-								team={selectedTeam}
+								team={selectedItem}
 							/>
 						</div>
 						<div>
@@ -204,7 +199,7 @@ const FavouriteTeams = () => {
 								isOpen={isDeleteModalOpen}
 								closeDeleteModal={closeDeleteModal}
 								onConfirm={deleteFavouriteTeamHandler}
-								_id={selectedTeam?._id}
+								_id={selectedItem?._id}
 							/>
 						</div>
 					</div>
@@ -213,7 +208,7 @@ const FavouriteTeams = () => {
 							label=' Add New Favourite Team'
 							icon="pi pi-plus"
 							className="p-button-rounded"
-							onClick={createNewFavouriteTeamHandlerClick}
+							onClick={openCreateModal}
 						/>
 					</div>
 				</div>

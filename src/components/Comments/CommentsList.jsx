@@ -8,6 +8,7 @@ import { Button } from "primereact/button";
 import { useForm } from "../../hooks/useForm";
 import { CommentContext } from "../../contexts/CommentContext";
 import EditCommentModal from "./EditCommentModal";
+import { useModal } from "../../hooks/useModal";
 
 import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as commentService from "../../services/comentService";
@@ -17,9 +18,16 @@ import DeleteModal from "../Modals/DeleteModal";
 
 const CommentsList = ({ entityId, type }) => {
 	const [comments, setComments] = useState([]);
-	const [selectedComment, setSelectedComment] = useState(null);
-	const [isEditModalOpen, setEditModalOpen] = useState(false);
-	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+	const {
+		setSelectedItem,
+		openEditModal,
+		closeEditModal,
+		openDeleteModal,
+		closeDeleteModal,
+		selectedItem,
+		isEditModalOpen,
+		isDeleteModalOpen
+	} = useModal()
 	const [showPicker, setShowPicker] = useState(false);
 
 	const { authentication, showSuccess } = useContext(AuthenticationContext)
@@ -114,33 +122,20 @@ const CommentsList = ({ entityId, type }) => {
 	};
 
 	const editCommentHandlerClick = (_id) => {
-		setSelectedComment(comments.find(comment => comment._id === _id));
+		setSelectedItem(comments.find(comment => comment._id === _id));
+
 		openEditModal();
 	};
 
 	const deleteCommentHandlerClick = async (_id) => {
-		setSelectedComment(comments.find(comment => comment._id === _id));
+		setSelectedItem(comments.find(comment => comment._id === _id));
+
 		openDeleteModal();
 	};
 
-	const openEditModal = () => {
-		setEditModalOpen(true);
-	};
-
-	const openDeleteModal = () => {
-		setIsDeleteModalOpen(true);
-	};
-
-	const closeDeleteModal = () => {
-		setIsDeleteModalOpen(false);
-	};
-
-	const closeEditModal = () => {
-		setEditModalOpen(false);
-	};
-
 	const saveEditedCommentHandlerClick = async (comment) => {
-		await editCommentHandler(selectedComment?._id, comment, selectedComment?.dateCreated);
+		await editCommentHandler(selectedItem?._id, comment, selectedItem?.dateCreated);
+
 		closeEditModal();
 	};
 
@@ -193,13 +188,13 @@ const CommentsList = ({ entityId, type }) => {
 				</div>
 				<EditCommentModal
 					isOpen={isEditModalOpen}
-					comment={selectedComment?.text}
+					comment={selectedItem?.text}
 				/>
 				<DeleteModal 
 					isOpen={isDeleteModalOpen}
 					closeDeleteModal={closeDeleteModal}
 					onConfirm={deleteCommentHandler}
-					_id={selectedComment?._id}
+					_id={selectedItem?._id}
 				/>
 			</div>
 		</CommentContext.Provider>

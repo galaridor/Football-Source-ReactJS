@@ -12,6 +12,7 @@ import * as predictionService from "../../services/predictionService";
 import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 import AuthenticationContext from '../../contexts/AuthenticationContext';
 import { PredictionContext } from "../../contexts/PredictionContext";
+import { useModal } from "../../hooks/useModal";
 
 import styles from "./Predictions.module.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
@@ -19,47 +20,56 @@ import "primereact/resources/primereact.min.css";
 
 const Predictions = () => {
 	const [predictions, setPredictions] = useState([]);
-	const [selectedPrediction, setSelectedPrediction] = useState({});
-	const [isEditModalOpen, setEditModalOpen] = useState(false);
-	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-	const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+	const {
+		setSelectedItem,
+		openCreateModal,
+		closeCreateModal,
+		openEditModal,
+		closeEditModal,
+		openDeleteModal,
+		closeDeleteModal,
+		selectedItem,
+		isCreateModalOpen,
+		isEditModalOpen,
+		isDeleteModalOpen
+	} = useModal()
 
 	const navigate = useNavigate();
 
 	const { authentication, showSuccess, showError } = useContext(AuthenticationContext);
 
-	const validatePrediction = (prediction) => {
-		if (!prediction.competition) {
+	const validatePrediction = (prediction, mode) => {
+		if (!prediction.competition && mode === 'NEW') {
 			showError(`'Competition' is required`)
 
 			return false
 		}
 
-		if (!prediction.date) {
+		if (!prediction.date && mode === 'NEW') {
 			showError(`'Date' is required`)
 
 			return false
 		}
 
-		if (!prediction.match) {
+		if (!prediction.match && mode === 'NEW') {
 			showError(`'Match' is required`)
 
 			return false
 		}
 
-		if (!prediction.homePrediction) {
+		if (!prediction.homePrediction && mode === 'NEW') {
 			showError(`'Home Prediction' is required`)
 
 			return false
 		}
 
-		if (!prediction.awayPrediction) {
+		if (!prediction.awayPrediction && mode === 'NEW') {
 			showError(`'Away Prediction' is required`)
 
 			return false
 		}
 
-		if (new Date(prediction.date) < new Date()) {
+		if (new Date(prediction.date) < new Date() && mode === 'NEW') {
 			showError('Cannot create prediction for finished matches')
 
 			return false
@@ -106,12 +116,12 @@ const Predictions = () => {
 	};
 
 	const handlePredictionDeleteClick = async (prediction) => {
-		setSelectedPrediction(prediction);
+		setSelectedItem(prediction);
 		openDeleteModal();
 	};
 
 	const handlePredictionEditClick = (prediction) => {
-		setSelectedPrediction(prediction);
+		setSelectedItem(prediction);
 
 		openEditModal();
 	};
@@ -163,47 +173,21 @@ const Predictions = () => {
 		return '';
 	};
 
-	const openEditModal = () => {
-		setEditModalOpen(true);
-	};
-
-	const closeEditModal = () => {
-		setEditModalOpen(false);
-	};
-
-	const openCreateModal = () => {
-		setCreateModalOpen(true);
-	};
-
-	const closeCreateModal = () => {
-		setCreateModalOpen(false);
-	};
-
-	const openDeleteModal = () => {
-		setIsDeleteModalOpen(true);
-	};
-
-	const closeDeleteModal = () => {
-		setIsDeleteModalOpen(false);
-	};
-
-	const createNewPredictionHandlerClick = () => {
-		openCreateModal();
-	}
-
 	const saveEditedPredictionHandler = async (prediction) => {
-		if (validatePrediction(prediction) == true) {
+		debugger;
+
+		if (validatePrediction(prediction, 'EDIT') == true) {
 
 			closeEditModal();
 
 			const currentDate = new Date();
 
 			const pred = {
-				homeTeamScore: prediction.homePrediction ?? selectedPrediction.prediction.homeTeamScore,
-				awayTeamScore: prediction.awayPrediction ?? selectedPrediction.prediction.awayTeamScore
+				homeTeamScore: prediction.homePrediction ?? selectedItem.prediction.homeTeamScore,
+				awayTeamScore: prediction.awayPrediction ?? selectedItem.prediction.awayTeamScore
 			}
 
-			const updatedPrediction = await predictionService.update(prediction._id, selectedPrediction.matchId, selectedPrediction.match, pred, prediction.notes, selectedPrediction.entityDate, selectedPrediction.dateCreated, currentDate);
+			const updatedPrediction = await predictionService.update(prediction._id, selectedItem.matchId, selectedItem.match, pred, prediction.notes, selectedItem.entityDate, selectedItem.dateCreated, currentDate);
 
 			setPredictions((prevPredictions) =>
 				prevPredictions.map((pr) =>
@@ -222,7 +206,7 @@ const Predictions = () => {
 	}
 
 	const saveNewPredictionHandler = async (prediction) => {
-		if (validatePrediction(prediction) == true) {
+		if (validatePrediction(prediction, 'NEW') == true) {
 			closeCreateModal();
 
 			const currentDate = new Date();
@@ -285,7 +269,7 @@ const Predictions = () => {
 				<div>
 					<PredictionEditModal
 						isOpen={isEditModalOpen}
-						currentPrediction={selectedPrediction}
+						currentPrediction={selectedItem}
 					/>
 				</div>
 				<div>
@@ -298,7 +282,7 @@ const Predictions = () => {
 						isOpen={isDeleteModalOpen}
 						closeDeleteModal={closeDeleteModal}
 						onConfirm={deletePrediction}
-						_id={selectedPrediction?._id}
+						_id={selectedItem?._id}
 					/>
 				</div>
 				<div>
@@ -306,7 +290,7 @@ const Predictions = () => {
 						label=' Add New Prediction Event'
 						icon="pi pi-plus"
 						className="p-button-rounded"
-						onClick={createNewPredictionHandlerClick}
+						onClick={openCreateModal}
 					/>
 				</div>
 			</div>

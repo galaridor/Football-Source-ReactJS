@@ -7,6 +7,7 @@ import { Button } from "primereact/button";
 import UpcomingEventEditModal from './UpcomingEventEditModal';
 import UpcomingEventCreateModal from './UpcomingEventCreateModal';
 import DeleteModal from '../Modals/DeleteModal';
+import { useModal } from '../../hooks/useModal';
 
 import { formatDateForTimer } from '../../utils/dateTimeUtils'
 import * as eventService from '../../services/eventService';
@@ -17,10 +18,19 @@ import styles from './UpcomingEventsAdminPage.module.css';
 
 const UpcomingEventsAdminPage = () => {
 	const [upcomingEvents, setUpcomingEvents] = useState([]);
-	const [selectedEvent, setSelectedEvent] = useState({});
-	const [isEditModalOpen, setEditModalOpen] = useState(false);
-	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-	const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+	const {
+		setSelectedItem,
+		openCreateModal,
+		closeCreateModal,
+		openEditModal,
+		closeEditModal,
+		openDeleteModal,
+		closeDeleteModal,
+		selectedItem,
+		isCreateModalOpen,
+		isEditModalOpen,
+		isDeleteModalOpen
+	} = useModal()
 
 	const navigate = useNavigate();
 
@@ -73,39 +83,11 @@ const UpcomingEventsAdminPage = () => {
 	);
 
 	const editEventHandlerClick = (event) => {
-		setSelectedEvent(event);
+		setSelectedItem(event);
 
 		openEditModal();
 	};
 
-	const openEditModal = () => {
-		setEditModalOpen(true);
-	};
-
-	const closeEditModal = () => {
-		setEditModalOpen(false);
-	};
-
-	const createNewEventHandlerClick = () => {
-		openCreateModal();
-	};
-
-	const openCreateModal = () => {
-		setCreateModalOpen(true);
-	};
-
-	const closeCreateModal = () => {
-		setCreateModalOpen(false);
-	};
-	
-	const openDeleteModal = () => {
-		setIsDeleteModalOpen(true);
-	};
-
-	const closeDeleteModal = () => {
-		setIsDeleteModalOpen(false);
-	};
-	
 	const saveEditedEventHandler = async (event) => {
 		if (validateEvent(event) == true) {
 
@@ -144,7 +126,8 @@ const UpcomingEventsAdminPage = () => {
 	};
 
 	const deleteEventHandlerClick = async (event) => {
-		setSelectedEvent(event);
+		setSelectedItem(event);
+		
 		openDeleteModal();
 	};
 
@@ -206,7 +189,7 @@ const UpcomingEventsAdminPage = () => {
 					<div>
 						<UpcomingEventEditModal
 							isOpen={isEditModalOpen}
-							currentEvent={selectedEvent}
+							currentEvent={selectedItem}
 						/>
 					</div>
 					<div>
@@ -219,7 +202,7 @@ const UpcomingEventsAdminPage = () => {
 							isOpen={isDeleteModalOpen}
 							closeDeleteModal={closeDeleteModal}
 							onConfirm={deleteEventHandler}
-							_id={selectedEvent?._id}
+							_id={selectedItem?._id}
 						/>
 					</div>
 				</div>
@@ -228,7 +211,7 @@ const UpcomingEventsAdminPage = () => {
 						label=' Add New Upcoming Event'
 						icon="pi pi-plus"
 						className="p-button-rounded"
-						onClick={createNewEventHandlerClick}
+						onClick={openCreateModal}
 					/>
 				</div>
 			</div>
