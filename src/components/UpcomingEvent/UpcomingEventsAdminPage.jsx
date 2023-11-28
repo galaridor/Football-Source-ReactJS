@@ -7,8 +7,10 @@ import { Button } from "primereact/button";
 import UpcomingEventEditModal from './UpcomingEventEditModal';
 import UpcomingEventCreateModal from './UpcomingEventCreateModal';
 import DeleteModal from '../Modals/DeleteModal';
-import { useModal } from '../../hooks/useModal';
+import Pagination from '../Pagination/Pagination';
 
+import { useModal } from '../../hooks/useModal';
+import { usePagination } from '../../hooks/usePagination';
 import { formatDateForTimer } from '../../utils/dateTimeUtils'
 import * as eventService from '../../services/eventService';
 import { UpcomingEventContext } from "../../contexts/UpcomingEventContext";
@@ -31,12 +33,13 @@ const UpcomingEventsAdminPage = () => {
 		isEditModalOpen,
 		isDeleteModalOpen
 	} = useModal()
+	const { currentPage, itemsPerPage, totalPages, handlePageChange, setTotalCount } = usePagination()
 
 	const navigate = useNavigate();
 
 	const { showSuccess, showError } = useContext(AuthenticationContext);
 
-	const validateEvent = (event) => {
+	const validateEvent = (event, mode) => {
 		if (event.name.trim() == '') {
 			showError(`'Name' is required`)
 
@@ -61,15 +64,39 @@ const UpcomingEventsAdminPage = () => {
 			return false
 		}
 
+		const isThereEventOnTheSameDate = upcomingEvents.some(obj =>
+			new Date(obj.startDate).toLocaleDateString() === new Date(event.startDate).toLocaleDateString() && event._id != obj._id
+		);
+
+		if (isThereEventOnTheSameDate) {
+			showError(`There is already event set for '${event.startDate}'`)
+
+			return false
+		}
+
 		return true;
 	}
 
 	useEffect(() => {
 		eventService
-			.getAllUpcomingEvent()
+			.getAllUpcomingEvent((currentPage * itemsPerPage) - itemsPerPage, itemsPerPage)
 			.then((result) => {
 				if (result) {
 					setUpcomingEvents(result);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+			});
+	}, [currentPage]);
+
+	useEffect(() => {
+		eventService
+			.getAllUpcomingEventCount()
+			.then((result) => {
+				if (result) {
+					setTotalCount(result);
 				}
 			})
 			.catch((error) => {
@@ -206,6 +233,7 @@ const UpcomingEventsAdminPage = () => {
 						/>
 					</div>
 				</div>
+				<Pagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
 				<div>
 					<Button
 						label=' Add New Upcoming Event'

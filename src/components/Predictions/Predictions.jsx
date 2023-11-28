@@ -81,6 +81,14 @@ const Predictions = () => {
 			return false
 		}
 
+		const isPredictionForThisMatchAlreadyMake = predictions.some(obj => obj.matchId === prediction.match.id && prediction._id != obj._id);
+
+		if (isPredictionForThisMatchAlreadyMake) {
+			showError(`Prediction for this match already exists`)
+
+			return false
+		}
+
 		return true;
 	}
 
@@ -174,8 +182,6 @@ const Predictions = () => {
 	};
 
 	const saveEditedPredictionHandler = async (prediction) => {
-		debugger;
-
 		if (validatePrediction(prediction, 'EDIT') == true) {
 
 			closeEditModal();

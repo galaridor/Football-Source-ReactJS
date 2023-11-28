@@ -64,6 +64,10 @@ const Standing = ({ alias, type }) => {
 		navigate(`/teams/${rowData.team.id}/`);
 	};
 
+	const handleCompetitionStandingClick = () => {
+		navigate(`/competitions/${alias}/standing/full`);
+	};
+
 	if (standing) {
 		if (type === "short") {
 			return (
@@ -77,14 +81,21 @@ const Standing = ({ alias, type }) => {
 							rowsPerPageOptions={[5, 10, 15, 20, 50]}
 							totalRecords={standing?.length}
 						>
-							<Column field="position" header="P" sortable />
-							<Column field="team.name" header="Team" sortable />
-							<Column field="playedGames" header="PG" sortable />
-							<Column field="won" header="W" sortable />
-							<Column field="draw" header="D" sortable />
-							<Column field="lost" header="L" sortable />
-							<Column field="points" header="PTS" sortable />
+							<Column field="position" header="P" headerTooltip="Position" sortable />
+							<Column field="team.name" header="Team" headerTooltip="Team Name" sortable />
+							<Column field="playedGames" header="PG" headerTooltip="Played Games" sortable />
+							<Column field="won" header="W" headerTooltip="Wins" sortable />
+							<Column field="draw" header="D" headerTooltip="Draws" sortable />
+							<Column field="lost" header="L" headerTooltip="Losses" sortable />
+							<Column field="points" header="PTS" headerTooltip="Points" sortable />
 						</DataTable>
+					</div>
+					<div className={styles['details-btn']}>
+						<Button
+							label="Detailed Standing"
+							onClick={handleCompetitionStandingClick}
+							icon="pi pi-info"
+						/>
 					</div>
 				</div>
 			);

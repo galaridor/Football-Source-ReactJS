@@ -6,8 +6,10 @@ import { Button } from 'primereact/button';
 import FavouriteTeamEditModal from "./FavouriteTeamEditModal";
 import FavouriteTeamCreateModal from "./FavouriteTeamCreateModal";
 import DeleteModal from "../Modals/DeleteModal";
-import { useModal } from "../../hooks/useModal";
+import Pagination from "../Pagination/Pagination";
 
+import { useModal } from "../../hooks/useModal";
+import { usePagination } from "../../hooks/usePagination";
 import { FavouriteTeamContext } from "../../contexts/FavouriteTeamContext";
 import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as favouriteTeamService from '../../services/favouriteTeamService';
@@ -29,6 +31,7 @@ const FavouriteTeams = () => {
 		isEditModalOpen,
 		isDeleteModalOpen
 	} = useModal()
+	const { currentPage, itemsPerPage, totalPages, handlePageChange, setTotalCount } = usePagination()
 
 	const navigate = useNavigate();
 
@@ -47,11 +50,19 @@ const FavouriteTeams = () => {
 			return false
 		}
 
+		const isTeamIdPresent = favouriteTeams.some(obj => obj.teamId === team.team.id);
+
+		if (isTeamIdPresent) {
+			showError(`'${team.team.name}' is already added as a favourite team`)
+
+			return false
+		}
+
 		return true;
 	}
 
 	useEffect(() => {
-		favouriteTeamService.getFavouriteTeamsForUser(authentication._id)
+		favouriteTeamService.getFavouriteTeamsForUser(authentication._id, (currentPage * itemsPerPage) - itemsPerPage, itemsPerPage)
 			.then((result) => {
 				if (result) {
 					setFavouriteTeams(result);
@@ -61,7 +72,21 @@ const FavouriteTeams = () => {
 				console.log(error);
 				navigate(`/error`);
 			});
-	}, []);
+	}, [currentPage]);
+
+	useEffect(() => {
+		favouriteTeamService
+			.getTotalCountForUser(authentication._id)
+			.then((result) => {
+				if (result) {
+					setTotalCount(result);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+			});
+	}, [authentication._id]);
 
 	const cardHeader = (team) => (
 		<img src={`${team?.teamCrest}`} alt="Missing Image" className={`${styles['card-image']}`} />
@@ -203,6 +228,7 @@ const FavouriteTeams = () => {
 							/>
 						</div>
 					</div>
+					<Pagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
 					<div>
 						<Button
 							label=' Add New Favourite Team'

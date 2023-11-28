@@ -2,10 +2,13 @@ import * as request from "../utils/request";
 
 const baseUrl = "http://localhost:3030/data/comments";
 
-export const getAllForEntity = async (entityId) => {
+export const getAllForEntity = async (entityId, offset, pageSize) => {
 	try {
         const query = new URLSearchParams({
-            where: `entityId="${entityId}"`
+            where: `entityId="${entityId}"`,
+            // sortBy: `_createdOn`,
+            offset: offset,
+            pageSize: pageSize
         })
 
 		const result = await request.get(`${baseUrl}?${query}`);
@@ -18,6 +21,25 @@ export const getAllForEntity = async (entityId) => {
         console.log(error);
 
         return [];
+    }
+};
+
+export const getTotalCountForEntity = async (entityId) => {
+	try {
+        const query = new URLSearchParams({
+            where: `entityId="${entityId}"`,
+        })
+
+		const result = await request.get(`${baseUrl}?${query}&count`);
+
+		console.log(result);
+	
+		return result;
+    } 
+    catch (error) {
+        console.log(error);
+
+        return null;
     }
 };
 

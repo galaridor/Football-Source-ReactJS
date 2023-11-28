@@ -5,16 +5,18 @@ import { InputTextarea } from "primereact/inputtextarea";
 import Comment from "./Comment";
 import Picker from "@emoji-mart/react";
 import { Button } from "primereact/button";
+import DeleteModal from "../Modals/DeleteModal";
+
 import { useForm } from "../../hooks/useForm";
 import { CommentContext } from "../../contexts/CommentContext";
 import EditCommentModal from "./EditCommentModal";
 import { useModal } from "../../hooks/useModal";
-
+import { usePagination } from "../../hooks/usePagination";
 import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as commentService from "../../services/comentService";
 
 import styles from "./CommentsList.module.css";
-import DeleteModal from "../Modals/DeleteModal";
+import Pagination from "../Pagination/Pagination";
 
 const CommentsList = ({ entityId, type }) => {
 	const [comments, setComments] = useState([]);
@@ -28,6 +30,7 @@ const CommentsList = ({ entityId, type }) => {
 		isEditModalOpen,
 		isDeleteModalOpen
 	} = useModal()
+	const { currentPage, itemsPerPage, totalPages, handlePageChange, setTotalCount } = usePagination()
 	const [showPicker, setShowPicker] = useState(false);
 
 	const { authentication, showSuccess } = useContext(AuthenticationContext)
@@ -36,12 +39,25 @@ const CommentsList = ({ entityId, type }) => {
 
 	useEffect(() => {
 		commentService
-			.getAllForEntity(entityId)
+			.getAllForEntity(entityId, (currentPage * itemsPerPage) - itemsPerPage, itemsPerPage)
 			.then((result) => {
-				if (result.error)
-					throw new Error(result.error);
+				if (result) {
+					setComments(result);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				navigate(`/error`);
+			});
+	}, [entityId, currentPage]);
 
-				setComments(result);
+	useEffect(() => {
+		commentService
+			.getTotalCountForEntity(entityId)
+			.then((result) => {
+				if (result.error) {
+					setTotalCount(result);
+				}
 			})
 			.catch((error) => {
 				console.log(error);
@@ -156,6 +172,7 @@ const CommentsList = ({ entityId, type }) => {
 						{...comment}
 					/>
 				))}
+				<Pagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange} />
 				<div className={styles["create-comment"]}>
 					<label>Add new comment:</label>
 					<div className={styles["emoji-section"]}>
@@ -190,7 +207,7 @@ const CommentsList = ({ entityId, type }) => {
 					isOpen={isEditModalOpen}
 					comment={selectedItem?.text}
 				/>
-				<DeleteModal 
+				<DeleteModal
 					isOpen={isDeleteModalOpen}
 					closeDeleteModal={closeDeleteModal}
 					onConfirm={deleteCommentHandler}

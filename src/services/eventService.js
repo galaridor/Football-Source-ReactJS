@@ -2,10 +2,16 @@ import * as request from "../utils/request";
 
 const baseUrl = "http://localhost:3030/data/events";
 
-export const getAllUpcomingEvent = async () => {
+export const getAllUpcomingEvent = async (offset, pageSize) => {
 
     try {
-        const result = await request.get(`${baseUrl}`);
+        const query = new URLSearchParams({
+            // sortBy: `_createdOn`,
+            offset: offset,
+            pageSize: pageSize
+        })
+
+        const result = await request.get(`${baseUrl}?${query}`);
         
         if (result.code){
             throw new Error(result.message)
@@ -14,6 +20,21 @@ export const getAllUpcomingEvent = async () => {
         console.log(result);
 
         return result;
+    } 
+    catch (error) {
+        console.log(error);
+
+        return null;
+    }
+};
+
+export const getAllUpcomingEventCount = async () => {
+	try {
+		const result = await request.get(`${baseUrl}?count`);
+
+		console.log(result);
+	
+		return result;
     } 
     catch (error) {
         console.log(error);

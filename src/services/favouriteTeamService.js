@@ -2,11 +2,14 @@ import * as request from "../utils/request";
 
 const baseUrl = "http://localhost:3030/data/favouriteTeams";
 
-export const getFavouriteTeamsForUser = async (userId) => {
+export const getFavouriteTeamsForUser = async (userId, offset, pageSize) => {
 
     try {
         const query = new URLSearchParams({
-            where: `_ownerId="${userId}"`
+            where: `_ownerId="${userId}"`,
+            // sortBy: `_createdOn`,
+            offset: offset,
+            pageSize: pageSize
         })
 
         const result = await request.get(`${baseUrl}?${query}`);
@@ -18,6 +21,25 @@ export const getFavouriteTeamsForUser = async (userId) => {
         console.log(result);
 
         return result;
+    } 
+    catch (error) {
+        console.log(error);
+
+        return null;
+    }
+};
+
+export const getTotalCountForUser = async (userId) => {
+	try {
+        const query = new URLSearchParams({
+            where: `_ownerId="${userId}"`,
+        })
+
+		const result = await request.get(`${baseUrl}?${query}&count`);
+
+		console.log(result);
+	
+		return result;
     } 
     catch (error) {
         console.log(error);
