@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import Matches from '../Matches/Matches';
+import ClubColor from '../ClubColor/ClubColor';
 
 import * as personService from '../../services/personService';
 
@@ -75,7 +76,7 @@ const Person = () => {
 						<Card style={{ backgroundColor: 'salmon' }} footer={teamCardFooter} subTitle={teamCardSubTitle} title={person.currentTeam.name} header={teamCardHeader} className='md-w-25rem'>
 							<p><strong>Founded:</strong> {person.currentTeam.founded}</p>
 							<p><strong>Address:</strong> {person.currentTeam.address}</p>
-							<p><strong>Club Colors:</strong> {person.currentTeam.clubColors}</p>
+							<p><strong>Club Colors:</strong> <ClubColor text={person.currentTeam.clubColors} /></p>
 							<p><strong>Stadium:</strong> {person.currentTeam.venue}</p>
 							<p><strong>Website:</strong> <a href={person.currentTeam.website}>{person.currentTeam.website}</a></p>
 						</Card>

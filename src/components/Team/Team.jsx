@@ -8,6 +8,7 @@ import RunningCompetitions from '../RunningCompetitions/RunningCompetitions';
 import Coach from '../Coach/Coach';
 import Matches from '../Matches/Matches';
 import CommentsList from "../Comments/CommentsList";
+import ClubColor from '../ClubColor/ClubColor';
 
 import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as teamService from '../../services/teamService';
@@ -56,7 +57,7 @@ const Team = () => {
 					<Card className={`md-w-25rem ${styles['card']}`} title={team.name} subTitle={cardSubtitle} header={cardHeader}>
 						<p><strong>Founded:</strong> {team.founded}</p>
 						<p><strong>Address:</strong> {team.address}</p>
-						<p><strong>Club Colors:</strong> {team.clubColors}</p>
+						<p><strong>Club Colors:</strong> <ClubColor text={team.clubColors} /></p>
 						<p><strong>Stadium:</strong> {team.venue}</p>
 						<p><strong>Website:</strong> <a href={team.website}>{team.website}</a></p>
 					</Card>

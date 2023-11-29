@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
+import ClubColor from '../ClubColor/ClubColor';
 
 import * as competitionService from "../../services/competitionService";
 import * as teamService from "../../services/teamService";
@@ -99,6 +100,12 @@ const SearchResult = () => {
 		);
 	};
 
+	const teamColorsBodyTemplate = (team) => {
+		return (
+			<ClubColor text={team.clubColors} />
+		)
+	}
+
 	return (
 		<div className={styles['saerch-result-section']}>
 			<h1 className={styles['search-result-title']}>Search Result from '{phrase}'</h1>
@@ -142,7 +149,7 @@ const SearchResult = () => {
 						<Column header="Competition Emblem" body={teamEmblemBodyTemplate} />
 						<Column field="founded" header="Founded" sortable />
 						<Column field="venue" header="Stadium" sortable filter filterPlaceholder="Search by Stadium" />
-						<Column field="clubColors" header="Club Colors" sortable filter filterPlaceholder="Search by Club Colors" />
+						<Column header="Club Colors" body={teamColorsBodyTemplate} sortable filter filterPlaceholder="Search by Club Colors" />
 						<Column field="website" header="Website" sortable filter filterPlaceholder="Search by Website" />
 						<Column header="Options" body={teamOptionsBodyTemplate} />
 					</DataTable>

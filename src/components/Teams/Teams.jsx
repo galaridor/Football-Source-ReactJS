@@ -1,9 +1,10 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { Card } from "primereact/card";
 import { Button } from 'primereact/button';
-import { useState, useEffect } from "react";
+import ClubColor from "../ClubColor/ClubColor";
 
 import * as competitionService from '../../services/competitionService';
 
@@ -68,7 +69,7 @@ const Teams = () => {
 								<div className={`${styles['card-content']}`}>
 									<p><strong>Founded: </strong>{team.founded}</p>
 									<p><strong>Address: </strong>{team.address}</p>
-									<p><strong>Club Colors: </strong>{team.clubColors}</p>
+									<p><strong>Club Colors: </strong> <ClubColor text={team.clubColors} /></p>
 									<p><strong>Stadium: </strong>{team.venue}</p>
 									<p><strong>Website: </strong><a href={team.website}>{team.website}</a></p>
 								</div>
