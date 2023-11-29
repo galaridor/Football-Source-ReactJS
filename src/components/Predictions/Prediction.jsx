@@ -7,6 +7,7 @@ import CommentsList from '../Comments/CommentsList';
 
 import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as predictionService from '../../services/predictionService';
+import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 
 import styles from './Prediction.module.css';
 
@@ -70,7 +71,7 @@ const Prediction = () => {
 						subTitle={cardSubTitle}
 					>
 						<div className={styles['card-content']}>
-							<strong>Match Date: </strong> <p>{prediction.entityDate}</p>
+							<strong>Match Date: </strong> <p>{formatUTCDateToLocal(prediction.entityDate)}</p>
 							<strong>Prediction: </strong> <p>{prediction.prediction.homeTeamScore} : {prediction.prediction.awayTeamScore}</p>
 							<strong>Notes: </strong> <p>{prediction.notes}</p>
 							<strong>Made by: </strong> <p>{prediction.owner.username}</p>

@@ -8,6 +8,7 @@ import Modal from "react-modal";
 
 import { useForm } from "../../hooks/useForm";
 import { PredictionContext } from "../../contexts/PredictionContext";
+import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 
 import styles from "./PredictionEditModal.module.css";
 
@@ -45,7 +46,7 @@ const PredictionEditModal = ({ isOpen, currentPrediction }) => {
 				<img src={`${currentPrediction?.match?.awayTeam?.crest}`} alt="Missing Image" className={styles['card-header']} />
 			</div>
 			<div>
-				<p><strong>Date: </strong> {currentPrediction.entityDate}</p>
+				<p><strong>Date: </strong> {formatUTCDateToLocal(currentPrediction.entityDate)}</p>
 			</div>
 		</div>
 	);
