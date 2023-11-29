@@ -10,7 +10,7 @@ export const getPredictionById = async (id) => {
             load: `owner=_ownerId:users`
         })
 
-        const result = await request.get(`${baseUrl}/${id}?${query}&sortBy=_createdOn desc`);
+        const result = await request.get(`${baseUrl}/${id}?${query}`);
         
         if (result.code) {
             throw new Error(result.message)
@@ -34,7 +34,7 @@ export const getAllPredictions = async () => {
             load: `owner=_ownerId:users`
         })
 
-        const result = await request.get(`${baseUrl}?${query}`);
+        const result = await request.get(`${baseUrl}?${query}&sortBy=_createdOn desc`);
         
         if (result.code) {
             throw new Error(result.message)

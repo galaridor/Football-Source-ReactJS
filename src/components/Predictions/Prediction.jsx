@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from "react-router-dom"
 
 import { Card } from 'primereact/card';
 import { Button } from "primereact/button";
+import CommentsList from '../Comments/CommentsList';
 
+import AuthenticationContext from '../../contexts/AuthenticationContext';
 import * as predictionService from '../../services/predictionService';
 
 import styles from './Prediction.module.css';
@@ -14,6 +16,8 @@ const Prediction = () => {
 	const navigate = useNavigate();
 
 	const { id } = useParams();
+
+	const { isAuthenticated } = useContext(AuthenticationContext);
 
 	useEffect(() => {
 		predictionService.getPredictionById(id)
@@ -73,6 +77,7 @@ const Prediction = () => {
 						</div>
 					</Card>
 				</div>
+				{isAuthenticated ? (<CommentsList entityId={id} type='prediction' />) : (<h3>Login to see comments!</h3>)}
 			</div>
 		);
 	} else {

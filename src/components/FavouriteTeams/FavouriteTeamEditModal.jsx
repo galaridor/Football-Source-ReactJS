@@ -43,6 +43,7 @@ const FavouriteTeamEditModal = ({ isOpen, team }) => {
 					<div className={`${styles['card-container']}`} key={team?.teamId}>
 						<Card className={`${styles['card']}`} subTitle={cardSubtitle(team)} header={cardHeader(team)} title={team?.teamName}>
 							<div className={styles['card-content']}>
+							<div className="p-fluid">
 								<div className="p-field">
 									<label htmlFor="description">Description:</label>
 									<InputTextarea
@@ -54,6 +55,7 @@ const FavouriteTeamEditModal = ({ isOpen, team }) => {
 										value={formValues?.description}
 										onChange={handleInputChange}
 									/>
+								</div>
 								</div>
 							</div>
 						</Card>

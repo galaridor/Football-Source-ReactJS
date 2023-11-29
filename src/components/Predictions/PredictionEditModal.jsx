@@ -79,7 +79,6 @@ const PredictionEditModal = ({ isOpen, currentPrediction }) => {
 											showButtons
 											id="homePrediction"
 											name="homePrediction"
-											style={{ width: '50rem' }}
 										/>
 									</div>
 
@@ -91,7 +90,6 @@ const PredictionEditModal = ({ isOpen, currentPrediction }) => {
 											showButtons
 											id="awayPrediction"
 											name="awayPrediction"
-											style={{ width: '50rem' }}
 										/>
 									</div>
 

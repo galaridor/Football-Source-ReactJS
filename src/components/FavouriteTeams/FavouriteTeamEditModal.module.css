@@ -29,9 +29,9 @@
 }
 
 .modal textarea {
+	overflow-y: scroll;
 	margin-bottom: 10px;
 	max-height: 400px;
-	width: 800px;
 }
 
 .buttons-container {

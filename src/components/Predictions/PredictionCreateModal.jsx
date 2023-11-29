@@ -164,7 +164,6 @@ const PredictionCreateModal = ({ isOpen }) => {
 								showButtons
 								id="homePrediction"
 								name="homePrediction"
-								style={{ width: '50rem' }}
 							/>
 						</div>}
 
@@ -176,7 +175,6 @@ const PredictionCreateModal = ({ isOpen }) => {
 								showButtons
 								id="awayPrediction"
 								name="awayPrediction"
-								style={{ width: '50rem' }}
 							/>
 						</div>}
 

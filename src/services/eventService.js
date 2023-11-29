@@ -87,19 +87,20 @@ export const update = async (_id, name, imageUrl, description, startDate) => {
 export const getLatestUpcomingEvent = async () => {
 
     try {
-        const result = await request.get(`${baseUrl}`);
+        const query = new URLSearchParams({
+            offset: 0,
+            pageSize: 1
+        })
+
+        const result = await request.get(`${baseUrl}?sortBy=startDate&${query}`);
         
         console.log(result);
 
-        if (result.code){
+        if (result.code) {
             throw new Error(result.message)
         }
 
-        const sortedResult = Object.values(result).sort(function(a, b) {
-            return a.startDate.localeCompare(b.startDate);
-        });
-
-        return sortedResult;
+        return result;
     } 
     catch (error) {
         console.log(error);
