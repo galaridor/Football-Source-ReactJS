@@ -76,8 +76,14 @@ const getLivescoreDates = (inputDate) => {
 	if (day < lastDay) {
 		day = (inputDate.getDate() + 1).toString().padStart(2, '0');
 	} else {
-		month = (inputDate.getMonth() + 2).toString().padStart(2, '0');
-		day = '01';
+		if (inputDate.getMonth() === 11) {
+			year = inputDate.getFullYear() + 1;
+			month = '01';
+			day = '01';
+		} else {
+			month = (inputDate.getMonth() + 2).toString().padStart(2, '0');
+			day = '01';
+		}
 	}
 
 	const dateTo = `${year}-${month}-${day}`;
@@ -96,7 +102,7 @@ const LiveScore = () => {
 	const { authentication } = useContext(AuthenticationContext);
 
 	useEffect(() => {
-		const { dateTo, dateFrom} = getLivescoreDates(date);
+		const { dateFrom, dateTo } = getLivescoreDates(date);
 
 		favouriteTeamService.getFavouriteTeamsForUser(authentication._id)
 			.then((favouriteTeamsResult) => {
