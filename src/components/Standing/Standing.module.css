@@ -18,3 +18,7 @@
 .standing-title, .group-title {
 	color: red;
 }
+
+.highlighted-team-name {
+	background-color: yellow;
+}

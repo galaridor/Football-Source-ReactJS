@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import HeadToHead from "../HeadToHead/HeadToHead";
 import CommentsList from "../Comments/CommentsList";
+import Standing from "../Standing/Standing";
 
 import AuthenticationContext from '../../contexts/AuthenticationContext';
 import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
@@ -90,6 +91,7 @@ const Match = ({match, title, type}) => {
 							</div>
 						}			
 				</div>
+					{type === 'full' && <Standing alias={match.competition.code} type="short" homeTeamName={match.homeTeam.name} awayTeamName={match.awayTeam.name}/> }
 				  	{type === 'full' && <HeadToHead matchId={match.id} />}
 					{isAuthenticated && type === 'full' ? (<CommentsList entityId={match.id} type='match' />) : type === 'full' ? (<h3>Login to see comments!</h3>) : <></>}
 			</div>

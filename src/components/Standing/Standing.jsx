@@ -9,7 +9,7 @@ import * as competitionService from '../../services/competitionService';
 
 import styles from './Standing.module.css';
 
-const Standing = ({ alias, type }) => {
+const Standing = ({ alias, type, homeTeamName, awayTeamName }) => {
 	const [isMultipleGroups, setIsMultipleGroups] = useState(false);
 	const [standing, setStanding] = useState(null);
 	const [competitionName, setCompetitionName] = useState("");
@@ -60,6 +60,12 @@ const Standing = ({ alias, type }) => {
 		);
 	};
 
+	const teamNameBodyTemplate = (rowData) => {
+		return (
+			<span className={(rowData.team.name == homeTeamName || rowData.team.name == awayTeamName) && styles['highlighted-team-name']} >{rowData.team.name}</span>
+		)
+	}
+
 	const handleTeamDetailsClick = (rowData) => {
 		navigate(`/teams/${rowData.team.id}/`);
 	};
@@ -82,7 +88,7 @@ const Standing = ({ alias, type }) => {
 							totalRecords={standing?.length}
 						>
 							<Column field="position" header="P" headerTooltip="Position" sortable />
-							<Column field="team.name" header="Team" headerTooltip="Team Name" sortable />
+							<Column body={teamNameBodyTemplate} header="Team" headerTooltip="Team Name" sortable />
 							<Column field="playedGames" header="PG" headerTooltip="Played Games" sortable />
 							<Column field="won" header="W" headerTooltip="Wins" sortable />
 							<Column field="draw" header="D" headerTooltip="Draws" sortable />
