@@ -62,7 +62,7 @@ const Standing = ({ alias, type, homeTeamName, awayTeamName }) => {
 
 	const teamNameBodyTemplate = (rowData) => {
 		return (
-			<span className={(rowData.team.name == homeTeamName || rowData.team.name == awayTeamName) && styles['highlighted-team-name']} >{rowData.team.name}</span>
+			<span className={(rowData.team.name == homeTeamName || rowData.team.name == awayTeamName) ? styles['highlighted-team-name'] : ''} >{rowData.team.name}</span>
 		)
 	}
 

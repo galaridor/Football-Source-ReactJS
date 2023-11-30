@@ -64,6 +64,27 @@ const sortByArrayOrder = (arrayOfIds, arrayOfObjects) => {
 	return sortedArray;
 }
 
+const getLivescoreDates = (inputDate) => {
+	let year = inputDate.getFullYear();
+	let month = (inputDate.getMonth() + 1).toString().padStart(2, '0');
+	let day = inputDate.getDate().toString().padStart(2, '0');
+
+	const dateFrom = `${year}-${month}-${day}`;
+
+	const lastDay = new Date(year, inputDate.getMonth() + 1, 0).getDate();
+
+	if (day < lastDay) {
+		day = (inputDate.getDate() + 1).toString().padStart(2, '0');
+	} else {
+		month = (inputDate.getMonth() + 2).toString().padStart(2, '0');
+		day = '01';
+	}
+
+	const dateTo = `${year}-${month}-${day}`;
+
+	return { dateFrom, dateTo };
+} 
+
 const LiveScore = () => {
 	const [liveScoreMatches, setLiveScoreMatches] = useState([]);
 	const [matchTimes, setMatchTimes] = useState([]);
@@ -75,17 +96,7 @@ const LiveScore = () => {
 	const { authentication } = useContext(AuthenticationContext);
 
 	useEffect(() => {
-		let year = date.getFullYear();
-		let month = (date.getMonth() + 1).toString().padStart(2, '0');
-		let day = date.getDate().toString().padStart(2, '0');
-
-		const dateFrom = `${year}-${month}-${day}`;
-
-		year = date.getFullYear();
-		month = (date.getMonth() + 1).toString().padStart(2, '0');
-		day = (date.getDate() + 1).toString().padStart(2, '0');
-
-		const dateTo = `${year}-${month}-${day}`;
+		const { dateTo, dateFrom} = getLivescoreDates(date);
 
 		favouriteTeamService.getFavouriteTeamsForUser(authentication._id)
 			.then((favouriteTeamsResult) => {

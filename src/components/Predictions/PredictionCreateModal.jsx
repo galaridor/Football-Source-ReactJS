@@ -13,6 +13,18 @@ import * as competitionService from "../../services/competitionService";
 
 import styles from "./PredictionCreateModal.module.css";
 
+const getMatchesDates = (inputDate) => {
+	let year = inputDate.getFullYear();
+	let month = (inputDate.getMonth() + 1).toString().padStart(2, '0');
+	let day = inputDate.getDate().toString().padStart(2, '0');
+
+	const dateFrom = `${year}-${month}-${day}`;
+
+	const dateTo = dateFrom;
+
+	return { dateFrom, dateTo };
+} 
+
 const PredictionCreateModal = ({ isOpen }) => {
 	const { closeCreateModal, saveNewPredictionHandler } = useContext(PredictionContext);
 	const [competitions, setCompetitions] = useState({});
@@ -58,13 +70,8 @@ const PredictionCreateModal = ({ isOpen }) => {
 
 	useEffect(() => {
 		if (formValues?.competition && formValues?.date) {
-			let year = formValues.date.getFullYear();
-			let month = (formValues.date.getMonth() + 1).toString().padStart(2, '0');
-			let day = formValues.date.getDate().toString().padStart(2, '0');
 
-			const dateFrom = `${year}-${month}-${day}`;
-
-			const dateTo = dateFrom;
+			const {dateFrom, dateTo} = getMatchesDates(formValues.date);
 
 			competitionService.getCompetitionMatchesByAliasFiltered(formValues.competition.code, dateFrom, dateTo)
 				.then((result) => {
