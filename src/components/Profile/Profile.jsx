@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { Card } from 'primereact/card';
 
 import AuthenticationContext from '../../contexts/AuthenticationContext';
-import { formatUTCDateToLocal } from '../../utils/dateTimeUtils';
 
 import styles from './Profile.module.css';
 
@@ -24,7 +23,7 @@ const Profile = () => {
 					header={cardHeader}
 				>
 					<p><strong>Email:</strong> {authentication.email}</p>
-					<p><strong>Date of Birth:</strong> {formatUTCDateToLocal(authentication.dateOfBirth)}</p>
+					<p><strong>Date of Birth:</strong> {authentication.dateOfBirth}</p>
 					<p><strong>Age:</strong> {authentication.age}</p>
 				</Card>
 			</div>
