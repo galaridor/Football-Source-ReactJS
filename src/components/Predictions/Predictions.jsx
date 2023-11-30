@@ -194,7 +194,7 @@ const Predictions = () => {
 				awayTeamScore: prediction.awayPrediction ?? selectedItem.prediction.awayTeamScore
 			}
 
-			const updatedPrediction = await predictionService.update(prediction._id, selectedItem.matchId, selectedItem.match, pred, prediction.notes, selectedItem.entityDate, selectedItem.dateCreated, currentDate);
+			const updatedPrediction = await predictionService.update(prediction._id, selectedItem.matchId, selectedItem.match, pred, prediction.notes, selectedItem.match.utcDate, selectedItem.dateCreated, currentDate);
 
 			setPredictions((prevPredictions) =>
 				prevPredictions.map((pr) =>
@@ -234,7 +234,7 @@ const Predictions = () => {
 				awayTeamScore: prediction.awayPrediction ?? 0
 			}
 
-			const createdPrediction = await predictionService.create(prediction.match.id, match, pred, prediction.notes, prediction.date, currentDate, currentDate);
+			const createdPrediction = await predictionService.create(prediction.match.id, match, pred, prediction.notes, prediction.match.utcDate, currentDate, currentDate);
 
 			setPredictions((state) => [createdPrediction, ...state]);
 
