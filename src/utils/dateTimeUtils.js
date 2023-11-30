@@ -35,7 +35,7 @@ export function formatDateToIsoDate(formattedDate) {
 		return "Invalid Date";
 	}
 
-	const isoDate = date.toISOString();
+	const isoDate = date.toISOString().split('T')[0];
 
 	return isoDate;
 }
