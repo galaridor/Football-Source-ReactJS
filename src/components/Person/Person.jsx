@@ -32,7 +32,7 @@ const Person = () => {
 	}, []);
 
 	const personCardHeader = (
-		<img src='../images/person.jpg' className={styles['card-main-image']} alt="Missing Image" />
+		<img src='/images/person.jpg' className={styles['card-main-image']} alt="Missing Image" />
 	);
 
 	const teamCardHeader = (

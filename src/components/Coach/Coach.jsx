@@ -23,7 +23,7 @@ const Coach = ({ coach }) => {
 	};
 
 	const cardHeader = (competition) => (
-		<img src='../images/default_coach_background.jpg' className={styles['card-image']} alt="Missing Image" />
+		<img src='/images/default_coach_background.jpg' className={styles['card-image']} alt="Missing Image" />
 	);
 
 
