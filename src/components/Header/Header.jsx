@@ -1,9 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate  } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 
 import { InputText } from "primereact/inputtext";
 import { Button } from 'primereact/button';
-import { useNavigate } from "react-router-dom"
 
 import AuthenticationContext from '../../contexts/AuthenticationContext';
 
@@ -63,6 +62,10 @@ const Header = () => {
 		navigate(`/search/${searchPhrase}`);
 	};
 
+	const handleBack = () => {
+		navigate(-1);
+	};
+
 	return (
 		<header className={`site-navbar py-4 ${styles['header-section']}`} role="banner">
 			<div className="container">
@@ -116,7 +119,8 @@ const Header = () => {
 						</a>
 					</div>
 				</div>
-				<div className={styles['search']}>
+				<div className={styles['controls']}>
+					<Button className={styles['back-btn']} icon="pi pi-step-backward" severity="danger" aria-label="Back" label='Back' onClick={handleBack} />
 					<span className="p-input-icon-right">
 						<i className="pi pi-search" />
 						<InputText placeholder="Search" onChange={handleSearchChange} />

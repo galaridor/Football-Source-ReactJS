@@ -32,7 +32,7 @@ const Person = () => {
 	}, []);
 
 	const personCardHeader = (
-		<img src='/images/person.jpg' className={styles['card-main-image']} alt="Missing Image" />
+		<img src={person?.section ? '/images/person.jpg' : '/images/default_coach_background.jpg'} className={styles['card-main-image']} alt="Missing Image" />
 	);
 
 	const teamCardHeader = (
@@ -70,7 +70,7 @@ const Person = () => {
 						<p><strong>Name:</strong> {person.name}</p>
 						<p><strong>Date of Birth:</strong> {person.dateOfBirth}</p>
 						<p><strong>Nationality:</strong> {person.nationality}</p>
-						<p><strong>Position:</strong> {person.section}</p>
+						<p><strong>Position:</strong> {person.section ?? 'Coach' }</p>
 						<br></br>
 						<p><strong>Current Team:</strong></p>
 						<Card style={{ backgroundColor: 'salmon' }} footer={teamCardFooter} subTitle={teamCardSubTitle} title={person.currentTeam.name} header={teamCardHeader} className='md-w-25rem'>
