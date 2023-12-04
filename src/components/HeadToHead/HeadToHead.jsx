@@ -140,7 +140,7 @@ const HeadToHead = ({ matchId }) => {
 			</div>
 		);
 	} else {
-		return null;
+		return <h3 className={styles['no-head-to-head-title']}>There are not any previous matches between those teams!</h3>;
 	}
 };
 

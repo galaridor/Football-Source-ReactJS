@@ -36,3 +36,8 @@
 	flex: 1;
 	margin: 5%;
 }
+
+.no-head-to-head-title {
+	color: red;
+	margin: 2%;
+}
