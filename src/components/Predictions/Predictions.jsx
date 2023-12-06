@@ -70,7 +70,7 @@ const Predictions = () => {
 			return false
 		}
 
-		if (new Date(prediction.date) < new Date() && mode === 'NEW') {
+		if (new Date(prediction.date).getDate() < new Date().getDate() && mode === 'NEW') {
 			showError('Cannot create prediction for finished matches')
 
 			return false
