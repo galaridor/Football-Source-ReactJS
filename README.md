@@ -23,7 +23,7 @@ Welcome to the Football Source App! This web application allows users to registe
 - Predictions
 - Upcoming Events
 - Teams, Players and Matches Details
-- User comments under Teams and Matches
+- User comments under Teams, Matches and Predictions
 - Geographic Map Representation of Team Locations
 
 ## Getting Started
