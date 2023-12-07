@@ -7,8 +7,6 @@ export const getMatchesByDate = async (dateFrom, dateTo) => {
     try {
         const result = await request.get(`${baseUrl}/${dateFrom}/${dateTo}`);
 
-        console.log(result);
-
         return result;
     } 
     catch (error) {
@@ -23,8 +21,6 @@ export const getMatchById = async (id) => {
     try {
         const result = await request.get(`${baseUrl}/${id}`);
 
-        console.log(result);
-
         return result;
     } 
     catch (error) {
@@ -37,8 +33,6 @@ export const getMatchById = async (id) => {
 export const getMatchHeadToHeadById = async (id) => {
     try {
         const result = await request.get(`${baseUrl}/${id}/headtohead`);
-
-        console.log(result);
 
         return result;
     } 

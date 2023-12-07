@@ -7,8 +7,6 @@ export const getPersonById = async (id) => {
     try {
         const result = await request.get(`${baseUrl}/${id}`);
 
-        console.log(result);
-
         return result;
     } 
     catch (error) {
@@ -22,8 +20,6 @@ export const getPersonMatchesById = async (id) => {
 
     try {
         const result = await request.get(`${baseUrl}/${id}/matches`);
-
-        console.log(result);
 
         return result;
     } 

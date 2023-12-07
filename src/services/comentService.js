@@ -12,8 +12,6 @@ export const getAllForEntity = async (entityId, offset, pageSize) => {
 
 		const result = await request.get(`${baseUrl}?${query}&sortBy=_createdOn desc`);
 
-		console.log(result);
-	
 		return result;
     } 
     catch (error) {
@@ -31,8 +29,6 @@ export const getTotalCountForEntity = async (entityId) => {
 
 		const result = await request.get(`${baseUrl}?${query}&count`);
 
-		console.log(result);
-	
 		return result;
     } 
     catch (error) {

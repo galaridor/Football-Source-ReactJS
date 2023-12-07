@@ -97,8 +97,6 @@ export const AuthenticationProvider = ({
 	}
 
 	const loginHandler = async (values) => {
-		console.log(values);
-
 		if (validateLogin(values) == true) {
 			authenticationService.login(values?.email, values?.password)
 				.then((result) => {
@@ -126,8 +124,6 @@ export const AuthenticationProvider = ({
 	}
 
 	const registerHandler = async (values) => {
-		console.log(values);
-
 		if (validateRegister(values) == true) {
 			values.age = calculateAge(values.dateOfBirth);
 

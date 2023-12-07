@@ -9,8 +9,6 @@ export const getAllTeams = async () => {
 
         const result = await request.get(`${baseUrl}/all/${limit}`);
 
-        console.log(result);
-
         return result;
     } 
     catch (error) {
@@ -25,8 +23,6 @@ export const getTeamById = async (id) => {
     try {
         const result = await request.get(`${baseUrl}/${id}`);
 
-        console.log(result);
-
         return result;
     } 
     catch (error) {
@@ -40,8 +36,6 @@ export const getTeamMatchesById = async (id) => {
 
     try {
         const result = await request.get(`${baseUrl}/${id}/matches`);
-
-        console.log(result);
 
         return result;
     } 

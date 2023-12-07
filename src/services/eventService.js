@@ -16,8 +16,6 @@ export const getAllUpcomingEvent = async (offset, pageSize) => {
             throw new Error(result.message)
         }
 
-        console.log(result);
-
         return result;
     } 
     catch (error) {
@@ -30,8 +28,6 @@ export const getAllUpcomingEvent = async (offset, pageSize) => {
 export const getAllUpcomingEventCount = async () => {
 	try {
 		const result = await request.get(`${baseUrl}?count`);
-
-		console.log(result);
 	
 		return result;
     } 
@@ -47,8 +43,6 @@ export const create = async (name, imageUrl, description, startDate) => {
     try {
         const newEvent = await request.post(baseUrl, {name, imageUrl, description, startDate});
         
-        console.log(newEvent);
-
         return newEvent;
     } 
     catch (error) {
@@ -93,8 +87,6 @@ export const getLatestUpcomingEvent = async () => {
         })
 
         const result = await request.get(`${baseUrl}?sortBy=startDate&${query}`);
-        
-        console.log(result);
 
         if (result.code) {
             throw new Error(result.message)

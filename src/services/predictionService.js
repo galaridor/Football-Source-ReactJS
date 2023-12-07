@@ -16,8 +16,6 @@ export const getPredictionById = async (id) => {
             throw new Error(result.message)
         }
 
-        console.log(result);
-
         return result;
     } 
     catch (error) {
@@ -40,8 +38,6 @@ export const getAllPredictions = async () => {
             throw new Error(result.message)
         }
 
-        console.log(result);
-
         return result;
     } 
     catch (error) {
@@ -56,8 +52,6 @@ export const create = async (matchId, match, prediction, notes, entityDate, date
     try {
         const newPrediction = await request.post(baseUrl, {matchId, match, prediction, notes, entityDate, dateCreated, lastModifiedOn});
         
-        console.log(newPrediction);
-
         return newPrediction;
     } 
     catch (error) {

@@ -17,8 +17,6 @@ export const getFavouriteTeamsForUser = async (userId, offset, pageSize) => {
             throw new Error(result.message)
         }
 
-        console.log(result);
-
         return result;
     } 
     catch (error) {
@@ -36,8 +34,6 @@ export const getTotalCountForUser = async (userId) => {
 
 		const result = await request.get(`${baseUrl}?${query}&count`);
 
-		console.log(result);
-	
 		return result;
     } 
     catch (error) {
@@ -52,8 +48,6 @@ export const create = async (teamId, teamName, teamCrest, teamCompetitionAlias, 
     try {
         const newFavouriteTeam = await request.post(baseUrl, {teamId, teamName, teamCrest, teamCompetitionAlias, teamCompetitonName, teamCompetitionEmblem, description});
         
-        console.log(newFavouriteTeam);
-
         return newFavouriteTeam;
     } 
     catch (error) {
