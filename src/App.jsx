@@ -29,6 +29,7 @@ import Prediction from "./components/Predictions/Prediction";
 import Profile from "./components/Profile/Profile";
 import AuthGuard from "./components/Guards/AuthGuard";
 import AdminGuard from "./components/Guards/AdminGuard";
+import LoggedInGuard from "./components/Guards/LoggedInGuard";
 import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
 
 const UpcomingEventsAdminPage = lazy(() => import("./components/UpcomingEvent/UpcomingEventsAdminPage"));
@@ -52,8 +53,10 @@ function App() {
 						<Route path="/" element={<Home />} />
 						<Route path="/error" element={<SomethingWentWrong />} />
 						<Route path="/access-denied" element={<AccessDenied />} />
-						<Route path="/login" element={<Login />} />
-						<Route path="/register" element={<Register />} />
+						<Route element={<LoggedInGuard />}>
+							<Route path="/login" element={<Login />} />
+							<Route path="/register" element={<Register />} />
+						</Route>
 						<Route path="/logout" element={<Logout />} />
 						<Route path="/search/:phrase" element={<SearchResult />} />
 						<Route path="/competitions" element={<Competitions />} />

@@ -106,6 +106,12 @@ const SearchResult = () => {
 		)
 	}
 
+	const teamWebsiteBodyTemplae = (team) => {
+		return (
+			<a href={team.website}>{team.website}</a>
+		)
+	}
+
 	return (
 		<div className={styles['saerch-result-section']}>
 			<h1 className={styles['search-result-title']}>Search Result from '{phrase}'</h1>
@@ -150,7 +156,7 @@ const SearchResult = () => {
 						<Column field="founded" header="Founded" sortable />
 						<Column field="venue" header="Stadium" sortable filter filterPlaceholder="Search by Stadium" />
 						<Column header="Club Colors" body={teamColorsBodyTemplate} sortable filter filterPlaceholder="Search by Club Colors" />
-						<Column field="website" header="Website" sortable filter filterPlaceholder="Search by Website" />
+						<Column body={teamWebsiteBodyTemplae} header="Website" sortable filter />
 						<Column header="Options" body={teamOptionsBodyTemplate} />
 					</DataTable>
 				</div>
