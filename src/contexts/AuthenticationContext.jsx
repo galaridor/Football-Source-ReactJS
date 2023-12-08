@@ -71,7 +71,9 @@ export const AuthenticationProvider = ({
 			return false
 		}
 
-		if (new Date(values.dateOfBirth).getDate() > new Date().getDate()) {
+		const isDateOfBirthInTheFuture= new Date(values.dateOfBirth).setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0);
+
+		if (isDateOfBirthInTheFuture) {
 			showError('Date of Birth cannot be in the future')
 
 			return false

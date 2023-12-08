@@ -58,7 +58,9 @@ const UpcomingEventsAdminPage = () => {
 			return false
 		}
 
-		if (new Date(event.startDate).getDate() < new Date().getDate()) {
+		const isStartDatePast = new Date(event.startDate).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
+
+		if (isStartDatePast) {
 			showError('Cannot create event in the past')
 
 			return false

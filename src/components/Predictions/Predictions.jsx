@@ -70,9 +70,21 @@ const Predictions = () => {
 			return false
 		}
 
-		if (new Date(prediction.date).getDate() < new Date().getDate() && mode === 'NEW') {
+		const isMatchDatePast = new Date(prediction.date).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
+
+		if (mode === 'NEW' && isMatchDatePast) {
+
 			showError('Cannot create prediction for finished matches')
 
+			return false
+		}
+
+		const isEntitiyDatePast = new Date(prediction.entityDate).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
+
+		if (mode === 'EDIT' && isEntitiyDatePast) {
+			
+			showError('Cannot edit prediction for finished matches')
+			
 			return false
 		}
 
@@ -194,7 +206,7 @@ const Predictions = () => {
 				awayTeamScore: prediction.awayPrediction ?? selectedItem.prediction.awayTeamScore
 			}
 
-			const updatedPrediction = await predictionService.update(prediction._id, selectedItem.matchId, selectedItem.match, pred, prediction.notes, selectedItem.match.utcDate, selectedItem.dateCreated, currentDate);
+			const updatedPrediction = await predictionService.update(prediction._id, selectedItem.matchId, selectedItem.match, pred, prediction.notes, selectedItem.entityDate, selectedItem.dateCreated, currentDate);
 
 			setPredictions((prevPredictions) =>
 				prevPredictions.map((pr) =>

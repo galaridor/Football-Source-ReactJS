@@ -1471,7 +1471,7 @@
                     awayTeamScore: 1
                 },
                 notes: "I beleave this game will finish 2-1 for Chelsea",
-                entityDate: '2023-01-13T18:30:00Z',
+                entityDate: '2023-08-13T18:30:00Z',
                 dateCreated: "2023-11-17T21:45:04.107Z",
                 lastModifiedOn: "2023-11-17T21:45:04.107Z",
                 _createdOn: 1614260681375,
